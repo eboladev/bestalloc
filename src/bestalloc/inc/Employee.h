@@ -24,7 +24,7 @@ namespace bestalloc
         string getName() const;
         void   setName(string& value);
 
-        ~Employee ();
+        ~Employee();
     };
 }
 
