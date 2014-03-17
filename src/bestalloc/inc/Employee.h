@@ -1,5 +1,10 @@
-#ifndef EMPLOYEE_H
-#define EMPLOYEE_H
+// Employee.h
+// Interface of Employee class
+// Author: Edward Ryabikov
+// version 1.0
+
+#ifndef EMPLOYEE_H_INCLUDED
+#define EMPLOYEE_H_INCLUDED
 
 #include "Skill.h"
 
@@ -12,8 +17,8 @@ namespace bestalloc
     class Employee
     {
     private:
-        int             m_id;
-        string          m_name;
+        int    m_id;
+        string m_name;
 
     public:
         Employee();
@@ -28,5 +33,5 @@ namespace bestalloc
     };
 }
 
-#endif // EMPLOYEE_H
+#endif // EMPLOYEE_H_INCLUDED
 

@@ -1,34 +1,39 @@
+// Skill.cpp
+// Implementation of Skill class
+// Author: Edward Ryabikov
+// version 1.0
+
 #include "Skill.h"
 using namespace bestalloc;
 
 Skill::Skill()
-    : m_technology(), m_level(0)
+    : m_id(-1), m_name("")
 {
 }
 
-Skill::Skill(const Technology& technology, int level)
-    : m_technology(technology), m_level(level)
+Skill::Skill(int id, const string& name)
+    : m_id(id), m_name(name)
 {
 }
 
-Technology Skill::getTechnology() const
+int Skill::getId() const
 {
-    return m_technology;
+    return m_id;
 }
 
-void Skill::setTechnology(const Technology& value)
+void Skill::setId(int value)
 {
-    m_technology = value;
+    m_id = value;
 }
 
-int Skill::getLevel() const
+string Skill::getName() const
 {
-    return m_level;
+    return m_name;
 }
 
-void Skill::setLevel(int value)
+void Skill::setName(string& value)
 {
-    m_level = value;
+    m_name = value;
 }
 
 Skill::~Skill()

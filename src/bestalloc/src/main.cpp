@@ -1,34 +1,53 @@
+// main.cpp
+// Author: Edward Ryabikov
+
 #include <QCoreApplication>
 
-#include "Employee.h"
-#include "Bigraph.h"
-#include "Edge.h"
 #include "BestAllocAlgo.h"
 using namespace bestalloc;
+
+#include <iostream>
+using namespace std;
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    Bigraph<int, int> graph;
-
-    Edge<int, int> edge1(1, 2, 3);
-    Edge<int, int> edge2(3, 4, 5);
-    graph.addEdge(edge1);
-    graph.addEdge(edge2);
-    graph.addUVertex(2);
-
     BestAllocAlgorithm algo;
     algo.addEmployee(Employee(1, "Peter"));
     algo.addEmployee(Employee(2, "Mike"));
+    algo.addEmployee(Employee(3, "Robby"));
+    algo.addEmployee(Employee(4, "James"));
+    algo.addEmployee(Employee(5, "Alan"));
 
-    algo.addTechnology(Technology(1, "VS 2010"));
-    algo.addTechnology(Technology(2, "MS Office"));
+    algo.addSkill(Skill(1, "C++"));
+    algo.addSkill(Skill(2, "Java"));
+    algo.addSkill(Skill(3, "Python"));
+    algo.addSkill(Skill(4, "Ruby"));
+    algo.addSkill(Skill(5, "Perl"));
 
-    algo.assignSkill(1, 1, 4);
-    algo.assignSkill(1, 2, 3);
-    algo.assignSkill(2, 1, 3);
-    algo.assignSkill(2, 2, 3);
+    algo.assignSkill(1, 1, 7);
+    algo.assignSkill(1, 2, 11);
 
-    return a.exec();
+    algo.assignSkill(2, 2, 4);
+    algo.assignSkill(2, 5, 3);
+
+    algo.assignSkill(3, 1, 12);
+    algo.assignSkill(3, 3, 6);
+
+    algo.assignSkill(4, 2, 10);
+    algo.assignSkill(4, 4, 8);
+
+    algo.assignSkill(5, 4, 4);
+    algo.assignSkill(5, 5, 6);
+
+    vector< pair<Employee, Skill> > bestAllocMap = algo.getBestAllocation();
+
+    cout << "Best allocation:" << endl;
+    vector< pair<Employee, Skill> >::iterator i;
+    for (i = bestAllocMap.begin(); i != bestAllocMap.end(); i++) {
+        cout << i->first.getName() << " <---> " << i->second.getName() << endl;
+    }
+
+    return 0;
 }

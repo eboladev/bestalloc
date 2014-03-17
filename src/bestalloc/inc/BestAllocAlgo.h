@@ -1,5 +1,10 @@
-#ifndef BESTALLOCALGO_H
-#define BESTALLOCALGO_H
+// BestAllocAlgo.h
+// Interface of BestAlloc class
+// Author: Edward Ryabikov
+// version 1.0
+
+#ifndef BESTALLOCALGO_H_INCLUDED
+#define BESTALLOCALGO_H_INCLUDED
 
 #include "Bigraph.h"
 #include "Employee.h"
@@ -8,30 +13,41 @@
 #include <map>
 #include <vector>
 #include <list>
+#include <utility>
 using namespace std;
 
 namespace bestalloc
 {
     class BestAllocAlgorithm
     {
-    private:
-        vector<Employee>         m_employees;
-        vector<Technology>       m_technologies;
-        map< int, list<Skill> >  m_skillsMap;
-        Bigraph<Employee, Technology> m_graph;
+    public: //
+        Bigraph<Employee, Skill> m_graph;
+
+        vector< vector<int> > m_effMatrix; // Efficiency matrix
+        vector<int>           m_pairUV;    // Matching: pairUV[employee]
+        vector<int>           m_pairVU;    // Matching: pairVU[technology]
+        vector<bool>          m_altTreeUV; // Alternating tree
+        vector<bool>          m_altTreeVU; // Alternating tree
+        vector<int>           m_maxRow;
+        vector<int>           m_minCol;
 
     private:
-        Employee*   getEmployeeById(int id);
-        Technology* getTechnologyById(int id);
+        const Employee* getEmployeeById(int id);
+        const Skill*    getSkillById(int id);
+        bool isSkillExists(int emplId, int skillId);
+        int  getSkillLevel(int emplId, int skillId);
+
+        void initEffMatrix();
+        bool buildAltTree(int i);
 
     public:
         BestAllocAlgorithm();
 
         void addEmployee(const Employee& employee);
-        void addTechnology(const Technology& technology);
+        void addSkill(const Skill& skill);
         void assignSkill(int emplId, int techId, int level);
 
-        map<Employee, Skill> getBestAllocation() const;
+        vector< pair<Employee, Skill> > getBestAllocation();
 
         void clearContainers();
 
@@ -39,4 +55,4 @@ namespace bestalloc
     };
 }
 
-#endif // BESTALLOCALGO_H
+#endif // BESTALLOCALGO_H_INCLUDED

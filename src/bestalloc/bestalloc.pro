@@ -16,11 +16,10 @@ HEADERS += inc/Bigraph.h \
     inc/ProjectSession.h \
     inc/Skill.h \
     inc/BestAllocAlgo.h \
-    inc/Technology.h
+    inc/BigraphIterator.h
 
 SOURCES += src/main.cpp \
     src/Employee.cpp \
     src/Skill.cpp \
     src/ProjectSession.cpp \
-    src/BestAllocAlgo.cpp \
-    src/Technology.cpp
+    src/BestAllocAlgo.cpp

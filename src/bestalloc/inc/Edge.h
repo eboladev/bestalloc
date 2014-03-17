@@ -1,5 +1,10 @@
-#ifndef EDGE_H
-#define EDGE_H
+// Edge.h
+// Interface and implementation of Edge template class
+// Author: Edward Ryabikov
+// version 1.0
+
+#ifndef EDGE_H_INCLUDED
+#define EDGE_H_INCLUDED
 
 namespace bestalloc
 {
@@ -28,7 +33,7 @@ namespace bestalloc
 
     template <class U, class V>
     Edge<U, V>::Edge()
-        : m_uVertex(NULL), m_vVertex(NULL), m_weight(0)
+        : m_uVertex(), m_vVertex(), m_weight(0)
     {
     }
 
@@ -87,4 +92,4 @@ namespace bestalloc
     }
 }
 
-#endif // EDGE_H
+#endif // EDGE_H_INCLUDED

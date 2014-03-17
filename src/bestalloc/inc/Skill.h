@@ -1,31 +1,34 @@
-#ifndef SKILL_H
-#define SKILL_H
+// Skill.h
+// Interface of Skill class
+// Author: Edward Ryabikov
+// version 1.0
+
+#ifndef SKILL_H_INCLUDED
+#define SKILL_H_INCLUDED
 
 #include <string>
 using namespace std;
-
-#include "Technology.h"
 
 namespace bestalloc
 {
     class Skill
     {
     private:
-        Technology m_technology;
-        int        m_level;
+        int    m_id;
+        string m_name;
 
     public:
         Skill();
-        Skill(const Technology& technology, int level);
+        Skill(int id, const string& name);
 
-        Technology getTechnology() const;
-        void       setTechnology(const Technology& value);
-        int        getLevel() const;
-        void       setLevel(int value);
+        int    getId() const;
+        void   setId(int value);
+        string getName() const;
+        void   setName(string& value);
 
         ~Skill();
     };
 }
 
 
-#endif // SKILL_H
+#endif // SKILL_H_INCLUDED

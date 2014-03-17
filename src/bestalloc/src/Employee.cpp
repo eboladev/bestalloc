@@ -1,3 +1,8 @@
+// Employee.cpp
+// Implementation of Employee class
+// Author: Edward Ryabikov
+// version 1.0
+
 #include "Employee.h"
 using namespace bestalloc;
 

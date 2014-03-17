@@ -1,3 +1,8 @@
+// ProjectSession.cpp
+// Implementation of ProjectSession class
+// Edward Ryabikov
+// version 1.0
+
 #include "ProjectSession.h"
 using namespace bestalloc;
 
@@ -22,9 +27,9 @@ void ProjectSession::addEmployee(const Employee &employee)
     m_algo.addEmployee(employee);
 }
 
-void ProjectSession::addTechnology(const Technology& technology)
+void ProjectSession::addSkill(const Skill& skill)
 {
-    m_algo.addTechnology(technology);
+    m_algo.addSkill(skill);
 }
 
 void ProjectSession::assignSkill(int employeeId, int skillId, int level)
@@ -32,7 +37,7 @@ void ProjectSession::assignSkill(int employeeId, int skillId, int level)
     m_algo.assignSkill(employeeId, skillId, level);
 }
 
-map<Employee, Skill> ProjectSession::getBestAllocation() const
+vector< pair<Employee, Skill> > ProjectSession::getBestAllocation()
 {
     return m_algo.getBestAllocation();
 }

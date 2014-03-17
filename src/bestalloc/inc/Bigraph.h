@@ -1,9 +1,15 @@
-#ifndef BIGRAPH_H
-#define BIGRAPH_H
+// Bigraph.h
+// Interface and implementation of Bigraph template class
+// Author: Edward Ryabikov
+// version 1.0
+
+#ifndef BIGRAPH_H_INCLUDED
+#define BIGRAPH_H_INCLUDED
 
 #include <stdlib.h>
 
 #include "Edge.h"
+#include "BigraphIterator.h"
 
 namespace bestalloc
 {
@@ -30,6 +36,21 @@ namespace bestalloc
         void addVVertex(const V& vertex);
 
         void clear();
+
+        typedef BigraphIterator<U> UIterator;
+        BigraphIterator<U> uSetStart();
+        BigraphIterator<U> uSetItemAt(int position);
+        BigraphIterator<U> uSetEnd();
+
+        typedef BigraphIterator<V> VIterator;
+        BigraphIterator<V> vSetStart();
+        BigraphIterator<V> vSetItemAt(int position);
+        BigraphIterator<V> vSetEnd();
+
+        typedef BigraphIterator< Edge<U, V> > EdgeIterator;
+        BigraphIterator< Edge<U, V> > edgesStart();
+        BigraphIterator< Edge<U, V> > edgesItemAt(int position);
+        BigraphIterator< Edge<U, V> > edgesEnd();
 
         ~Bigraph();
     };
@@ -133,10 +154,64 @@ namespace bestalloc
     }
 
     template <class U, class V>
+    BigraphIterator<U> Bigraph<U, V>::uSetStart()
+    {
+        return BigraphIterator<U>(m_uSet, m_uSetSize, 0);
+    }
+
+    template <class U, class V>
+    BigraphIterator<U> Bigraph<U, V>::uSetItemAt(int position)
+    {
+        return BigraphIterator<U>(m_uSet, m_uSetSize, position);
+    }
+
+    template <class U, class V>
+    BigraphIterator<U> Bigraph<U, V>::uSetEnd()
+    {
+        return BigraphIterator<U>(m_uSet, m_uSetSize, m_uSetSize);
+    }
+
+    template <class U, class V>
+    BigraphIterator<V> Bigraph<U, V>::vSetStart()
+    {
+        return BigraphIterator<V>(m_vSet, m_vSetSize, 0);
+    }
+
+    template <class U, class V>
+    BigraphIterator<V> Bigraph<U, V>::vSetItemAt(int position)
+    {
+        return BigraphIterator<V>(m_vSet, m_vSetSize, position);
+    }
+
+    template <class U, class V>
+    BigraphIterator<V> Bigraph<U, V>::vSetEnd()
+    {
+        return BigraphIterator<V>(m_vSet, m_vSetSize, m_vSetSize);
+    }
+
+    template <class U, class V>
+    BigraphIterator< Edge<U, V> > Bigraph<U, V>::edgesStart()
+    {
+        return BigraphIterator< Edge<U, V> >(m_edges, m_edgesCount, 0);
+    }
+
+    template <class U, class V>
+    BigraphIterator< Edge<U, V> > Bigraph<U, V>::edgesItemAt(int position)
+    {
+        return BigraphIterator< Edge<U, V> >(m_edges, m_edgesCount, position);
+    }
+
+    template <class U, class V>
+    BigraphIterator< Edge<U, V> > Bigraph<U, V>::edgesEnd()
+    {
+        return BigraphIterator< Edge<U, V> >(m_edges, m_edgesCount, m_edgesCount);
+    }
+
+    template <class U, class V>
     Bigraph<U, V>::~Bigraph()
     {
         clear();
     }
 }
 
-#endif // BIGRAPH_H
+#endif // BIGRAPH_H_INCLUDED
