@@ -20,7 +20,7 @@ namespace bestalloc
 {
     class BestAllocAlgorithm
     {
-    public: //
+    private:
         Bigraph<Employee, Skill> m_graph;
 
         vector< vector<int> > m_effMatrix; // Efficiency matrix

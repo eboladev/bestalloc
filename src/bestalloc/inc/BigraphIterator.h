@@ -19,8 +19,7 @@ namespace bestalloc
 
     public:
         BigraphIterator();
-        BigraphIterator(T** targetSet, int size);
-        BigraphIterator(T** targetSet, int size, int curPosition);
+        BigraphIterator(T** targetSet, int size, int curPosition = -1);
 
         int getPosition() const;
 
@@ -39,12 +38,6 @@ namespace bestalloc
     template <class T>
     BigraphIterator<T>::BigraphIterator()
         : m_targetSet(NULL), m_size(0), m_position(-1), m_emptyValue()
-    {
-    }
-
-    template <class T>
-    BigraphIterator<T>::BigraphIterator(T** targetSet, int size)
-        : m_targetSet(targetSet), m_size(size), m_position(-1), m_emptyValue()
     {
     }
 
