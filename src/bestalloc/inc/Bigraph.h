@@ -6,14 +6,13 @@
 #ifndef BIGRAPH_H_INCLUDED
 #define BIGRAPH_H_INCLUDED
 
-#include <stdlib.h>
-
 #include "Edge.h"
 #include "BigraphIterator.h"
+#include "BigraphAllocator.h"
 
 namespace bestalloc
 {
-    template <class U, class V>
+    template < class U, class V, class A = BigraphAllocator<U, V> >
     class Bigraph
     {
     private:
@@ -24,8 +23,10 @@ namespace bestalloc
         int          m_vSetSize;
         int          m_edgesCount;
 
+        A            m_allocator;
+
     public:
-        Bigraph();
+        Bigraph(const A& allocator = A());
 
         int  getUSetSize() const;
         int  getVSetSize() const;
@@ -55,160 +56,128 @@ namespace bestalloc
         ~Bigraph();
     };
 
-    template <class U, class V>
-    Bigraph<U, V>::Bigraph()
+    template <class U, class V, class A>
+    Bigraph<U, V, A>::Bigraph(const A& allocator)
         : m_uSet(NULL), m_vSet(NULL), m_edges(NULL),
-          m_uSetSize(0), m_vSetSize(0), m_edgesCount(0)
+          m_uSetSize(0), m_vSetSize(0), m_edgesCount(0),
+          m_allocator(allocator)
     {
     }
 
-    template <class U, class V>
-    int Bigraph<U, V>::getUSetSize() const
+    template <class U, class V, class A>
+    int Bigraph<U, V, A>::getUSetSize() const
     {
         return m_uSetSize;
     }
 
-    template <class U, class V>
-    int Bigraph<U, V>::getVSetSize() const
+    template <class U, class V, class A>
+    int Bigraph<U, V, A>::getVSetSize() const
     {
         return m_vSetSize;
     }
 
-    template <class U, class V>
-    int Bigraph<U, V>::getEdgesCount() const
+    template <class U, class V, class A>
+    int Bigraph<U, V, A>::getEdgesCount() const
     {
         return m_edgesCount;
     }
 
-    template <class U, class V>
-    void Bigraph<U, V>::addEdge(const Edge<U, V>& edge)
+    template <class U, class V, class A>
+    void Bigraph<U, V, A>::addEdge(const Edge<U, V>& edge)
     {
-        if (m_edges == NULL) {
-            m_edges = (Edge<U, V>**)malloc(sizeof(Edge<U, V>*));
-        } else {
-            m_edges = (Edge<U, V>**)realloc(m_edges, (m_edgesCount+1) * sizeof(Edge<U, V>*));
-        }
-
-        m_edges[m_edgesCount] = new Edge<U, V>(edge);
+        m_edges = m_allocator.allocEdges(m_edges, m_edgesCount);
+        m_allocator.constructEdge(m_edges, m_edgesCount, edge);
         m_edgesCount++;
     }
 
-    template <class U, class V>
-    void Bigraph<U, V>::addUVertex(const U& vertex)
+    template <class U, class V, class A>
+    void Bigraph<U, V, A>::addUVertex(const U& vertex)
     {
-        if (m_uSet == NULL) {
-            m_uSet = (U**)malloc(sizeof(U*));
-        } else {
-            m_uSet = (U**)realloc(m_uSet, (m_uSetSize+1) * sizeof(U*));
-        }
-
-        m_uSet[m_uSetSize] = new U(vertex);
+        m_uSet = m_allocator.allocUSet(m_uSet, m_uSetSize);
+        m_allocator.constructUElem(m_uSet, m_uSetSize, vertex);
         m_uSetSize++;
     }
 
-    template <class U, class V>
-    void Bigraph<U, V>::addVVertex(const V& vertex)
+    template <class U, class V, class A>
+    void Bigraph<U, V, A>::addVVertex(const V& vertex)
     {
-        if (m_vSet == NULL) {
-            m_vSet = (V**)malloc(sizeof(V*));
-        } else {
-            m_vSet = (V**)realloc(m_vSet, (m_vSetSize+1) * sizeof(V*));
-        }
-
-        m_vSet[m_vSetSize] = new V(vertex);
+        m_vSet = m_allocator.allocVSet(m_vSet, m_vSetSize);
+        m_allocator.constructVElem(m_vSet, m_vSetSize, vertex);
         m_vSetSize++;
     }
 
-    template <class U, class V>
-    void Bigraph<U, V>::clear()
+    template <class U, class V, class A>
+    void Bigraph<U, V, A>::clear()
     {
-        if (m_edges != NULL) {
-            for (int i = 0; i < m_edgesCount; i++) {
-                delete m_edges[i];
-            }
+        m_allocator.destroyUSet(m_uSet, m_uSetSize);
+        m_uSet = NULL;
+        m_uSetSize = 0;
 
-            free(m_edges);
-            m_edges = NULL;
-            m_edgesCount = 0;
-        }
+        m_allocator.destroyVSet(m_vSet, m_vSetSize);
+        m_vSet = NULL;
+        m_vSetSize = 0;
 
-        if (m_uSet  != NULL) {
-            for (int i = 0; i < m_uSetSize; i++) {
-                delete m_uSet[i];
-            }
-
-            free(m_uSet);
-            m_uSet = NULL;
-            m_uSetSize = 0;
-        }
-
-        if (m_vSet  != NULL) {
-            for (int i = 0; i < m_vSetSize; i++) {
-                delete m_vSet[i];
-            }
-
-            free(m_vSet);
-            m_vSet = NULL;
-            m_vSetSize = 0;
-        }
+        m_allocator.destroyEdges(m_edges, m_edgesCount);
+        m_edges = NULL;
+        m_edgesCount = 0;
     }
 
-    template <class U, class V>
-    BigraphIterator<U> Bigraph<U, V>::uSetStart()
+    template <class U, class V, class A>
+    BigraphIterator<U> Bigraph<U, V, A>::uSetStart()
     {
         return BigraphIterator<U>(m_uSet, m_uSetSize, 0);
     }
 
-    template <class U, class V>
-    BigraphIterator<U> Bigraph<U, V>::uSetItemAt(int position)
+    template <class U, class V, class A>
+    BigraphIterator<U> Bigraph<U, V, A>::uSetItemAt(int position)
     {
         return BigraphIterator<U>(m_uSet, m_uSetSize, position);
     }
 
-    template <class U, class V>
-    BigraphIterator<U> Bigraph<U, V>::uSetEnd()
+    template <class U, class V, class A>
+    BigraphIterator<U> Bigraph<U, V, A>::uSetEnd()
     {
         return BigraphIterator<U>(m_uSet, m_uSetSize, m_uSetSize);
     }
 
-    template <class U, class V>
-    BigraphIterator<V> Bigraph<U, V>::vSetStart()
+    template <class U, class V, class A>
+    BigraphIterator<V> Bigraph<U, V, A>::vSetStart()
     {
         return BigraphIterator<V>(m_vSet, m_vSetSize, 0);
     }
 
-    template <class U, class V>
-    BigraphIterator<V> Bigraph<U, V>::vSetItemAt(int position)
+    template <class U, class V, class A>
+    BigraphIterator<V> Bigraph<U, V, A>::vSetItemAt(int position)
     {
         return BigraphIterator<V>(m_vSet, m_vSetSize, position);
     }
 
-    template <class U, class V>
-    BigraphIterator<V> Bigraph<U, V>::vSetEnd()
+    template <class U, class V, class A>
+    BigraphIterator<V> Bigraph<U, V, A>::vSetEnd()
     {
         return BigraphIterator<V>(m_vSet, m_vSetSize, m_vSetSize);
     }
 
-    template <class U, class V>
-    BigraphIterator< Edge<U, V> > Bigraph<U, V>::edgesStart()
+    template <class U, class V, class A>
+    BigraphIterator< Edge<U, V> > Bigraph<U, V, A>::edgesStart()
     {
         return BigraphIterator< Edge<U, V> >(m_edges, m_edgesCount, 0);
     }
 
-    template <class U, class V>
-    BigraphIterator< Edge<U, V> > Bigraph<U, V>::edgesItemAt(int position)
+    template <class U, class V, class A>
+    BigraphIterator< Edge<U, V> > Bigraph<U, V, A>::edgesItemAt(int position)
     {
         return BigraphIterator< Edge<U, V> >(m_edges, m_edgesCount, position);
     }
 
-    template <class U, class V>
-    BigraphIterator< Edge<U, V> > Bigraph<U, V>::edgesEnd()
+    template <class U, class V, class A>
+    BigraphIterator< Edge<U, V> > Bigraph<U, V, A>::edgesEnd()
     {
         return BigraphIterator< Edge<U, V> >(m_edges, m_edgesCount, m_edgesCount);
     }
 
-    template <class U, class V>
-    Bigraph<U, V>::~Bigraph()
+    template <class U, class V, class A>
+    Bigraph<U, V, A>::~Bigraph()
     {
         clear();
     }

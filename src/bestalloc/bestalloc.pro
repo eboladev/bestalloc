@@ -16,7 +16,8 @@ HEADERS += inc/Bigraph.h \
     inc/ProjectSession.h \
     inc/Skill.h \
     inc/BestAllocAlgo.h \
-    inc/BigraphIterator.h
+    inc/BigraphIterator.h \
+    inc/BigraphAllocator.h
 
 SOURCES += src/main.cpp \
     src/Employee.cpp \

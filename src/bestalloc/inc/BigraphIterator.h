@@ -6,6 +6,8 @@
 #ifndef BIGRAPHITERATOR_H_INCLUDED
 #define BIGRAPHITERATOR_H_INCLUDED
 
+#include <cstddef>
+
 namespace bestalloc
 {
     template <class T>
