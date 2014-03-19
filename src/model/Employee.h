@@ -1,7 +1,10 @@
-// Employee.h
-// Interface of Employee class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   Employee.h
+ * \brief  Employee class declaration
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #ifndef EMPLOYEE_H_INCLUDED
 #define EMPLOYEE_H_INCLUDED

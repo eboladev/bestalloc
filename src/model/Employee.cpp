@@ -1,7 +1,10 @@
-// Employee.cpp
-// Implementation of Employee class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   Employee.cpp
+ * \brief  Employee class implementation
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #include "Employee.h"
 using namespace bestalloc;

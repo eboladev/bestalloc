@@ -1,7 +1,10 @@
-// Edge.h
-// Interface and implementation of Edge template class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   Edge.h
+ * \brief  Edge template class declaration and implementation
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #ifndef EDGE_H_INCLUDED
 #define EDGE_H_INCLUDED

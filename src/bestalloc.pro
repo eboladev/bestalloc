@@ -1,11 +1,4 @@
-QT       += core
-
-QT       -= gui
-
 TARGET   = bestalloc
-CONFIG   += console
-CONFIG   -= app_bundle
-
 TEMPLATE = app
 
 INCLUDEPATH += ./common ./model ./ui
@@ -17,10 +10,28 @@ HEADERS += model/Bigraph.h \
     model/BestAllocAlgo.h \
     model/BigraphIterator.h \
     model/BigraphAllocator.h \
-    common/ProjectSession.h
+    common/DataProvider.h \
+    ui/MainWindow.h \
+    ui/GraphWidget.h \
+    common/Constants.h \
+    ui/GraphEdge.h \
+    ui/GraphNode.h \
+    ui/AddNodeDialog.h \
+    ui/SkillNode.h \
+    ui/EmployeeNode.h
 
 SOURCES += main.cpp \
     model/Employee.cpp \
     model/Skill.cpp \
     model/BestAllocAlgo.cpp \
-    common/ProjectSession.cpp
+    common/DataProvider.cpp \
+    ui/MainWindow.cpp \
+    ui/GraphWidget.cpp \
+    ui/GraphEdge.cpp \
+    ui/GraphNode.cpp \
+    ui/AddNodeDialog.cpp \
+    ui/SkillNode.cpp \
+    ui/EmployeeNode.cpp
+
+RESOURCES += \
+    bestalloc.qrc

@@ -1,7 +1,10 @@
-// Skill.cpp
-// Implementation of Skill class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   Skill.cpp
+ * \brief  Skill class implementation
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #include "Skill.h"
 using namespace bestalloc;

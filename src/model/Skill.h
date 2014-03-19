@@ -1,7 +1,10 @@
-// Skill.h
-// Interface of Skill class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   Skill.h
+ * \brief  Skill class declaration
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #ifndef SKILL_H_INCLUDED
 #define SKILL_H_INCLUDED

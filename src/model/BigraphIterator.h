@@ -1,7 +1,10 @@
-// BigraphIterator.h
-// Interface and implementation of BigraphIterator class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   BigraphIterator.h
+ * \brief  BigraphIterator template class declaration and implementation
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #ifndef BIGRAPHITERATOR_H_INCLUDED
 #define BIGRAPHITERATOR_H_INCLUDED

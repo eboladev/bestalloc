@@ -1,7 +1,10 @@
-// Bigraph.h
-// Interface and implementation of Bigraph template class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   Bigraph.h
+ * \brief  Bigraph template class declaration and implementation
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #ifndef BIGRAPH_H_INCLUDED
 #define BIGRAPH_H_INCLUDED

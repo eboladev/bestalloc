@@ -1,7 +1,10 @@
-// BestAllocAlgo.h
-// Interface of BestAlloc class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   BestAllocAlgo.h
+ * \brief  BestAllocAlgorithm class declaration
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #ifndef BESTALLOCALGO_H_INCLUDED
 #define BESTALLOCALGO_H_INCLUDED

@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/res_html.png</file>
+        <file>images/res_mysql.png</file>
+        <file>images/res_office.png</file>
+        <file>images/res_perl.png</file>
+        <file>images/res_photoshop.png</file>
+        <file>images/res_php.png</file>
+        <file>images/res_python.png</file>
+        <file>images/res_qt.png</file>
+        <file>images/res_ruby.png</file>
+        <file>images/res_vs.png</file>
+        <file>images/staff_admin.png</file>
+        <file>images/staff_boss.png</file>
+        <file>images/staff_businessman.png</file>
+        <file>images/staff_chief.png</file>
+        <file>images/staff_devil.png</file>
+        <file>images/staff_engineer.png</file>
+        <file>images/staff_female_boss.png</file>
+        <file>images/staff_global_manager.png</file>
+        <file>images/staff_manager.png</file>
+        <file>images/staff_old_boss.png</file>
+        <file>images/staff_professor.png</file>
+        <file>images/staff_security.png</file>
+        <file>images/staff_superman.png</file>
+        <file>images/staff_supervisor.png</file>
+        <file>images/staff_teacher.png</file>
+    </qresource>
+</RCC>

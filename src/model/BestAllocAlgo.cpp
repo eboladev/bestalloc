@@ -1,7 +1,10 @@
-// BestAllocAlgo.cpp
-// Implementation of BestAlloc class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   BestAllocAlgo.cpp
+ * \brief  BestAllocAlgorithm class implementation
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #include "BestAllocAlgo.h"
 using namespace bestalloc;

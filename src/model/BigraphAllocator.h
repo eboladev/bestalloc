@@ -1,7 +1,10 @@
-// BigraphAllocator.h
-// Interface and implementation of BigraphAllocator class
-// Author: Edward Ryabikov
-// version 1.0
+/*! ---------------------------------------------------------------
+ * \file   BigraphAllocator.h
+ * \brief  BigraphAllocator template class declaration and implementation
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 
 #ifndef BIGRAPHALLOCATOR_H_INCLUDED
 #define BIGRAPHALLOCATOR_H_INCLUDED
