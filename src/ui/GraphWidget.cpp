@@ -11,11 +11,8 @@
 #include "GraphEdge.h"
 #include "AddNodeDialog.h"
 #include "DataProvider.h"
+#include "BestAllocAlgo.h"
 using namespace bestalloc;
-
-#include <iostream>
-using namespace std;
-
 
 #include "Constants.h"
 
@@ -29,7 +26,8 @@ GraphWidget::GraphWidget(QWidget* parent)
       m_scene(new QGraphicsScene(this)),
       m_employeeNodes(),
       m_skillNodes(),
-      m_edges()
+      m_edges(),
+      m_fakeEdges()
 {
     m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     m_scene->setSceneRect(-this->rect().width()/2, -this->rect().height()/2, this->rect().width(), this->rect().height());
@@ -39,41 +37,9 @@ GraphWidget::GraphWidget(QWidget* parent)
     setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
 
-    setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
+    setContextMenuPolicy(Qt::DefaultContextMenu);
 
     // TODO delete
-
-    BestAllocAlgorithm algo;
-    algo.addEmployee(Employee(1, "Peter"));
-    algo.addEmployee(Employee(2, "Mike"));
-    algo.addEmployee(Employee(3, "Robby"));
-    algo.addEmployee(Employee(4, "James"));
-    algo.addEmployee(Employee(5, "Alan"));
-
-    algo.addSkill(Skill(1, "C++"));
-    algo.addSkill(Skill(2, "Java"));
-    algo.addSkill(Skill(3, "Python"));
-    algo.addSkill(Skill(4, "Ruby"));
-    algo.addSkill(Skill(5, "Perl"));
-
-    algo.assignSkill(1, 1, 7);
-    algo.assignSkill(1, 2, 11);
-
-    algo.assignSkill(2, 2, 4);
-    algo.assignSkill(2, 5, 3);
-
-    algo.assignSkill(3, 1, 12);
-    algo.assignSkill(3, 3, 6);
-
-    algo.assignSkill(4, 2, 10);
-    algo.assignSkill(4, 4, 8);
-
-    algo.assignSkill(5, 4, 4);
-    algo.assignSkill(5, 5, 6);
-
-
-
     EmployeeNode* node1 = new EmployeeNode("Peter", this, QPixmap(":/images/staff_superman.png"));
     EmployeeNode* node2 = new EmployeeNode("Mike", this, QPixmap(":/images/staff_businessman.png"));
     EmployeeNode* node3 = new EmployeeNode("Robby", this, QPixmap(":/images/staff_professor.png"));
@@ -135,40 +101,42 @@ GraphWidget::GraphWidget(QWidget* parent)
     m_skillNodes.push_back(node10);
 }
 
-void GraphWidget::addNewNode()
+EmployeeNode* GraphWidget::getEmployeeNodeById(int id)
 {
-    AddNodeDialog* dialog = new AddNodeDialog();
-    dialog->show();
-}
-
-void GraphWidget::compute()
-{
-    // TODO delete
-
-    DataProvider controller;
-
     foreach (EmployeeNode* node, m_employeeNodes) {
-        controller.addEmployee(*node);
+        if (node->getId() == id) {
+            return node;
+        }
     }
 
-    foreach (SkillNode* node, m_skillNodes) {
-        controller.addSkill(*node);
-    }
-
-    foreach (GraphEdge* edge, m_edges) {
-        controller.assignSkill(edge->getSourceNode()->getId(), edge->getDestNode()->getId(), edge->getWeight());
-    }
-
-    vector< pair<Employee, Skill> > bestAllocMap = controller.getBestAllocation();
-
-    cout << "Best allocation:" << endl;
-    vector< pair<Employee, Skill> >::iterator i;
-    for (i = bestAllocMap.begin(); i != bestAllocMap.end(); i++) {
-        cout << i->first.getName() << " <---> " << i->second.getName() << endl;
-    }
+    return NULL;
 }
 
-void GraphWidget::showContextMenu(const QPoint &pos)
+SkillNode* GraphWidget::getSkillNodeById(int id)
+{
+    foreach (SkillNode* node, m_skillNodes) {
+        if (node->getId() == id) {
+            return node;
+        }
+    }
+
+    return NULL;
+}
+
+GraphEdge* GraphWidget::getEdge(int sourceNodeId, int destNodeId)
+{
+    foreach (GraphEdge* edge, m_edges) {
+        if (edge->getSourceNode()->getId() == sourceNodeId &&
+            edge->getDestNode()->getId() == destNodeId)
+        {
+            return edge;
+        }
+    }
+
+    return NULL;
+}
+
+void GraphWidget::contextMenuEvent(QContextMenuEvent *event)
 {
     QAction* addDataAction = new QAction(NULL);
     addDataAction->setText(ADD_NODE_LABEL);
@@ -176,14 +144,77 @@ void GraphWidget::showContextMenu(const QPoint &pos)
 
     QAction* computeAction = new QAction(NULL);
     computeAction->setText(COMPUTE_LABEL);
-    connect(computeAction, SIGNAL(triggered()), SLOT(compute()));
+    connect(computeAction, SIGNAL(triggered()), SIGNAL(compute()));
+
+    QAction* clearSceneAction = new QAction(NULL);
+    clearSceneAction->setText(CLEAR_SCENE_LABEL);
+    connect(clearSceneAction, SIGNAL(triggered()), SLOT(clear()));
 
     QMenu contextMenu;
     contextMenu.addAction(addDataAction);
     contextMenu.addAction(computeAction);
+    contextMenu.addAction(clearSceneAction);
 
-    QPoint globalPos = this->mapToGlobal(pos);
+    QPoint globalPos = this->mapToGlobal(event->pos());
     contextMenu.exec(globalPos);
+}
+
+const QList<EmployeeNode*>& GraphWidget::getEmployeeNodes() const
+{
+    return m_employeeNodes;
+}
+
+const QList<SkillNode*>& GraphWidget::getSkillNodes() const
+{
+    return m_skillNodes;
+}
+
+const QList<GraphEdge*>& GraphWidget::getEdges() const
+{
+    return m_edges;
+}
+
+void GraphWidget::setBestAllocation(const vector< pair<Employee, Skill> >& bestAllocMap)
+{
+    for (unsigned int i = 0; i < bestAllocMap.size(); i++) {
+        int employeeId = bestAllocMap[i].first.getId();
+        int skillId = bestAllocMap[i].second.getId();
+
+        EmployeeNode* sourceNode = getEmployeeNodeById(employeeId);
+        SkillNode*    destNode = getSkillNodeById(skillId);
+
+        if (sourceNode != NULL && destNode != NULL) {
+            GraphEdge* edge = getEdge(employeeId, skillId);
+            if (edge != NULL) {
+                edge->setMarked();
+                edge->update();
+            } else {
+                GraphEdge* fakeEdge = new GraphEdge(sourceNode, destNode, 0, true);
+                m_fakeEdges.push_back(fakeEdge);
+                m_scene->addItem(fakeEdge);
+            }
+        }
+    }
+}
+
+void GraphWidget::addNewNode()
+{
+    AddNodeDialog* dialog = new AddNodeDialog();
+    dialog->show();
+}
+
+void GraphWidget::clear()
+{
+    foreach (GraphEdge* fakeEdge, m_fakeEdges) {
+        m_scene->removeItem(fakeEdge);
+    }
+
+    m_fakeEdges.clear();
+
+    foreach (GraphEdge* edge, m_edges) {
+        edge->setMarked(false);
+        edge->update();
+    }
 }
 
 GraphWidget::~GraphWidget()

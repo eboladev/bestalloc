@@ -34,6 +34,8 @@ namespace bestalloc
         ~MainWindow();
 
     public slots:
+        void compute();
+
         void saveState();
         void loadState();
 

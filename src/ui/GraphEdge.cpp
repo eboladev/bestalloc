@@ -16,8 +16,8 @@ using namespace bestalloc;
 
 #include <math.h>
 
-GraphEdge::GraphEdge(EmployeeNode* sourceNode, SkillNode* destNode, int weight)
-    : m_sourceNode(sourceNode), m_destNode(destNode), m_weight(weight)
+GraphEdge::GraphEdge(EmployeeNode* sourceNode, SkillNode* destNode, int weight, bool isMarked)
+    : m_sourceNode(sourceNode), m_destNode(destNode), m_weight(weight), m_isMarked(isMarked)
 {
     setAcceptedMouseButtons(0);
     m_sourceNode->addEdge(this);
@@ -51,8 +51,20 @@ void GraphEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
         return;
     }
 
-    painter->setPen(QPen(Qt::black, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    if (m_isMarked) {
+        painter->setPen(QPen(Qt::red, 3.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    } else {
+        painter->setPen(QPen(Qt::black, 1.5, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+    }
+
     painter->drawLine(line);
+
+    painter->setPen(QPen(Qt::darkBlue, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter->setFont(QFont("Verdana", 12));
+
+    QPoint weightPosPoint = QPoint((m_destPoint.x() + m_sourcePoint.x()) / 2, (m_destPoint.y() + m_sourcePoint.y()) / 2);
+
+    painter->drawText(QRect(weightPosPoint.x() - 20, weightPosPoint.y(), 20, 20), Qt::AlignCenter | Qt::AlignTop, QString::number(m_weight));
 }
 
 EmployeeNode* GraphEdge::getSourceNode() const
@@ -68,6 +80,26 @@ SkillNode* GraphEdge::getDestNode() const
 int GraphEdge::getWeight() const
 {
     return m_weight;
+}
+
+void GraphEdge::setSourceNode(EmployeeNode* value)
+{
+    m_sourceNode = value;
+}
+
+void GraphEdge::setDestNode(SkillNode* value)
+{
+    m_destNode = value;
+}
+
+void GraphEdge::setWeight(int value)
+{
+    m_weight = value;
+}
+
+void GraphEdge::setMarked(bool isMarked)
+{
+    m_isMarked = isMarked;
 }
 
 void GraphEdge::adjust()

@@ -23,6 +23,7 @@ namespace bestalloc
         EmployeeNode* m_sourceNode;
         SkillNode*    m_destNode;
         int           m_weight;
+        bool          m_isMarked;
 
         QPointF m_sourcePoint;
         QPointF m_destPoint;
@@ -32,11 +33,16 @@ namespace bestalloc
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     public:
-        GraphEdge(EmployeeNode* sourceNode, SkillNode* destNode, int weight);
+        GraphEdge(EmployeeNode* sourceNode, SkillNode* destNode, int weight, bool isMarked = false);
 
         EmployeeNode* getSourceNode() const;
         SkillNode*    getDestNode() const;
         int           getWeight() const;
+
+        void setSourceNode(EmployeeNode* value);
+        void setDestNode(SkillNode* value);
+        void setWeight(int value);
+        void setMarked(bool isMarked = true);
 
         void adjust();
     };

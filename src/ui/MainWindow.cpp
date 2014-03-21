@@ -13,6 +13,9 @@ using namespace bestalloc;
 #include <QMenuBar>
 #include <QDesktopWidget>
 
+#include <iostream>
+using namespace std;
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent), m_graphWidget()
 {
@@ -32,6 +35,8 @@ MainWindow::MainWindow(QWidget* parent)
     setGeometry(screenWidth / 2 - windowWidth / 2,
                 screenHeight / 2 - windowHeight / 2,
                 windowWidth, windowHeight);
+
+    connect(&m_graphWidget, SIGNAL(compute()), SLOT(compute()));
 }
 
 void MainWindow::initMenuBar()
@@ -80,6 +85,24 @@ void MainWindow::initMenuBar()
     menuBar()->addMenu(menuFile);
     menuBar()->addMenu(menuEdit);
     menuBar()->addMenu(menuTools);
+}
+
+void MainWindow::compute()
+{
+    foreach (EmployeeNode* node, m_graphWidget.getEmployeeNodes()) {
+        m_dataProvider.addEmployee(*node);
+    }
+
+    foreach (SkillNode* node, m_graphWidget.getSkillNodes()) {
+        m_dataProvider.addSkill(*node);
+    }
+
+    foreach (GraphEdge* edge, m_graphWidget.getEdges()) {
+        m_dataProvider.assignSkill(edge->getSourceNode()->getId(), edge->getDestNode()->getId(), edge->getWeight());
+    }
+
+    vector< pair<Employee, Skill> > bestAllocMap = m_dataProvider.getBestAllocation();
+    m_graphWidget.setBestAllocation(bestAllocMap);
 }
 
 void MainWindow::saveState()

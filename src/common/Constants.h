@@ -23,6 +23,7 @@
 #define GRAPH_NODE_TYPE_LABEL "Type: "
 #define GRAPH_EMPLOYEE_TYPE_LABEL "Employee"
 #define GRAPH_SKILL_TYPE_LABEL "Skill"
+#define CLEAR_SCENE_LABEL "Clear scene"
 
 #define CONFIRM_LABEL "OK"
 #define CANCEL_LABEL "Cancel"
