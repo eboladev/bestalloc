@@ -33,9 +33,10 @@ AddNodeDialog::AddNodeDialog(QWidget *parent)
 
     QRadioButton* employeeRadioBtn = new QRadioButton(GRAPH_EMPLOYEE_TYPE_LABEL, this);
     employeeRadioBtn->setChecked(true);
-    connect(employeeRadioBtn, SIGNAL(toggled(bool)), SLOT(changeItemType(bool)));
+    connect(employeeRadioBtn, SIGNAL(toggled(bool)), SLOT(setEmployeeNodeType(bool)));
 
     QRadioButton* skillRadioBtn = new QRadioButton(GRAPH_SKILL_TYPE_LABEL, this);
+    connect(skillRadioBtn, SIGNAL(toggled(bool)), SLOT(setSkillNodeType(bool)));
 
     QPushButton* confirmButton = new QPushButton(CONFIRM_LABEL, this);
     confirmButton->setDefault(true);
@@ -75,14 +76,25 @@ void AddNodeDialog::changeItemName(const QString &name)
     emit(enableConfirmButton(true));
 }
 
-void AddNodeDialog::changeItemType(bool isSkillNode)
+void AddNodeDialog::setSkillNodeType(bool isTrue)
 {
-    m_isSkillNode = isSkillNode;
+    m_isSkillNode = isTrue;
+}
+
+void AddNodeDialog::setEmployeeNodeType(bool isTrue)
+{
+    m_isSkillNode = !isTrue;
 }
 
 void AddNodeDialog::confirmNewItem()
 {
-
+    if (m_isSkillNode) {
+        SkillNode* newItem = new SkillNode(m_itemName, (GraphWidget*)parent(), QPixmap(":/images/res_photoshop.png"));
+        emit(addSkillNode(newItem));
+    } else {
+        EmployeeNode* newItem = new EmployeeNode(m_itemName, (GraphWidget*)parent(), QPixmap(":/images/staff_superman.png"));
+        emit(addEmployeeNode(newItem));
+    }
 }
 
 AddNodeDialog::~AddNodeDialog()

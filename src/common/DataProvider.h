@@ -10,17 +10,12 @@
 #define DATA_PROVIDER_INCLUDED
 
 #include "BestAllocAlgo.h"
-//#include "MainWindow.h"
-
-#include <map>
-using namespace std;
 
 namespace bestalloc
 {
     class DataProvider
     {
     private:
-        //MainWindow*        m_view;
         BestAllocAlgorithm m_algo;
 
     public:

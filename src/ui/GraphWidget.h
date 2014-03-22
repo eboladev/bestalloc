@@ -31,6 +31,8 @@ namespace bestalloc
         QList<GraphEdge*>    m_edges;
         QList<GraphEdge*>    m_fakeEdges;
 
+        QPoint m_lastCtxtMenuPos;
+
     private:
         EmployeeNode* getEmployeeNodeById(int id);
         SkillNode*    getSkillNodeById(int id);
@@ -55,6 +57,8 @@ namespace bestalloc
 
     public slots:
         void addNewNode();
+        void addEmployeeNode(EmployeeNode* node);
+        void addSkillNode(SkillNode* node);
         void clear();
     };
 }

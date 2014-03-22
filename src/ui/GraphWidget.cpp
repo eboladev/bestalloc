@@ -27,7 +27,8 @@ GraphWidget::GraphWidget(QWidget* parent)
       m_employeeNodes(),
       m_skillNodes(),
       m_edges(),
-      m_fakeEdges()
+      m_fakeEdges(),
+      m_lastCtxtMenuPos()
 {
     m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     m_scene->setSceneRect(-this->rect().width()/2, -this->rect().height()/2, this->rect().width(), this->rect().height());
@@ -78,16 +79,16 @@ GraphWidget::GraphWidget(QWidget* parent)
     m_scene->addItem(node9);
     m_scene->addItem(node10);
 
-    node1->setPos(-300, -150);
-    node2->setPos(-150, -150);
-    node3->setPos(0,    -150);
-    node4->setPos(150,  -150);
-    node5->setPos(300,  -150);
-    node6->setPos(-300,  150);
-    node7->setPos(-150,   150);
-    node8->setPos(0,     150);
-    node9->setPos(150,   150);
-    node10->setPos(300,  150);
+    node1->setPos(-400, -200);
+    node2->setPos(-200, -200);
+    node3->setPos(0,    -200);
+    node4->setPos(200,  -200);
+    node5->setPos(400,  -200);
+    node6->setPos(-400,  200);
+    node7->setPos(-200,  200);
+    node8->setPos(0,     200);
+    node9->setPos(200,   200);
+    node10->setPos(400,  200);
 
     m_employeeNodes.push_back(node1);
     m_employeeNodes.push_back(node2);
@@ -138,6 +139,8 @@ GraphEdge* GraphWidget::getEdge(int sourceNodeId, int destNodeId)
 
 void GraphWidget::contextMenuEvent(QContextMenuEvent *event)
 {
+    m_lastCtxtMenuPos = QPoint(event->pos());
+
     QAction* addDataAction = new QAction(NULL);
     addDataAction->setText(ADD_NODE_LABEL);
     connect(addDataAction, SIGNAL(triggered()), SLOT(addNewNode()));
@@ -199,8 +202,24 @@ void GraphWidget::setBestAllocation(const vector< pair<Employee, Skill> >& bestA
 
 void GraphWidget::addNewNode()
 {
-    AddNodeDialog* dialog = new AddNodeDialog();
+    AddNodeDialog* dialog = new AddNodeDialog(this);
+    connect(dialog, SIGNAL(addEmployeeNode(EmployeeNode*)), SLOT(addEmployeeNode(EmployeeNode*)));
+    connect(dialog, SIGNAL(addSkillNode(SkillNode*)), SLOT(addSkillNode(SkillNode*)));
     dialog->show();
+}
+
+void GraphWidget::addEmployeeNode(EmployeeNode* node)
+{
+    m_employeeNodes.push_back(node);
+    m_scene->addItem(node);
+    node->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
+}
+
+void GraphWidget::addSkillNode(SkillNode* node)
+{
+    m_skillNodes.push_back(node);
+    m_scene->addItem(node);
+    node->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
 }
 
 void GraphWidget::clear()

@@ -12,6 +12,9 @@
 #include <QDialog>
 #include <QString>
 
+#include "EmployeeNode.h"
+#include "SkillNode.h"
+
 namespace bestalloc
 {
     class AddNodeDialog : public QDialog
@@ -29,12 +32,14 @@ namespace bestalloc
 
     public slots:
         void changeItemName(const QString& name);
-        void changeItemType(bool isSkillNode);
+        void setSkillNodeType(bool isTrue);
+        void setEmployeeNodeType(bool isTrue);
         void confirmNewItem();
 
     signals:
         void enableConfirmButton(bool);
-
+        void addEmployeeNode(EmployeeNode*);
+        void addSkillNode(SkillNode*);
     };
 }
 

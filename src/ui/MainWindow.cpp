@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     QDesktopWidget desktopWidget;
 
-    int windowWidth = 800;
-    int windowHeight = 600;
+    int windowWidth = 1024;
+    int windowHeight = 768;
 
     int screenWidth = desktopWidget.screen()->width();
     int screenHeight = desktopWidget.screen()->height();
