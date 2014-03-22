@@ -19,7 +19,7 @@ namespace bestalloc
         BestAllocAlgorithm m_algo;
 
     public:
-        DataProvider();
+        DataProvider(const BestAllocAlgorithm& algo);
 
         void addEmployee(const Employee&  employee);
         void addSkill(const Skill& skill);

@@ -9,8 +9,8 @@
 #include "DataProvider.h"
 using namespace bestalloc;
 
-DataProvider::DataProvider()
-    : m_algo()
+DataProvider::DataProvider(const BestAllocAlgorithm& algo)
+    : m_algo(algo)
 {
 }
 

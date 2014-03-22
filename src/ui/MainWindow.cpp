@@ -17,7 +17,7 @@ using namespace bestalloc;
 using namespace std;
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), m_graphWidget()
+    : QMainWindow(parent), m_dataProvider(BestAllocAlgorithm()), m_graphWidget()
 {
     initMenuBar();
 
