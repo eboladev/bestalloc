@@ -16,8 +16,8 @@ using namespace bestalloc;
 #include <QPainter>
 #include <QStyleOption>
 
-GraphNode::GraphNode(GraphWidget* graphWidget, const QPixmap& nodePicture)
-    : QGraphicsPixmapItem(), m_graph(graphWidget), m_nodePicture(QPixmap(nodePicture))
+GraphNode::GraphNode(const QPixmap& nodePicture)
+    : QGraphicsPixmapItem(), m_nodePicture(QPixmap(nodePicture))
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);

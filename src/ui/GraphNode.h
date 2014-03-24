@@ -19,7 +19,6 @@ namespace bestalloc
     class GraphNode : public QGraphicsPixmapItem
     {
     private:
-        GraphWidget*      m_graph;
         QPixmap           m_nodePicture;
         QPointF           m_newPos;
         QList<GraphEdge*> m_edgeList;
@@ -30,7 +29,7 @@ namespace bestalloc
         QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
     public:
-        GraphNode(GraphWidget *graphWidget, const QPixmap& nodePicture);
+        GraphNode(const QPixmap& nodePicture);
 
         void addEdge(GraphEdge *edge);
         QList<GraphEdge*> getEdges() const;

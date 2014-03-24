@@ -44,6 +44,10 @@ namespace bestalloc
     public:
         GraphWidget(QWidget* parent = NULL);
 
+        void setEmployeeNodes(const QList<EmployeeNode*>& nodes);
+        void setSkillNodes(const QList<SkillNode*>& nodes);
+        void setEdges(const QList<GraphEdge*>& edges);
+
         const QList<EmployeeNode*>& getEmployeeNodes() const;
         const QList<SkillNode*>&    getSkillNodes() const;
         const QList<GraphEdge*>&    getEdges() const;

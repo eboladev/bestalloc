@@ -89,10 +89,10 @@ void AddNodeDialog::setEmployeeNodeType(bool isTrue)
 void AddNodeDialog::confirmNewItem()
 {
     if (m_isSkillNode) {
-        SkillNode* newItem = new SkillNode(m_itemName, (GraphWidget*)parent(), QPixmap(":/images/res_photoshop.png"));
+        SkillNode* newItem = new SkillNode(m_itemName, QPixmap(":/images/res_photoshop.png"));
         emit(addSkillNode(newItem));
     } else {
-        EmployeeNode* newItem = new EmployeeNode(m_itemName, (GraphWidget*)parent(), QPixmap(":/images/staff_superman.png"));
+        EmployeeNode* newItem = new EmployeeNode(m_itemName, QPixmap(":/images/staff_superman.png"));
         emit(addEmployeeNode(newItem));
     }
 }

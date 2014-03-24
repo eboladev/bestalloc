@@ -12,8 +12,8 @@ using namespace bestalloc;
 
 static int s_globalSkillCounter = 0;
 
-SkillNode::SkillNode(const QString &name, GraphWidget *graphWidget, const QPixmap &nodePicture)
-    : Skill(s_globalSkillCounter++, name.toStdString()), GraphNode(graphWidget, nodePicture)
+SkillNode::SkillNode(const QString &name, const QPixmap &nodePicture)
+    : Skill(s_globalSkillCounter++, name.toStdString()), GraphNode(nodePicture)
 {
 }
 

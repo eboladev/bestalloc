@@ -19,7 +19,7 @@ namespace bestalloc
     class EmployeeNode : public Employee, public GraphNode
     {
     public:
-        EmployeeNode(const QString& name, GraphWidget *graphWidget, const QPixmap& nodePicture);
+        EmployeeNode(const QString& name, const QPixmap& nodePicture);
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 

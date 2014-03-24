@@ -41,17 +41,17 @@ GraphWidget::GraphWidget(QWidget* parent)
     setContextMenuPolicy(Qt::DefaultContextMenu);
 
     // TODO delete
-    EmployeeNode* node1 = new EmployeeNode("Peter", this, QPixmap(":/images/staff_superman.png"));
-    EmployeeNode* node2 = new EmployeeNode("Mike", this, QPixmap(":/images/staff_businessman.png"));
-    EmployeeNode* node3 = new EmployeeNode("Robby", this, QPixmap(":/images/staff_professor.png"));
-    EmployeeNode* node4 = new EmployeeNode("James", this, QPixmap(":/images/staff_old_boss.png"));
-    EmployeeNode* node5 = new EmployeeNode("Alan", this, QPixmap(":/images/staff_global_manager.png"));
+    EmployeeNode* node1 = new EmployeeNode("Peter", QPixmap(":/images/staff_superman.png"));
+    EmployeeNode* node2 = new EmployeeNode("Mike", QPixmap(":/images/staff_businessman.png"));
+    EmployeeNode* node3 = new EmployeeNode("Robby", QPixmap(":/images/staff_professor.png"));
+    EmployeeNode* node4 = new EmployeeNode("James", QPixmap(":/images/staff_old_boss.png"));
+    EmployeeNode* node5 = new EmployeeNode("Alan", QPixmap(":/images/staff_global_manager.png"));
 
-    SkillNode*    node6 = new SkillNode("Perl", this, QPixmap(":/images/res_perl.png"));
-    SkillNode*    node7 = new SkillNode("PHP", this, QPixmap(":/images/res_php.png"));
-    SkillNode*    node8 = new SkillNode("Ruby", this, QPixmap(":/images/res_ruby.png"));
-    SkillNode*    node9 = new SkillNode("Python", this, QPixmap(":/images/res_python.png"));
-    SkillNode*    node10 = new SkillNode("VS 2010", this, QPixmap(":/images/res_vs.png"));
+    SkillNode*    node6 = new SkillNode("Perl", QPixmap(":/images/res_perl.png"));
+    SkillNode*    node7 = new SkillNode("PHP", QPixmap(":/images/res_php.png"));
+    SkillNode*    node8 = new SkillNode("Ruby", QPixmap(":/images/res_ruby.png"));
+    SkillNode*    node9 = new SkillNode("Python", QPixmap(":/images/res_python.png"));
+    SkillNode*    node10 = new SkillNode("VS 2010", QPixmap(":/images/res_vs.png"));
 
     m_edges.push_back(new GraphEdge(node1, node6, 7));
     m_edges.push_back(new GraphEdge(node1, node7, 11));

@@ -19,7 +19,7 @@ namespace bestalloc
     class SkillNode : public Skill, public GraphNode
     {
     public:
-        SkillNode(const QString& name, GraphWidget *graphWidget, const QPixmap& nodePicture);
+        SkillNode(const QString& name, const QPixmap& nodePicture);
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
