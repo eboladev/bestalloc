@@ -13,6 +13,7 @@ using namespace bestalloc;
 
 #include <QPainter>
 #include <QDebug>
+#include "ConfigReader.h"
 
 #include <math.h>
 
@@ -133,4 +134,22 @@ void GraphEdge::adjust()
     } else {
         m_sourcePoint = m_destPoint = line.p1();
     }
+}
+
+void GraphEdge::save(QDataStream &str)
+{
+    str<<(qint32)m_weight;
+    str<<m_isMarked;
+
+    ConfigReader::saveQPointF(str, m_sourcePoint);
+    ConfigReader::saveQPointF(str, m_destPoint);
+}
+
+void GraphEdge::load(QDataStream &str)
+{
+    str>>m_weight;
+    str>>m_isMarked;
+
+    ConfigReader::loadQPointF(str, m_sourcePoint);
+    ConfigReader::loadQPointF(str, m_destPoint);
 }

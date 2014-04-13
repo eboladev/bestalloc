@@ -45,6 +45,9 @@ namespace bestalloc
         void setMarked(bool isMarked = true);
 
         void adjust();
+
+        void save(QDataStream &str);
+        void load(QDataStream &str);
     };
 }
 

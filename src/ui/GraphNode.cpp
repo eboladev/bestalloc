@@ -15,9 +15,10 @@ using namespace bestalloc;
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
+#include "ConfigReader.h"
 
 GraphNode::GraphNode(const QPixmap& nodePicture)
-    : QGraphicsPixmapItem(), m_nodePicture(QPixmap(nodePicture))
+    : QGraphicsPixmapItem(), m_nodePicture(QPixmap(nodePicture)),m_position(QPointF(0,0))
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
@@ -94,4 +95,35 @@ void GraphNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 GraphNode::~GraphNode()
 {
+}
+
+void GraphNode::save(QDataStream &str)
+{
+    m_position.setX(QGraphicsItem::x());
+    m_position.setY(QGraphicsItem::y());
+    ConfigReader::saveQPixmap(str,m_nodePicture);
+    ConfigReader::saveQPointF(str,m_newPos);
+    ConfigReader::saveQPointF(str,m_position);
+}
+
+void GraphNode::load(QDataStream &str)
+{
+    ConfigReader::loadQPixmap(str,m_nodePicture);
+    ConfigReader::loadQPointF(str,m_newPos);
+    ConfigReader::loadQPointF(str,m_position);
+}
+
+void GraphNode::setPos(qreal x, qreal y)
+{
+    QGraphicsItem::setPos(x,y);
+}
+
+void GraphNode::setPos(const QPointF &arg)
+{
+    QGraphicsItem::setPos(arg);
+}
+
+QPointF GraphNode::getPosition()
+{
+    return m_position;
 }

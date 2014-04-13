@@ -31,3 +31,15 @@ EmployeeNode::~EmployeeNode()
 {
 }
 
+void EmployeeNode::save(QDataStream &str)
+{
+    this->Employee::save(str);
+    this->GraphNode::save(str);
+}
+
+void EmployeeNode::load(QDataStream &str)
+{
+    this->Employee::load(str);
+    this->GraphNode::load(str);
+}
+

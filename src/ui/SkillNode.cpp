@@ -30,3 +30,15 @@ void SkillNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 SkillNode::~SkillNode()
 {
 }
+
+void SkillNode::save(QDataStream &str)
+{
+    this->Skill::save(str);
+    this->GraphNode::save(str);
+}
+
+void SkillNode::load(QDataStream &str)
+{
+    this->Skill::load(str);
+    this->GraphNode::load(str);
+}

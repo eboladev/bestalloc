@@ -15,7 +15,7 @@
 namespace bestalloc
 {
     class GraphWidget;
-
+    class Employee;
     class EmployeeNode : public Employee, public GraphNode
     {
     public:
@@ -24,6 +24,9 @@ namespace bestalloc
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
         ~EmployeeNode();
+
+        void save(QDataStream &str);
+        void load(QDataStream &str);
     };
 }
 

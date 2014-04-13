@@ -10,6 +10,7 @@
 #define SKILL_H_INCLUDED
 
 #include <string>
+#include <QDataStream>
 using namespace std;
 
 namespace bestalloc
@@ -30,6 +31,9 @@ namespace bestalloc
         void   setName(string& value);
 
         ~Skill();
+
+        void save(QDataStream &str);
+        void load(QDataStream &str);
     };
 }
 

@@ -22,6 +22,7 @@ namespace bestalloc
         QPixmap           m_nodePicture;
         QPointF           m_newPos;
         QList<GraphEdge*> m_edgeList;
+        QPointF           m_position;
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -41,6 +42,12 @@ namespace bestalloc
         virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
         virtual ~GraphNode();
+
+        void save(QDataStream &str);
+        void load(QDataStream &str);
+        void setPos(qreal x, qreal y);
+        void setPos(const QPointF &arg);
+        QPointF getPosition();
     };
 }
 

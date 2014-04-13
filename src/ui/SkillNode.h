@@ -24,6 +24,9 @@ namespace bestalloc
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
         ~SkillNode();
+
+        void save(QDataStream &str);
+        void load(QDataStream &str);
     };
 }
 

@@ -7,6 +7,7 @@
  * ---------------------------------------------------------------- */
 
 #include "Skill.h"
+#include "ConfigReader.h"
 using namespace bestalloc;
 
 Skill::Skill()
@@ -41,4 +42,16 @@ void Skill::setName(string& value)
 
 Skill::~Skill()
 {
+}
+
+void Skill::save(QDataStream &str)
+{
+    str<<(qint32)m_id;
+    str<<m_name.data();
+}
+
+void Skill::load(QDataStream &str)
+{
+    str>>m_id;
+    m_name = ConfigReader::readString(str);
 }

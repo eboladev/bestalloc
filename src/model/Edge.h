@@ -9,8 +9,11 @@
 #ifndef EDGE_H_INCLUDED
 #define EDGE_H_INCLUDED
 
+#include <QDataStream>
+
 namespace bestalloc
 {
+
     template <class U, class V>
     class Edge
     {
@@ -30,8 +33,9 @@ namespace bestalloc
         V    getVVertex() const;
         void setWeight(int value);
         int  getWeight() const;
-
         ~Edge();
+        void save(QDataStream &str);
+        void load(QDataStream &str);
     };
 
     template <class U, class V>
@@ -93,6 +97,23 @@ namespace bestalloc
     Edge<U, V>::~Edge()
     {
     }
+
+    template <class U, class V>
+    void Edge<U, V>::save(QDataStream &str)
+    {
+        str<<(qint32)m_weight;
+        m_uVertex.save(str);
+        m_vVertex.save(str);
+    }
+
+    template <class U, class V>
+    void Edge<U, V>::load(QDataStream &str)
+    {
+        str>>m_weight;
+        m_uVertex.load(str);
+        m_vVertex.load(str);
+    }
+
 }
 
 #endif // EDGE_H_INCLUDED

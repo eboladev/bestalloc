@@ -64,6 +64,9 @@ namespace bestalloc
         void addEmployeeNode(EmployeeNode* node);
         void addSkillNode(SkillNode* node);
         void clear();
+        void clearAll();
+        void save(QDataStream &str);
+        void load(QDataStream &str);
     };
 }
 

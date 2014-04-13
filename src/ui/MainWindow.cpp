@@ -12,6 +12,9 @@ using namespace bestalloc;
 
 #include <QMenuBar>
 #include <QDesktopWidget>
+#include <QFileDialog>
+
+#include "ConfigReader.h"
 
 #include <iostream>
 using namespace std;
@@ -107,12 +110,20 @@ void MainWindow::compute()
 
 void MainWindow::saveState()
 {
-    // TODO
+    QString fileName = QFileDialog::getSaveFileName(this,
+        tr("Save task to file"), "/home", tr("Best files (*.bst)"));
+    if(fileName!=""){
+        ConfigReader::save(fileName,m_dataProvider,m_graphWidget);
+    }
 }
 
 void MainWindow::loadState()
 {
-    // TODO
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Load task from file"), "/home", tr("Best files (*.bst)"));
+    if(fileName!=""){
+        ConfigReader::load(fileName,m_dataProvider,m_graphWidget);
+    }
 }
 
 void MainWindow::addTemplate()

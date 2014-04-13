@@ -9,7 +9,7 @@
 #ifndef EMPLOYEE_H_INCLUDED
 #define EMPLOYEE_H_INCLUDED
 
-#include "Skill.h"
+#include <QDataStream>
 
 #include <string>
 #include <vector>
@@ -33,6 +33,9 @@ namespace bestalloc
         void   setName(string& value);
 
         ~Employee();
+
+        void save(QDataStream &str);
+        void load(QDataStream &str);
     };
 }
 

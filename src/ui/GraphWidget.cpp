@@ -236,6 +236,89 @@ void GraphWidget::clear()
     }
 }
 
+void GraphWidget::clearAll()
+{
+    clear();
+    foreach (GraphEdge* cur, m_edges) {
+        m_scene->removeItem(cur);
+    }
+    m_edges.clear();
+    foreach (EmployeeNode* cur, m_employeeNodes) {
+        m_scene->removeItem(cur);
+    }
+    m_employeeNodes.clear();
+    foreach (SkillNode* cur, m_skillNodes) {
+        m_scene->removeItem(cur);
+    }
+    m_skillNodes.clear();
+}
+
+void GraphWidget::save(QDataStream &str)
+{
+    str<<(qint32)m_employeeNodes.size();
+    foreach (EmployeeNode *cur, m_employeeNodes) {
+        cur->save(str);
+    }
+    str<<(qint32)m_skillNodes.size();
+    foreach (SkillNode *cur, m_skillNodes) {
+        cur->save(str);
+    }
+    str<<(qint32)m_edges.size();
+    foreach (GraphEdge *cur, m_edges) {
+        str<<(qint32)cur->getSourceNode()->getId();
+        str<<(qint32)cur->getDestNode()->getId();
+        cur->save(str);
+    }
+}
+
+void GraphWidget::load(QDataStream &str)
+{
+    clearAll();
+    int size;
+    str>>size;
+    for (int i = 0; i < size; ++i) {
+        EmployeeNode* node = new EmployeeNode("", QPixmap(":/images/staff_superman.png"));
+        node->load(str);
+        m_employeeNodes.push_back(node);
+    }
+    str>>size;
+    for (int i = 0; i < size; ++i) {
+        SkillNode* node = new SkillNode("", QPixmap(":/images/staff_superman.png"));
+        node->load(str);
+        m_skillNodes.push_back(node);
+    }
+    str>>size;
+    for (int i = 0; i < size; ++i) {
+        int eId;
+        str>>eId;
+        int sId;
+        str>>sId;
+        EmployeeNode* eNode = getEmployeeNodeById(eId);
+        SkillNode* sNode = getSkillNodeById(sId);
+        if(!eNode||!sNode){
+            qDebug()<<"GraphWidget::load :: !eNode||!sNode\n";
+            throw;
+        }
+        GraphEdge* node = new GraphEdge(eNode,sNode,42);
+        node->load(str);
+        m_edges.push_back(node);
+    }
+
+    foreach (GraphEdge *cur, m_edges) {
+        m_scene->addItem(cur);
+    }
+
+    foreach (EmployeeNode *cur, m_employeeNodes) {
+        m_scene->addItem(cur);
+        cur->setPos(cur->getPosition());
+    }
+
+    foreach (SkillNode *cur, m_skillNodes) {
+        m_scene->addItem(cur);
+        cur->setPos(cur->getPosition());
+    }
+}
+
 GraphWidget::~GraphWidget()
 {
 }
