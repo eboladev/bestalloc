@@ -49,7 +49,8 @@ SOURCES += ../src/model/Skill.cpp \
 
 
 CONFIG += qtestlib
-QT += testlib
+QT += testlib \
+        widgets
 
 OTHER_FILES += \
     BestAllocAlgo.o
