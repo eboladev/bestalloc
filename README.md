@@ -1,20 +1,17 @@
 ==================================================
 Best allocation analyzer installation guide. version 1.0
 ==================================================
-
 Hardware requiements:
-
+==================================================
 - Supported processors: Intel Atom series, Intel core 2 duo or later, Intel i-series or later
 - RAM: 1GB or more
 - Graphics: Intel Integrated Graphics card or alternative external video card
 - About 30 MB free disk space.
-- OS Ubuntu Linux 12.04 or later or Windows 7 or later.(1)
+- OS Ubuntu Linux 12.04 or later or Windows 7 or later.
 - Software: Qt-sdk, git
-- (1)There is no guarantee that programm will run or not on earlier OS versions or on alternative Linux distributives.
 ==================================================
-
 For Linux users(Requied Ubuntu 12.04 or later):
-
+==================================================
 1. Install Qt.
 Application requires Qt libraries version 4.8 or 5.02(NOTE: version 5.2 is not supported).
 Qt can be installed from terminal typing command:
@@ -55,6 +52,5 @@ To run bestAlloc application type next command in terminal:
 A window of bestAlloc application will appear on your screen.
 
 ==================================================
-
 For Windows 7 users: To be done.
 ==================================================
