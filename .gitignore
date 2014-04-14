@@ -8,3 +8,4 @@ tst/moc_*
 src/qrc_*
 tst/Makefile
 tst/test
+bin/*
