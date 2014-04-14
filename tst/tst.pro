@@ -11,7 +11,8 @@ HEADERS += ../src/model/Skill.h \
     Test_BestAllocAlgo.h \
     ../src/model/BestAllocAlgo.h \
     Test_Edge.h \
-    ../src/model/Edge.h
+    ../src/model/Edge.h \
+    ../src/common/ConfigReader.h
 
 
 
@@ -22,7 +23,9 @@ SOURCES += ../src/model/Skill.cpp \
     Test_Employee.cpp \
     Test_BestAllocAlgo.cpp \
     ../src/model/BestAllocAlgo.cpp \
-    Test_Edge.cpp
+    Test_Edge.cpp \
+    ../src/common/ConfigReader.cpp \
+    ../src/ui/GraphWidget.cpp
 
 
 
