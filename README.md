@@ -9,6 +9,7 @@ Hardware requiements:
 - About 30 MB free disk space.
 - OS Ubuntu Linux 12.04 or later or Windows 7 or later.
 - Software: Qt-sdk, git
+
 ==================================================
 For Linux users(Requied Ubuntu 12.04 or later):
 ==================================================
