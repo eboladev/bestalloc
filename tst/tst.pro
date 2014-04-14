@@ -1,6 +1,8 @@
 TARGET = test
 TEMPLATE = app
 
+QT+=widgets
+
 INCLUDEPATH = . ../src/common ../src/model ../src/ui
 
 HEADERS += ../src/model/Skill.h \
