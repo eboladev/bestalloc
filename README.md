@@ -1,17 +1,17 @@
 ==================================================
 Best allocation analyzer installation guide. version 1.0
 ==================================================
-Hardware requiements:
+Hardware requirements:
 ==================================================
 - Supported processors: Intel Atom series, Intel core 2 duo or later, Intel i-series or later
 - RAM: 1GB or more
 - Graphics: Intel Integrated Graphics card or alternative external video card
 - About 30 MB free disk space.
 - OS Ubuntu Linux 12.04 or later or Windows 7 or later.
-- Software: Qt-sdk, git
+- Software required: Qt-sdk, git
 
 ==================================================
-For Linux users(Requied Ubuntu 12.04 or later):
+For Linux users(Required Ubuntu 12.04 or later):
 ==================================================
 1. Install Qt.
 Application requires Qt libraries version 4.8 or 5.02(NOTE: version 5.2 is not supported).
@@ -22,7 +22,7 @@ Check installation typing:
 in terminal. 
 
 2. Install git.
-Git is requied to download project source codes.
+Git is required to download project source codes.
 Install git typing next command in terminal:
 	sudo apt-get install git
 Check installation typing:
