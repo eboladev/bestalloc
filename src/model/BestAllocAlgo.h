@@ -19,6 +19,10 @@
 #include <utility>
 using namespace std;
 
+namespace test{
+    class Test_BestAllocAlgo;
+}
+
 namespace bestalloc
 {
     class BestAllocAlgorithm
@@ -55,6 +59,8 @@ namespace bestalloc
         void clearContainers();
 
         ~BestAllocAlgorithm();
+
+        friend class test::Test_BestAllocAlgo;
     };
 }
 

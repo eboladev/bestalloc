@@ -1,3 +1,10 @@
 *.user
 *.o
 *.obj
+src/Makefile
+src/bestalloc
+src/moc_*
+tst/moc_*
+src/qrc_*
+tst/Makefile
+tst/test
