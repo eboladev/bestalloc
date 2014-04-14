@@ -9,10 +9,10 @@ Hardware requiements:
 - RAM: 1GB or more
 - Graphics: Intel Integrated Graphics card or alternative external video card
 - About 30 MB free disk space.
-- OS Ubuntu Linux 12.04 or later or Windows 7 or later.*
+- OS Ubuntu Linux 12.04 or later or Windows 7 or later.(1)
 - Software: Qt-sdk, git
 
-*There is no guarantee that programm will run or not on earlier OS versions or on alternative Linux distributives.
+(1)There is no guarantee that programm will run or not on earlier OS versions or on alternative Linux distributives.
 ==================================================
 
 For Linux users(Requied Ubuntu 12.04 or later):
@@ -60,5 +60,5 @@ A window of bestAlloc application will appear on your screen.
 
 For Windows 7 users:
 
-To be done.
+ To be done.
 ==================================================
