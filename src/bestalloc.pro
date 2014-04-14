@@ -3,6 +3,8 @@ TEMPLATE = app
 
 INCLUDEPATH += ./common ./model ./ui
 
+QT+=widgets
+
 HEADERS += model/Bigraph.h \
     model/Edge.h \
     model/Employee.h \
@@ -18,7 +20,8 @@ HEADERS += model/Bigraph.h \
     ui/GraphNode.h \
     ui/AddNodeDialog.h \
     ui/SkillNode.h \
-    ui/EmployeeNode.h
+    ui/EmployeeNode.h \
+    common/ConfigReader.h
 
 SOURCES += main.cpp \
     model/Employee.cpp \
@@ -31,7 +34,8 @@ SOURCES += main.cpp \
     ui/GraphNode.cpp \
     ui/AddNodeDialog.cpp \
     ui/SkillNode.cpp \
-    ui/EmployeeNode.cpp
+    ui/EmployeeNode.cpp \
+    common/ConfigReader.cpp
 
 RESOURCES += \
     bestalloc.qrc

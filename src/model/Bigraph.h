@@ -58,8 +58,6 @@ namespace bestalloc
 
         ~Bigraph();
 
-//        void save(QDataStream &str);
-//        void load(QDataStream &str);
     };
 
     template <class U, class V, class A>
@@ -188,44 +186,6 @@ namespace bestalloc
         clear();
     }
 
-/*
-    template <class U, class V, class A>
-    void Bigraph<U, V, A>::save(QDataStream &str)
-    {
-        str<<(qint32)m_uSetSize;
-        str<<(qint32)m_vSetSize;
-        str<<(qint32)m_edgesCount;
-
-        UIterator i;
-        for (i = uSetStart(); i != uSetEnd(); i++) {
-            i->save(str);
-        }
-
-        VIterator j;
-        for (j = vSetStart(); j != vSetEnd(); j++) {
-            j->save(str);
-        }
-
-        EdgeIterator k;
-        for (k = edgesStart(); k != edgesEnd(); k++) {
-            k->save(str);
-        }
-    }
-
-    template <class U, class V, class A>
-    void Bigraph<U, V, A>::load(QDataStream &str)
-    {
-        str>>m_uSetSize;
-        str>>m_vSetSize;
-        str>>m_edgesCount;
-
-        for (int i = 0; i < m_uSetSize; ++i) {
-            addUVertex(employee);
-        }
-
-        //m_graph.addEdge(Edge<Employee, Skill>(*targetEmployee, *targetSkill, level));
-    }
-*/
 }
 
 #endif // BIGRAPH_H_INCLUDED
