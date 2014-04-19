@@ -12,6 +12,11 @@
 #include "AddNodeDialog.h"
 #include "DataProvider.h"
 #include "BestAllocAlgo.h"
+#include "ChangeObjectDialog.h"
+#include "DeleteObjectDialog.h"
+#include "AddEdgeDialog.h"
+#include "MainWindow.h"
+
 using namespace bestalloc;
 
 #include "Constants.h"
@@ -141,25 +146,13 @@ void GraphWidget::contextMenuEvent(QContextMenuEvent *event)
 {
     m_lastCtxtMenuPos = QPoint(event->pos());
 
-    QAction* addDataAction = new QAction(NULL);
-    addDataAction->setText(ADD_NODE_LABEL);
-    connect(addDataAction, SIGNAL(triggered()), SLOT(addNewNode()));
-
-    QAction* computeAction = new QAction(NULL);
-    computeAction->setText(COMPUTE_LABEL);
-    connect(computeAction, SIGNAL(triggered()), SIGNAL(compute()));
-
-    QAction* clearSceneAction = new QAction(NULL);
-    clearSceneAction->setText(CLEAR_SCENE_LABEL);
-    connect(clearSceneAction, SIGNAL(triggered()), SLOT(clear()));
-
-    QMenu contextMenu;
-    contextMenu.addAction(addDataAction);
-    contextMenu.addAction(computeAction);
-    contextMenu.addAction(clearSceneAction);
+    QMenu *contextMenu = new QMenu();
+    contextMenu->addMenu(MainWindow::createFileMenu(this,parentWidget()));
+    contextMenu->addMenu(MainWindow::createEditMenu(this,this));
+    contextMenu->addMenu(MainWindow::createToolsMenu(this,parentWidget()));
 
     QPoint globalPos = this->mapToGlobal(event->pos());
-    contextMenu.exec(globalPos);
+    contextMenu->exec(globalPos);
 }
 
 const QList<EmployeeNode*>& GraphWidget::getEmployeeNodes() const
@@ -205,6 +198,36 @@ void GraphWidget::addNewNode()
     AddNodeDialog* dialog = new AddNodeDialog(this);
     connect(dialog, SIGNAL(addEmployeeNode(EmployeeNode*)), SLOT(addEmployeeNode(EmployeeNode*)));
     connect(dialog, SIGNAL(addSkillNode(SkillNode*)), SLOT(addSkillNode(SkillNode*)));
+    dialog->show();
+}
+
+void GraphWidget::changeObject()
+{
+    ChangeObjectDialog* dialog = new ChangeObjectDialog(this);
+    foreach (EmployeeNode *cur, m_employeeNodes) {
+        dialog->addElement(cur);
+    }
+    foreach (SkillNode *cur, m_skillNodes) {
+        dialog->addElement(cur);
+    }
+    foreach (GraphEdge *cur, m_edges) {
+        dialog->addElement(cur);
+    }
+    dialog->show();
+}
+
+void GraphWidget::deleteObject()
+{
+    DeleteObjectDialog* dialog = new DeleteObjectDialog(this);
+    foreach (EmployeeNode *cur, m_employeeNodes) {
+        dialog->addElement(cur);
+    }
+    foreach (SkillNode *cur, m_skillNodes) {
+        dialog->addElement(cur);
+    }
+    foreach (GraphEdge *cur, m_edges) {
+        dialog->addElement(cur);
+    }
     dialog->show();
 }
 
@@ -319,6 +342,67 @@ void GraphWidget::load(QDataStream &str)
     }
 }
 
+void GraphWidget::addEdge()
+{
+    AddEdgeDialog* dialog = new AddEdgeDialog(this);
+    foreach (EmployeeNode *cur, m_employeeNodes) {
+        dialog->addElement(cur);
+    }
+    foreach (SkillNode *cur, m_skillNodes) {
+        dialog->addElement(cur);
+    }
+    dialog->show();
+}
+
 GraphWidget::~GraphWidget()
 {
+}
+
+bool GraphWidget::deleteObject(TaskObject *obj)
+{
+    clear();
+
+    for (int i = 0; i < m_edges.size(); ++i) {
+        GraphEdge *cur = m_edges.at(i);
+        if(cur==obj){
+            cur->getSourceNode()->removeEdge(cur);
+            cur->getDestNode()->removeEdge(cur);
+            m_edges.removeAt(i);
+            delete(cur);
+            return true;
+        }
+    }
+    for (int i = 0; i < m_employeeNodes.size(); ++i) {
+        EmployeeNode *cur = m_employeeNodes.at(i);
+        if(cur==obj){
+            if(cur->hasEdges()){
+                return false;
+            }else{
+                m_employeeNodes.removeAt(i);
+                delete(cur);
+                return true;
+            }
+        }
+    }
+
+    for (int i = 0; i < m_skillNodes.size(); ++i) {
+        SkillNode *cur = m_skillNodes.at(i);
+        if(cur==obj){
+            if(cur->hasEdges()){
+                return false;
+            }else{
+                m_skillNodes.removeAt(i);
+                delete(cur);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void GraphWidget::addEdge(GraphEdge *arg)
+{
+    clear();
+    m_edges.push_back(arg);
+    m_scene->addItem(arg);
 }

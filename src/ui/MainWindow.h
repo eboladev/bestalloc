@@ -31,6 +31,9 @@ namespace bestalloc
     public:
         MainWindow(QWidget* parent = NULL);
 
+        static QMenu* createFileMenu(QWidget *parent, QWidget *target);
+        static QMenu* createEditMenu(QWidget *parent, QWidget *target);
+        static QMenu* createToolsMenu(QWidget *parent, QWidget *target);
         ~MainWindow();
 
     public slots:
@@ -38,10 +41,6 @@ namespace bestalloc
 
         void saveState();
         void loadState();
-
-        void addTemplate();
-        void changeObject();
-        void deleteObject();
 
         void generateReport();
     };

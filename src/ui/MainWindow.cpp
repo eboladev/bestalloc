@@ -42,48 +42,67 @@ MainWindow::MainWindow(QWidget* parent)
     connect(&m_graphWidget, SIGNAL(compute()), SLOT(compute()));
 }
 
-void MainWindow::initMenuBar()
+QMenu *MainWindow::createFileMenu(QWidget *parent, QWidget *target)
 {
     QAction* saveAction = new QAction(NULL);
     saveAction->setText(SAVE_ACTION_MENU_LABEL);
-    connect(saveAction, SIGNAL(triggered()), SLOT(saveState()));
+    parent->connect(saveAction, SIGNAL(triggered()),target, SLOT(saveState()));
 
     QAction* loadAction = new QAction(NULL);
     loadAction->setText(LOAD_ACTION_MENU_LABEL);
-    connect(loadAction, SIGNAL(triggered()), SLOT(loadState()));
+    parent->connect(loadAction, SIGNAL(triggered()),target, SLOT(loadState()));
 
     QMenu* menuFile = new QMenu(FILE_MENU_LABEL);
     menuFile->addAction(saveAction);
     menuFile->addAction(loadAction);
+    return menuFile;
+}
 
+QMenu *MainWindow::createEditMenu(QWidget *parent, QWidget *target)
+{
     QAction* addDataAction = new QAction(NULL);
     addDataAction->setText(ADD_DATA_MENU_LABEL);
-    connect(addDataAction, SIGNAL(triggered()), &m_graphWidget, SLOT(addNewNode()));
+    parent->connect(addDataAction, SIGNAL(triggered()), target, SLOT(addNewNode()));
 
-    QAction* addTemplateAction = new QAction(NULL);
-    addTemplateAction->setText(ADD_TEMPLATE_MENU_LABEL);
-    connect(addDataAction, SIGNAL(triggered()), SLOT(addTemplate()));
+    QAction* addEdgeAction = new QAction(NULL);
+    addEdgeAction->setText(ADD_EDGE_MENU_LABEL);
+    parent->connect(addEdgeAction, SIGNAL(triggered()), target, SLOT(addEdge()));
 
     QAction* changeObjectAction = new QAction(NULL);
     changeObjectAction->setText(CHANGE_OBJECT_MENU_LABEL);
-    connect(changeObjectAction, SIGNAL(triggered()), SLOT(changeObject()));
+    parent->connect(changeObjectAction, SIGNAL(triggered()), target, SLOT(changeObject()));
 
     QAction* deleteObjectAction = new QAction(NULL);
     deleteObjectAction->setText(DELETE_OBJECT_MENU_LABEL);
-    connect(deleteObjectAction, SIGNAL(triggered()), SLOT(deleteObject()));
+    parent->connect(deleteObjectAction, SIGNAL(triggered()), target, SLOT(deleteObject()));
 
     QMenu* menuEdit = new QMenu(EDIT_MENU_LABEL);
     menuEdit->addAction(addDataAction);
-    menuEdit->addAction(addTemplateAction);
+    menuEdit->addAction(addEdgeAction);
     menuEdit->addAction(changeObjectAction);
     menuEdit->addAction(deleteObjectAction);
+    return menuEdit;
+}
 
+QMenu *MainWindow::createToolsMenu(QWidget *parent, QWidget *target)
+{
     QAction* generateReportAction = new QAction(NULL);
     generateReportAction->setText(GENERATE_REPORT_ACTION_MENU_LABEL);
-    connect(generateReportAction, SIGNAL(triggered()), SLOT(generateReport()));
+    parent->connect(generateReportAction, SIGNAL(triggered()), target, SLOT(generateReport()));
 
     QMenu* menuTools = new QMenu(TOOLS_MENU_LABEL);
     menuTools->addAction(generateReportAction);
+
+    return menuTools;
+}
+
+void MainWindow::initMenuBar()
+{
+    QMenu* menuFile = createFileMenu(this,this);
+
+    QMenu* menuEdit = createEditMenu(this,&m_graphWidget);
+
+    QMenu* menuTools = createToolsMenu(this,this);
 
     menuBar()->addMenu(menuFile);
     menuBar()->addMenu(menuEdit);
@@ -113,7 +132,7 @@ void MainWindow::saveState()
     QString fileName = QFileDialog::getSaveFileName(this,
         tr("Save task to file"), "/home", tr("Best files (*.bst)"));
     if(fileName!=""){
-        ConfigReader::save(fileName,m_dataProvider,m_graphWidget);
+        ConfigReader::save(fileName+".bst",m_dataProvider,m_graphWidget);
     }
 }
 
@@ -124,21 +143,6 @@ void MainWindow::loadState()
     if(fileName!=""){
         ConfigReader::load(fileName,m_dataProvider,m_graphWidget);
     }
-}
-
-void MainWindow::addTemplate()
-{
-    // TODO
-}
-
-void MainWindow::changeObject()
-{
-    // TODO
-}
-
-void MainWindow::deleteObject()
-{
-    // TODO
 }
 
 void MainWindow::generateReport()

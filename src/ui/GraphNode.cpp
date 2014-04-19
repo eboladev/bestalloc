@@ -127,3 +127,23 @@ QPointF GraphNode::getPosition()
 {
     return m_position;
 }
+
+QPixmap GraphNode::getPixmap()
+{
+    return m_nodePicture;
+}
+
+void GraphNode::setImage(QGraphicsItem *image)
+{
+    m_nodePicture = ((QGraphicsPixmapItem*)image)->pixmap();
+}
+
+bool GraphNode::hasEdges()
+{
+    return m_edgeList.size();
+}
+
+void GraphNode::removeEdge(GraphEdge *edge)
+{
+    m_edgeList.removeAll(edge);
+}

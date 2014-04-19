@@ -8,12 +8,13 @@
 
 #include "EmployeeNode.h"
 #include "GraphWidget.h"
+#include "ConfigReader.h"
 using namespace bestalloc;
 
 static int s_globalEmployeeCounter = 0;
 
 EmployeeNode::EmployeeNode(const QString &name, const QPixmap &nodePicture)
-    : Employee(s_globalEmployeeCounter++, name.toStdString()), GraphNode(nodePicture)
+    : Employee(s_globalEmployeeCounter++, name.toStdString()), GraphNode(nodePicture), TaskObject()
 {
 }
 
@@ -43,3 +44,31 @@ void EmployeeNode::load(QDataStream &str)
     this->GraphNode::load(str);
 }
 
+QString EmployeeNode::getTaskName()
+{
+    return getName().data();
+}
+
+void EmployeeNode::printTo(QLineEdit *editName, QLineEdit *editPower)
+{
+    editName->setEnabled(true);
+    editPower->setEnabled(false);
+    editName->setText(getName().data());
+}
+
+QGraphicsItem *EmployeeNode::getGraphItem()
+{
+    return new QGraphicsPixmapItem(getPixmap());
+    return NULL;
+}
+
+void EmployeeNode::setFrom(QLineEdit *editName, QLineEdit *editPower)
+{
+    string newName = ConfigReader::readString(editName->text());
+    setName(newName);
+}
+
+void EmployeeNode::setImage(QGraphicsItem *item)
+{
+    GraphNode::setImage(item);
+}

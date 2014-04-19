@@ -56,17 +56,23 @@ namespace bestalloc
 
         ~GraphWidget();
 
+        bool deleteObject(TaskObject *obj);
+        void addEdge(GraphEdge *arg);
+
     signals:
         void compute();
 
     public slots:
         void addNewNode();
+        void changeObject();
+        void deleteObject();
         void addEmployeeNode(EmployeeNode* node);
         void addSkillNode(SkillNode* node);
         void clear();
         void clearAll();
         void save(QDataStream &str);
         void load(QDataStream &str);
+        void addEdge();
     };
 }
 

@@ -10,14 +10,14 @@
 #define GRAPHEDGE_H_INCLUDED
 
 #include <QGraphicsItem>
-
+#include "TaskObject.h"
 
 namespace bestalloc
 {
     class EmployeeNode;
     class SkillNode;
 
-    class GraphEdge : public QGraphicsItem
+    class GraphEdge : public QGraphicsItem, public TaskObject
     {
     private:
         EmployeeNode* m_sourceNode;
@@ -48,6 +48,10 @@ namespace bestalloc
 
         void save(QDataStream &str);
         void load(QDataStream &str);
+
+        virtual QString getTaskName();
+        virtual void printTo(QLineEdit *editName, QLineEdit *editPower);
+        virtual void setFrom(QLineEdit*editName,QLineEdit*editPower);
     };
 }
 

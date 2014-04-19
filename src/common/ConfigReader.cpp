@@ -52,6 +52,20 @@ string ConfigReader::readString(QDataStream &str)
     return result;
 }
 
+string ConfigReader::readString(QString str)
+{
+    string result;
+    char * tmp = new char[MAX_STRING_SIZE];
+    tmp = str.toLocal8Bit().data();
+    if(tmp){
+        result = tmp;
+    }else{
+        qDebug()<<"readString error\n";
+        throw;
+    }
+    return result;
+}
+
 void ConfigReader::saveQPointF(QDataStream &str, QPointF &arg)
 {
     str<<arg;

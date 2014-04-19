@@ -48,6 +48,10 @@ namespace bestalloc
         void setPos(qreal x, qreal y);
         void setPos(const QPointF &arg);
         QPointF getPosition();
+        QPixmap getPixmap();
+        void setImage(QGraphicsItem *image);
+        bool hasEdges();
+        void removeEdge(GraphEdge *edge);
     };
 }
 

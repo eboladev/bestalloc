@@ -11,12 +11,13 @@
 
 #include "Skill.h"
 #include "GraphNode.h"
+#include "TaskObject.h"
 
 namespace bestalloc
 {
     class GraphWidget;
 
-    class SkillNode : public Skill, public GraphNode
+    class SkillNode : public Skill, public GraphNode, public TaskObject
     {
     public:
         SkillNode(const QString& name, const QPixmap& nodePicture);
@@ -27,7 +28,15 @@ namespace bestalloc
 
         void save(QDataStream &str);
         void load(QDataStream &str);
+
+        virtual QString getTaskName();
+        virtual void printTo(QLineEdit *editName, QLineEdit *editPower);
+        virtual QGraphicsItem *getGraphItem();
+        virtual void setFrom(QLineEdit*editName, QLineEdit*editPower);
+        virtual void setImage(QGraphicsItem *item);
     };
 }
+
+Q_DECLARE_METATYPE(bestalloc::SkillNode*)
 
 #endif // SKILLNODE_H_INCLUDED

@@ -18,6 +18,8 @@ using namespace bestalloc;
 #include <QRadioButton>
 #include <QGroupBox>
 #include <QLayout>
+#include <QComboBox>
+#include <QDebug>
 
 AddNodeDialog::AddNodeDialog(QWidget *parent)
     : QDialog(parent),
@@ -25,8 +27,16 @@ AddNodeDialog::AddNodeDialog(QWidget *parent)
       m_itemImagePath(":images/staff_superman.png"),
       m_isSkillNode(false)
 {
+    m_patternsNames.append("PHP");
+    m_patternsImages.append(":images/res_php.png");
+    m_patternsNames.append("Perl");
+    m_patternsImages.append(":images/res_perl.png");
+    m_patternsNames.append("Qt");
+    m_patternsImages.append(":images/res_qt.png");
+
     QLineEdit* lineEdit = new QLineEdit(this);
     connect(lineEdit, SIGNAL(textChanged(QString)), this, SLOT(changeItemName(QString)));
+    connect(this, SIGNAL(enableLineEdit(bool)), lineEdit, SLOT(setEnabled(bool)));
 
     QLabel* label = new QLabel(GRAPH_NODE_NAME_LABEL, this);
     label->setBuddy(lineEdit);
@@ -37,6 +47,17 @@ AddNodeDialog::AddNodeDialog(QWidget *parent)
 
     QRadioButton* skillRadioBtn = new QRadioButton(GRAPH_SKILL_TYPE_LABEL, this);
     connect(skillRadioBtn, SIGNAL(toggled(bool)), SLOT(setSkillNodeType(bool)));
+
+    m_patternRadioBtn = new QRadioButton(GRAPH_PATTERN_TYPE_LABEL, this);
+    connect(m_patternRadioBtn, SIGNAL(toggled(bool)), SLOT(setPatternNodeType(bool)));
+
+    QComboBox *patternsList = new QComboBox(this);
+    connect(patternsList, SIGNAL(currentIndexChanged(int)), SLOT(selectPattern(int)));
+    connect(this, SIGNAL(enablePatternsList(bool)), patternsList, SLOT(setEnabled(bool)));
+    patternsList->setEnabled(false);
+    foreach (QString cur, m_patternsNames) {
+        patternsList->addItem(cur);
+    }
 
     QPushButton* confirmButton = new QPushButton(CONFIRM_LABEL, this);
     confirmButton->setDefault(true);
@@ -55,6 +76,8 @@ AddNodeDialog::AddNodeDialog(QWidget *parent)
     leftLayout->addLayout(topLeftLayout);
     leftLayout->addWidget(employeeRadioBtn);
     leftLayout->addWidget(skillRadioBtn);
+    leftLayout->addWidget(m_patternRadioBtn);
+    leftLayout->addWidget(patternsList);
 
     QVBoxLayout *rightLayout = new QVBoxLayout;
     rightLayout->addWidget(confirmButton);
@@ -73,22 +96,39 @@ AddNodeDialog::AddNodeDialog(QWidget *parent)
 void AddNodeDialog::changeItemName(const QString &name)
 {
     m_itemName = name;
-    emit(enableConfirmButton(true));
+    emit(enableConfirmButton(m_itemName.size()>0));
 }
 
 void AddNodeDialog::setSkillNodeType(bool isTrue)
 {
     m_isSkillNode = isTrue;
+    emit(enableConfirmButton(m_itemName.size()>0));
 }
 
 void AddNodeDialog::setEmployeeNodeType(bool isTrue)
 {
     m_isSkillNode = !isTrue;
+    emit(enableConfirmButton(m_itemName.size()>0));
+}
+
+void AddNodeDialog::setPatternNodeType(bool isTrue)
+{
+    emit(enablePatternsList(isTrue));
+    emit(enableConfirmButton(isTrue));
+    emit(enableLineEdit(!isTrue));
+}
+
+void AddNodeDialog::selectPattern(int index)
+{
+    m_patternIndex = index;
 }
 
 void AddNodeDialog::confirmNewItem()
 {
-    if (m_isSkillNode) {
+    if(m_patternRadioBtn->isChecked()){
+        SkillNode* newItem = new SkillNode(m_patternsNames.at(m_patternIndex), QPixmap(m_patternsImages.at(m_patternIndex)));
+        emit(addSkillNode(newItem));
+    }else if (m_isSkillNode) {
         SkillNode* newItem = new SkillNode(m_itemName, QPixmap(":/images/res_photoshop.png"));
         emit(addSkillNode(newItem));
     } else {

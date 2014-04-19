@@ -8,12 +8,13 @@
 
 #include "SkillNode.h"
 #include "GraphWidget.h"
+#include "ConfigReader.h"
 using namespace bestalloc;
 
 static int s_globalSkillCounter = 0;
 
 SkillNode::SkillNode(const QString &name, const QPixmap &nodePicture)
-    : Skill(s_globalSkillCounter++, name.toStdString()), GraphNode(nodePicture)
+    : Skill(s_globalSkillCounter++, name.toStdString()), GraphNode(nodePicture), TaskObject()
 {
 }
 
@@ -41,4 +42,32 @@ void SkillNode::load(QDataStream &str)
 {
     this->Skill::load(str);
     this->GraphNode::load(str);
+}
+
+QString SkillNode::getTaskName()
+{
+    return getName().data();
+}
+
+void SkillNode::printTo(QLineEdit *editName, QLineEdit *editPower)
+{
+    editName->setEnabled(true);
+    editPower->setEnabled(false);
+    editName->setText(getName().data());
+}
+
+QGraphicsItem *SkillNode::getGraphItem()
+{
+    return new QGraphicsPixmapItem(getPixmap());
+}
+
+void SkillNode::setFrom(QLineEdit *editName, QLineEdit *editPower)
+{
+    string newName = ConfigReader::readString(editName->text());
+    setName(newName);
+}
+
+void SkillNode::setImage(QGraphicsItem *item)
+{
+    GraphNode::setImage(item);
 }
