@@ -21,7 +21,11 @@ HEADERS += model/Bigraph.h \
     ui/AddNodeDialog.h \
     ui/SkillNode.h \
     ui/EmployeeNode.h \
-    common/ConfigReader.h
+    common/ConfigReader.h \
+    ui/ChangeObjectDialog.h \
+    ui/TaskObject.h \
+    ui/DeleteObjectDialog.h \
+    ui/AddEdgeDialog.h
 
 SOURCES += main.cpp \
     model/Employee.cpp \
@@ -35,7 +39,11 @@ SOURCES += main.cpp \
     ui/AddNodeDialog.cpp \
     ui/SkillNode.cpp \
     ui/EmployeeNode.cpp \
-    common/ConfigReader.cpp
+    common/ConfigReader.cpp \
+    ui/ChangeObjectDialog.cpp \
+    ui/TaskObject.cpp \
+    ui/DeleteObjectDialog.cpp \
+    ui/AddEdgeDialog.cpp
 
 RESOURCES += \
     bestalloc.qrc
