@@ -11,9 +11,17 @@
 
 #include <QMainWindow>
 #include <QSharedPointer>
+#include <QFileDialog>
+
 
 #include "DataProvider.h"
 #include "GraphWidget.h"
+
+#include "ReportGenerator.h"
+#include "XMLDataConverter.h"
+#include "CSVDataConverter.h"
+#include "TextDataConverter.h"
+
 
 namespace bestalloc
 {

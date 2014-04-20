@@ -39,4 +39,10 @@
 #define DELETE_OBJECT_LABEL "Delete object"
 #define SELECT_PICTURE_LABEL "Select picture"
 
+#define TEXT_FILE_FILTER "Text file (*.txt)"
+#define CSV_FILE_FILTER "Table csv (*.csv)"
+#define XML_FILE_FILTER "XML file (*.xml)"
+
+#define CSV_SEPARATOR ";"
+
 #endif // CONSTANTS_H_INCLUDED

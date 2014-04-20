@@ -1,3 +1,10 @@
+/*! ---------------------------------------------------------------
+ * \file   Test_Employee.cpp
+ * \brief  Test suite for Employee class
+ * \author Konstantin Stepanov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 #include "Test_Employee.h"
 
 #include "Employee.h"

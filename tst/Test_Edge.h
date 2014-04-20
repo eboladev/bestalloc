@@ -1,3 +1,10 @@
+/*! ---------------------------------------------------------------
+ * \file   Test_Edge.h
+ * \brief  Test suite for for Edge class
+ * \author Konstantin Stepanov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 #ifndef TEST_EDGE_H
 #define TEST_EDGE_H
 
