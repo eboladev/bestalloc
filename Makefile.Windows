@@ -1,0 +1,25 @@
+BINDIR := bin
+BIN_SRC := bestalloc
+BIN_TST := tests
+CODEDIR_SRC := src
+CODEDIR_TST := tst
+
+
+.PHONY: main
+
+main:	$(BINDIR) bestalloc test run_tests
+
+$(BINDIR):
+	mkdir $(BINDIR) && cd $(BINDIR) && mkdir $(BIN_SRC) && mkdir $(BIN_TST) && cd ..
+
+bestalloc: 
+	cd $(BINDIR)\$(BIN_SRC) && qmake ..\..\$(CODEDIR_SRC) && mingw32-make -f Makefile
+test:
+	cd $(BINDIR)\$(BIN_TST) && qmake ..\..\$(CODEDIR_TST) && mingw32-make -f Makefile
+
+run_tests:
+	echo "Running unit tests:" && $(BINDIR)\$(BIN_TST)\Release\test.exe
+
+clean:
+	rmdir /S /Q bin
+
