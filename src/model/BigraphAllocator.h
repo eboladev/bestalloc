@@ -12,6 +12,7 @@
 #include "Edge.h"
 
 #include <QDebug>
+#include <time.h>
 #include "stdlib.h"
 
 #define POOL_SIZE_LIMIT 100
