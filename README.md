@@ -98,5 +98,5 @@ After project will be built you will receive several test tables in cmd, like "s
 
 5. Run bestAlloc application.
 To run bestAlloc application type next command in cmd:
-	`bestAlloc\bestalloc\bin\bestalloc\release\bestalloc`
+	`bestAlloc\bestalloc\bin\bestalloc\release\bestalloc.exe`
 A window of bestAlloc application will appear on your screen. 
