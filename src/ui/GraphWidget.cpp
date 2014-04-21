@@ -402,29 +402,28 @@ bool GraphWidget::deleteObject(TaskObject *obj)
             return true;
         }
     }
+
     for (int i = 0; i < m_employeeNodes.size(); ++i) {
         EmployeeNode *cur = m_employeeNodes.at(i);
         if(cur==obj){
-            if(cur->hasEdges()){
-                return false;
-            }else{
-                m_employeeNodes.removeAt(i);
-                delete(cur);
-                return true;
+            foreach (GraphEdge* edge, cur->getEdges()) {
+                deleteObject(edge);
             }
+            m_employeeNodes.removeAt(i);
+            delete(cur);
+            return true;
         }
     }
 
     for (int i = 0; i < m_skillNodes.size(); ++i) {
         SkillNode *cur = m_skillNodes.at(i);
         if(cur==obj){
-            if(cur->hasEdges()){
-                return false;
-            }else{
-                m_skillNodes.removeAt(i);
-                delete(cur);
-                return true;
+            foreach (GraphEdge* edge, cur->getEdges()) {
+                deleteObject(edge);
             }
+            m_skillNodes.removeAt(i);
+            delete(cur);
+            return true;
         }
     }
     return false;
