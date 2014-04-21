@@ -97,7 +97,7 @@ AddNodeDialog::AddNodeDialog(QWidget *parent)
     connect(m_weightEdit, SIGNAL(textChanged(QString)), this, SLOT(changeWeight(QString)));
     connect(this, SIGNAL(enableWeightEdit(bool)), m_weightEdit, SLOT(setEnabled(bool)));
     QIntValidator *validator = new QIntValidator(this);
-    validator->setBottom(1);
+    validator->setBottom(0);
     m_weightEdit->setValidator(validator);
 
     QLabel* weightLabel = new QLabel(GRAPH_NODE_POWER_LABEL, this);
