@@ -18,6 +18,11 @@ namespace bestalloc
     template <class U, class V>
     class BigraphAllocator
     {
+    private:
+        int maxUCount;
+        int maxVCount;
+        int maxEdgesCount;
+
     public:
         BigraphAllocator();
 
