@@ -62,7 +62,7 @@ For Windows 7 users:
 --------------------------------------------------
 1. Install Qt.
 Application requires Qt libraries version 4.8 or 5.02 or later
-Qt can be installed from (qt-project.org/downloads).
+Qt can be installed from http://qt-project.org/downloads.
 Qt is installed in C:\Qt by default. Current version is Qt 5.2.1
 After installing you should add next directories to system Path:
 	`C:\Qt\Qt5.2.1\5.2.1\mingw48_32\bin\ `
@@ -73,7 +73,7 @@ in cmd.
 
 2. Install git.
 Git is required to download project source codes.
-Git can be installed from here: (http://msysgit.github.io/)
+Git can be installed from here: http://msysgit.github.io/
 
 Check installation typing:
 	`git --verion`
