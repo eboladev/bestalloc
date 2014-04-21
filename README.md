@@ -2,7 +2,9 @@
 Best allocation analyzer installation guide. version 1.0
 ==================================================
 Project description:
-Goal of this project is to implement tool which solves the problem of effective tasks assignment in IT projects. Program takes information about available employees, project's tasks which must be solved and each employee's qualification in some set of requied technologies and finds the best allocation of employees on the requied tasks. All employees are assigned with tasks and all tasks are distributed between employees, moreover total sum of qualifications of pairs Employee - assigned skill is maximal.
+--------------------------------------------------
+ Goal of this project is to implement tool which solves the problem of effective tasks assignment in IT projects. Program takes information about available employees, project's tasks which must be solved and each employee's qualification in some set of requied technologies and finds the best allocation of employees on the requied tasks. All employees are assigned with tasks and all tasks are distributed between employees, moreover total sum of qualifications of pairs Employee - assigned skill is maximal.
+
 --------------------------------------------------
 Hardware requirements:
 --------------------------------------------------
@@ -54,6 +56,7 @@ After project will be built you will receive several test tables in terminal, li
 To run bestAlloc application type next command in terminal:
 	`$HOME/bestAlloc/bestalloc/bin/bestalloc/bestalloc`
 A window of bestAlloc application will appear on your screen. 
+
 --------------------------------------------------
 For Windows 7 users: 
 --------------------------------------------------
