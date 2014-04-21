@@ -184,16 +184,16 @@ void GraphWidget::setDemoData()
     m_scene->addItem(node9);
     m_scene->addItem(node10);
 
-    node1->setPos(-400, -200);
-    node2->setPos(-200, -200);
-    node3->setPos(0,    -200);
-    node4->setPos(200,  -200);
-    node5->setPos(400,  -200);
-    node6->setPos(-400,  200);
-    node7->setPos(-200,  200);
+    node1->setPos(-300, -150);
+    node2->setPos(-150, -150);
+    node3->setPos(0,    -150);
+    node4->setPos(150,  -150);
+    node5->setPos(300,  -150);
+    node6->setPos(-300,  200);
+    node7->setPos(-150,  200);
     node8->setPos(0,     200);
-    node9->setPos(200,   200);
-    node10->setPos(400,  200);
+    node9->setPos(150,   200);
+    node10->setPos(300,  200);
 
     m_employeeNodes.push_back(node1);
     m_employeeNodes.push_back(node2);
