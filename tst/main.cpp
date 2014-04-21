@@ -13,6 +13,7 @@
 #include "Test_Employee.h"
 #include "Test_BestAllocAlgo.h"
 #include "Test_Edge.h"
+#include "Test_Bigraph.h"
 
 int main(int argc, char **argv)
 {
@@ -20,7 +21,8 @@ int main(int argc, char **argv)
         new test::Test_Skill(),
         new test::Test_Employee(),
         new test::Test_BestAllocAlgo(),
-        new test::Test_Edge()
+        new test::Test_Edge(),
+        new test::Test_Bigraph()
     };
 
     for (unsigned int i = 0; i < sizeof(tests) / sizeof(QObject*); i++) {

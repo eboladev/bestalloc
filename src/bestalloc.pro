@@ -24,7 +24,12 @@ HEADERS += model/Bigraph.h \
     common/ConfigReader.h \
     ui/ChangeObjectDialog.h \
     ui/TaskObject.h \
-    ui/DeleteObjectDialog.h
+    ui/DeleteObjectDialog.h \
+    common/XMLDataConverter.h \
+    common/TextDataConverter.h \
+    common/ReportGenerator.h \
+    common/DataConverter.h \
+    common/CSVDataConverter.h
 
 SOURCES += main.cpp \
     model/Employee.cpp \
@@ -41,7 +46,11 @@ SOURCES += main.cpp \
     common/ConfigReader.cpp \
     ui/ChangeObjectDialog.cpp \
     ui/TaskObject.cpp \
-    ui/DeleteObjectDialog.cpp
+    ui/DeleteObjectDialog.cpp \
+    common/XMLDataConverter.cpp \
+    common/TextDataConverter.cpp \
+    common/ReportGenerator.cpp \
+    common/CSVDataConverter.cpp
 
 RESOURCES += \
     bestalloc.qrc

@@ -1,3 +1,10 @@
+/*! ---------------------------------------------------------------
+ * \file   Test_BestAllocAlgo.cpp
+ * \brief  Test suite for BestAllocAlgo class
+ * \author Konstantin Stepanov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 #include "Test_BestAllocAlgo.h"
 #include "BestAllocAlgo.h"
 using namespace bestalloc;

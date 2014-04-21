@@ -1,3 +1,10 @@
+/*! ---------------------------------------------------------------
+ * \file   Test_BestAllocAlgo.h
+ * \brief  Test suite for BestAllocAlgo class
+ * \author Konstantin Stepanov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 #ifndef TEST_BESTALLOCALGO_H
 #define TEST_BESTALLOCALGO_H
 

@@ -1,3 +1,10 @@
+/*! ---------------------------------------------------------------
+ * \file   Test_Employee.h
+ * \brief  Test suite for Employee class
+ * \author Konstantin Stepanov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 #ifndef TEST_EMPLOYEE_H
 #define TEST_EMPLOYEE_H
 

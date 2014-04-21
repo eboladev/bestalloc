@@ -1,3 +1,10 @@
+/*! ---------------------------------------------------------------
+ * \file   Test_Edge.cpp
+ * \brief  Test suite for Edge class
+ * \author Konstantin Stepanov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
 #include "Test_Edge.h"
 
 #include "Edge.h"

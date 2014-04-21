@@ -54,6 +54,7 @@ namespace bestalloc
         const QList<GraphEdge*>&    getEdges() const;
 
         void setBestAllocation(const vector< pair<Employee, Skill> >& bestAllocMap);
+        void setDemoData();
 
         ~GraphWidget();
 

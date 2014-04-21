@@ -45,66 +45,7 @@ GraphWidget::GraphWidget(QWidget* parent)
 
     setContextMenuPolicy(Qt::DefaultContextMenu);
 
-    // TODO delete
-    EmployeeNode* node1 = new EmployeeNode("Peter", QPixmap(":/images/staff_superman.png"));
-    EmployeeNode* node2 = new EmployeeNode("Mike", QPixmap(":/images/staff_businessman.png"));
-    EmployeeNode* node3 = new EmployeeNode("Robby", QPixmap(":/images/staff_professor.png"));
-    EmployeeNode* node4 = new EmployeeNode("James", QPixmap(":/images/staff_old_boss.png"));
-    EmployeeNode* node5 = new EmployeeNode("Alan", QPixmap(":/images/staff_global_manager.png"));
-
-    SkillNode*    node6 = new SkillNode("Perl", QPixmap(":/images/res_perl.png"));
-    SkillNode*    node7 = new SkillNode("PHP", QPixmap(":/images/res_php.png"));
-    SkillNode*    node8 = new SkillNode("Ruby", QPixmap(":/images/res_ruby.png"));
-    SkillNode*    node9 = new SkillNode("Python", QPixmap(":/images/res_python.png"));
-    SkillNode*    node10 = new SkillNode("VS 2010", QPixmap(":/images/res_vs.png"));
-
-    m_edges.push_back(new GraphEdge(node1, node6, 7));
-    m_edges.push_back(new GraphEdge(node1, node7, 11));
-    m_edges.push_back(new GraphEdge(node2, node7, 4));
-    m_edges.push_back(new GraphEdge(node2, node10, 3));
-    m_edges.push_back(new GraphEdge(node3, node6, 12));
-    m_edges.push_back(new GraphEdge(node3, node8, 6));
-    m_edges.push_back(new GraphEdge(node4, node7, 10));
-    m_edges.push_back(new GraphEdge(node4, node9, 8));
-    m_edges.push_back(new GraphEdge(node5, node9, 4));
-    m_edges.push_back(new GraphEdge(node5, node10, 6));
-
-    foreach (GraphEdge* edge, m_edges) {
-        m_scene->addItem(edge);
-    }
-
-    m_scene->addItem(node1);
-    m_scene->addItem(node2);
-    m_scene->addItem(node3);
-    m_scene->addItem(node4);
-    m_scene->addItem(node5);
-    m_scene->addItem(node6);
-    m_scene->addItem(node7);
-    m_scene->addItem(node8);
-    m_scene->addItem(node9);
-    m_scene->addItem(node10);
-
-    node1->setPos(-400, -200);
-    node2->setPos(-200, -200);
-    node3->setPos(0,    -200);
-    node4->setPos(200,  -200);
-    node5->setPos(400,  -200);
-    node6->setPos(-400,  200);
-    node7->setPos(-200,  200);
-    node8->setPos(0,     200);
-    node9->setPos(200,   200);
-    node10->setPos(400,  200);
-
-    m_employeeNodes.push_back(node1);
-    m_employeeNodes.push_back(node2);
-    m_employeeNodes.push_back(node3);
-    m_employeeNodes.push_back(node4);
-    m_employeeNodes.push_back(node5);
-    m_skillNodes.push_back(node6);
-    m_skillNodes.push_back(node7);
-    m_skillNodes.push_back(node8);
-    m_skillNodes.push_back(node9);
-    m_skillNodes.push_back(node10);
+    setDemoData();
 }
 
 EmployeeNode* GraphWidget::getEmployeeNodeById(int id)
@@ -191,6 +132,69 @@ void GraphWidget::setBestAllocation(const vector< pair<Employee, Skill> >& bestA
             }
         }
     }
+}
+
+void GraphWidget::setDemoData()
+{
+    EmployeeNode* node1 = new EmployeeNode("Peter", QPixmap(":/images/staff_superman.png"));
+    EmployeeNode* node2 = new EmployeeNode("Mike", QPixmap(":/images/staff_businessman.png"));
+    EmployeeNode* node3 = new EmployeeNode("Robby", QPixmap(":/images/staff_professor.png"));
+    EmployeeNode* node4 = new EmployeeNode("James", QPixmap(":/images/staff_old_boss.png"));
+    EmployeeNode* node5 = new EmployeeNode("Alan", QPixmap(":/images/staff_global_manager.png"));
+
+    SkillNode*    node6 = new SkillNode("Perl", QPixmap(":/images/res_perl.png"));
+    SkillNode*    node7 = new SkillNode("PHP", QPixmap(":/images/res_php.png"));
+    SkillNode*    node8 = new SkillNode("Ruby", QPixmap(":/images/res_ruby.png"));
+    SkillNode*    node9 = new SkillNode("Python", QPixmap(":/images/res_python.png"));
+    SkillNode*    node10 = new SkillNode("VS 2010", QPixmap(":/images/res_vs.png"));
+
+    m_edges.push_back(new GraphEdge(node1, node6, 7));
+    m_edges.push_back(new GraphEdge(node1, node7, 11));
+    m_edges.push_back(new GraphEdge(node2, node7, 4));
+    m_edges.push_back(new GraphEdge(node2, node10, 3));
+    m_edges.push_back(new GraphEdge(node3, node6, 12));
+    m_edges.push_back(new GraphEdge(node3, node8, 6));
+    m_edges.push_back(new GraphEdge(node4, node7, 10));
+    m_edges.push_back(new GraphEdge(node4, node9, 8));
+    m_edges.push_back(new GraphEdge(node5, node9, 4));
+    m_edges.push_back(new GraphEdge(node5, node10, 6));
+
+    foreach (GraphEdge* edge, m_edges) {
+        m_scene->addItem(edge);
+    }
+
+    m_scene->addItem(node1);
+    m_scene->addItem(node2);
+    m_scene->addItem(node3);
+    m_scene->addItem(node4);
+    m_scene->addItem(node5);
+    m_scene->addItem(node6);
+    m_scene->addItem(node7);
+    m_scene->addItem(node8);
+    m_scene->addItem(node9);
+    m_scene->addItem(node10);
+
+    node1->setPos(-300, -150);
+    node2->setPos(-150, -150);
+    node3->setPos(0,    -150);
+    node4->setPos(150,  -150);
+    node5->setPos(300,  -150);
+    node6->setPos(-300,  200);
+    node7->setPos(-150,  200);
+    node8->setPos(0,     200);
+    node9->setPos(150,   200);
+    node10->setPos(300,  200);
+
+    m_employeeNodes.push_back(node1);
+    m_employeeNodes.push_back(node2);
+    m_employeeNodes.push_back(node3);
+    m_employeeNodes.push_back(node4);
+    m_employeeNodes.push_back(node5);
+    m_skillNodes.push_back(node6);
+    m_skillNodes.push_back(node7);
+    m_skillNodes.push_back(node8);
+    m_skillNodes.push_back(node9);
+    m_skillNodes.push_back(node10);
 }
 
 void GraphWidget::addNewNode()

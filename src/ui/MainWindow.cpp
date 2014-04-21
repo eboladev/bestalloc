@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     QDesktopWidget desktopWidget;
 
-    int windowWidth = 1024;
-    int windowHeight = 768;
+    int windowWidth = 850;
+    int windowHeight = 600;
 
     int screenWidth = desktopWidget.screen()->width();
     int screenHeight = desktopWidget.screen()->height();
@@ -114,6 +114,8 @@ void MainWindow::initMenuBar()
 
 void MainWindow::compute()
 {
+    m_dataProvider.clearContainers();
+
     foreach (EmployeeNode* node, m_graphWidget.getEmployeeNodes()) {
         m_dataProvider.addEmployee(*node);
     }
@@ -150,7 +152,49 @@ void MainWindow::loadState()
 
 void MainWindow::generateReport()
 {
-    // TODO
+    const QString xml_ext = "xml";
+    const QString csv_ext = "csv";
+    const QString text_ext = "txt";
+    const QString point = ".";
+    DataConverter *dataConverter;
+    QString selectedFilter = "";
+    QFileDialog filedialog;
+    QString f_name = filedialog.getSaveFileName(this,
+                                                tr("Generate report"),
+                                                QDir::currentPath(),
+                                                tr(TEXT_FILE_FILTER";;"CSV_FILE_FILTER";;"XML_FILE_FILTER),
+                                                &selectedFilter);
+    if(f_name != ""){
+        QFileInfo fileInfo(f_name);
+        if(fileInfo.suffix().isEmpty() || !((fileInfo.suffix() == text_ext && selectedFilter == TEXT_FILE_FILTER)||
+                                            (fileInfo.suffix() == csv_ext && selectedFilter == CSV_FILE_FILTER)||
+                                            (fileInfo.suffix() == xml_ext && selectedFilter == XML_FILE_FILTER) ))
+        if(selectedFilter == TEXT_FILE_FILTER)
+            f_name += point + text_ext;
+        else if(selectedFilter == CSV_FILE_FILTER)
+            f_name += point + csv_ext;
+        else if(selectedFilter == XML_FILE_FILTER)
+            f_name += point + xml_ext;
+        qDebug() <<f_name;
+
+        QFileInfo fileInfoChecked(f_name);
+
+        if(fileInfoChecked.suffix() == text_ext)
+            dataConverter = new TextDataConverter();
+        else if(fileInfoChecked.suffix() == csv_ext)
+            dataConverter = new CSVDataConverter();
+        else if(fileInfoChecked.suffix() == xml_ext)
+            dataConverter = new XMLDataConverter();
+
+        ReportGenerator reportGenerator(f_name, dataConverter);
+        reportGenerator.setEmployeeNodes(m_graphWidget.getEmployeeNodes());
+        reportGenerator.setSkillNodes(m_graphWidget.getSkillNodes());
+        reportGenerator.setEdges(m_graphWidget.getEdges());
+        reportGenerator.setBestAllocMap(m_dataProvider.getBestAllocation());
+        reportGenerator.generateReport();
+
+        delete dataConverter;
+    }
 }
 
 MainWindow::~MainWindow()

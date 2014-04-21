@@ -57,7 +57,6 @@ namespace bestalloc
         BigraphIterator< Edge<U, V> > edgesEnd();
 
         ~Bigraph();
-
     };
 
     template <class U, class V, class A>
@@ -89,25 +88,19 @@ namespace bestalloc
     template <class U, class V, class A>
     void Bigraph<U, V, A>::addEdge(const Edge<U, V>& edge)
     {
-        m_edges = m_allocator.allocEdges(m_edges, m_edgesCount);
-        m_allocator.constructEdge(m_edges, m_edgesCount, edge);
-        m_edgesCount++;
+        m_allocator.pushEdge(&m_edges, &m_edgesCount, edge);
     }
 
     template <class U, class V, class A>
     void Bigraph<U, V, A>::addUVertex(const U& vertex)
     {
-        m_uSet = m_allocator.allocUSet(m_uSet, m_uSetSize);
-        m_allocator.constructUElem(m_uSet, m_uSetSize, vertex);
-        m_uSetSize++;
+        m_allocator.pushUElem(&m_uSet, &m_uSetSize, vertex);
     }
 
     template <class U, class V, class A>
     void Bigraph<U, V, A>::addVVertex(const V& vertex)
     {
-        m_vSet = m_allocator.allocVSet(m_vSet, m_vSetSize);
-        m_allocator.constructVElem(m_vSet, m_vSetSize, vertex);
-        m_vSetSize++;
+        m_allocator.pushVElem(&m_vSet, &m_vSetSize, vertex);
     }
 
     template <class U, class V, class A>
