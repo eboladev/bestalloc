@@ -23,7 +23,7 @@ namespace bestalloc
         QGraphicsScene* m_scene;
         QLineEdit* m_editName;
         QLineEdit* m_editPower;
-        QGraphicsItem *m_currentImage;
+        QGraphicsPixmapItem *m_currentImage;
         TaskObject *m_selectedObject;
         QPushButton *m_openPictureBtn;
     public:
@@ -37,7 +37,7 @@ namespace bestalloc
         void confirmChanges();
         void openPicture();
     signals:
-
+        void updateImage();
     };
 }
 #endif // CHANGEOBJECTDIALOG_H

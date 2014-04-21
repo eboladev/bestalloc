@@ -23,6 +23,8 @@ using namespace bestalloc;
 #include <QGraphicsView>
 #include <QFileDialog>
 
+#define IMAGE_PREVIEW_SIZE 300
+
 ChangeObjectDialog::ChangeObjectDialog(QWidget *parent): m_currentImage(NULL),m_selectedObject(NULL),QDialog(parent)
 {
     m_objectsList = new QComboBox(this);
@@ -38,7 +40,7 @@ ChangeObjectDialog::ChangeObjectDialog(QWidget *parent): m_currentImage(NULL),m_
     QGraphicsView *view = new QGraphicsView(this);
     m_scene = new QGraphicsScene(this);
     m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-    m_scene->setSceneRect(0, 0, 300, 300);
+    m_scene->setSceneRect(0, 0, IMAGE_PREVIEW_SIZE, IMAGE_PREVIEW_SIZE);
     view->setScene(m_scene);
     view->setCacheMode(QGraphicsView::CacheBackground);
     view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -104,8 +106,10 @@ void ChangeObjectDialog::selectObject(int index)
     TaskObject *obj = v.value<TaskObject*>();
     m_selectedObject = obj;
     obj->printTo(m_editName,m_editPower);
-    m_currentImage = obj->getGraphItem();
+    m_currentImage = (QGraphicsPixmapItem*)obj->getGraphItem();
     if(m_currentImage){
+        QPixmap pixmap = m_currentImage->pixmap();
+        m_currentImage->setPixmap(pixmap.scaledToHeight(IMAGE_PREVIEW_SIZE).scaledToWidth(IMAGE_PREVIEW_SIZE));
         m_scene->addItem(m_currentImage);
     }
     m_openPictureBtn->setEnabled(m_currentImage);
@@ -121,6 +125,7 @@ void ChangeObjectDialog::confirmChanges()
         m_selectedObject->setImage(m_currentImage);
     }
     m_objectsList->setEnabled(false);
+    emit(updateImage());
 }
 
 void ChangeObjectDialog::openPicture()

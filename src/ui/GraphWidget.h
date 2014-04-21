@@ -17,6 +17,7 @@
 #include "GraphNode.h"
 #include "EmployeeNode.h"
 #include "SkillNode.h"
+#include "AddNodeDialog.h"
 
 namespace bestalloc
 {
@@ -57,7 +58,6 @@ namespace bestalloc
         ~GraphWidget();
 
         bool deleteObject(TaskObject *obj);
-        void addEdge(GraphEdge *arg);
 
     signals:
         void compute();
@@ -68,11 +68,13 @@ namespace bestalloc
         void deleteObject();
         void addEmployeeNode(EmployeeNode* node);
         void addSkillNode(SkillNode* node);
+        void addEdge(GraphEdge* edge);
         void clear();
         void clearAll();
         void save(QDataStream &str);
         void load(QDataStream &str);
-        void addEdge();
+        void addNodeDialogUpdateData(AddNodeDialog*dlg);
+        void updateImage();
     };
 }
 

@@ -31,6 +31,7 @@
 #define GRAPH_EMPLOYEE_TYPE_LABEL "Employee"
 #define GRAPH_SKILL_TYPE_LABEL "Skill"
 #define GRAPH_PATTERN_TYPE_LABEL "Pattern"
+#define GRAPH_EDGE_TYPE_LABEL "Edge"
 #define CLEAR_SCENE_LABEL "Clear scene"
 
 #define CONFIRM_LABEL "OK"

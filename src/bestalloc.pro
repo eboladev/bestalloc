@@ -24,8 +24,7 @@ HEADERS += model/Bigraph.h \
     common/ConfigReader.h \
     ui/ChangeObjectDialog.h \
     ui/TaskObject.h \
-    ui/DeleteObjectDialog.h \
-    ui/AddEdgeDialog.h
+    ui/DeleteObjectDialog.h
 
 SOURCES += main.cpp \
     model/Employee.cpp \
@@ -42,8 +41,7 @@ SOURCES += main.cpp \
     common/ConfigReader.cpp \
     ui/ChangeObjectDialog.cpp \
     ui/TaskObject.cpp \
-    ui/DeleteObjectDialog.cpp \
-    ui/AddEdgeDialog.cpp
+    ui/DeleteObjectDialog.cpp
 
 RESOURCES += \
     bestalloc.qrc

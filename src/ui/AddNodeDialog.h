@@ -17,6 +17,7 @@
 
 #include "EmployeeNode.h"
 #include "SkillNode.h"
+#include "GraphEdge.h"
 
 namespace bestalloc
 {
@@ -26,13 +27,24 @@ namespace bestalloc
 
     private:
         QString m_itemName;
-        QString m_itemImagePath;
-        bool    m_isSkillNode;
+
+        QRadioButton* m_employeeRadioBtn;
+        QRadioButton* m_skillRadioBtn;
+
         QRadioButton* m_patternRadioBtn;
         QComboBox* m_patternsList;
         QList<QString> m_patternsNames;
         QList<QString> m_patternsImages;
         int m_patternIndex;
+
+        QRadioButton *m_edgeRadioBtn;
+        QComboBox *m_skillsList;
+        QComboBox *m_employeeList;
+        QLineEdit* m_weightEdit;
+
+        int m_weight;
+        EmployeeNode *m_selectedEmployeeNode;
+        SkillNode *m_selectedSkillNode;
 
     public:
         AddNodeDialog(QWidget* parent = NULL);
@@ -40,18 +52,28 @@ namespace bestalloc
 
     public slots:
         void changeItemName(const QString& name);
+        void changeWeight(const QString& weight);
         void setSkillNodeType(bool isTrue);
         void setEmployeeNodeType(bool isTrue);
         void setPatternNodeType(bool isTrue);
+        void setEdgeNodeType(bool isTrue);
         void selectPattern(int index);
         void confirmNewItem();
+        void selectSkill(int index);
+        void selectEmployee(int index);
+        void updateData(QList<EmployeeNode*> &employees,QList<SkillNode*> &skills);
 
     signals:
         void enableConfirmButton(bool);
         void enablePatternsList(bool);
+        void enableSkillsList(bool);
+        void enableEmployeeList(bool);
+        void enableWeightEdit(bool);
         void enableLineEdit(bool);
         void addEmployeeNode(EmployeeNode*);
         void addSkillNode(SkillNode*);
+        void addEdge(GraphEdge*);
+        void updateData(AddNodeDialog*);
     };
 }
 

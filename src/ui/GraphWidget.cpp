@@ -14,7 +14,6 @@
 #include "BestAllocAlgo.h"
 #include "ChangeObjectDialog.h"
 #include "DeleteObjectDialog.h"
-#include "AddEdgeDialog.h"
 #include "MainWindow.h"
 
 using namespace bestalloc;
@@ -25,6 +24,7 @@ using namespace bestalloc;
 #include <QGraphicsPixmapItem>
 #include <QMenu>
 #include <QDebug>
+#include <QMessageBox>
 
 GraphWidget::GraphWidget(QWidget* parent)
     : QGraphicsView(parent),
@@ -149,11 +149,7 @@ void GraphWidget::contextMenuEvent(QContextMenuEvent *event)
     QMenu *contextMenu = new QMenu();
     contextMenu->addMenu(MainWindow::createFileMenu(this,parentWidget()));
     contextMenu->addMenu(MainWindow::createEditMenu(this,this));
-    contextMenu->addMenu(MainWindow::createToolsMenu(this,parentWidget()));
-    QAction* computeAction = new QAction(NULL);
-    computeAction->setText(COMPUTE_LABEL);
-    connect(computeAction, SIGNAL(triggered()), SIGNAL(compute()));
-    contextMenu->addAction(computeAction);
+    contextMenu->addMenu(MainWindow::createToolsMenu(this,this,parentWidget()));
 
     QPoint globalPos = this->mapToGlobal(event->pos());
     contextMenu->exec(globalPos);
@@ -202,12 +198,16 @@ void GraphWidget::addNewNode()
     AddNodeDialog* dialog = new AddNodeDialog(this);
     connect(dialog, SIGNAL(addEmployeeNode(EmployeeNode*)), SLOT(addEmployeeNode(EmployeeNode*)));
     connect(dialog, SIGNAL(addSkillNode(SkillNode*)), SLOT(addSkillNode(SkillNode*)));
+    connect(dialog, SIGNAL(addEdge(GraphEdge*)), SLOT(addEdge(GraphEdge*)));
+    connect(dialog, SIGNAL(updateData(AddNodeDialog*)), SLOT(addNodeDialogUpdateData(AddNodeDialog*)));
+    dialog->updateData(m_employeeNodes,m_skillNodes);
     dialog->show();
 }
 
 void GraphWidget::changeObject()
 {
     ChangeObjectDialog* dialog = new ChangeObjectDialog(this);
+    connect(dialog, SIGNAL(updateImage()), SLOT(updateImage()));
     foreach (EmployeeNode *cur, m_employeeNodes) {
         dialog->addElement(cur);
     }
@@ -237,6 +237,17 @@ void GraphWidget::deleteObject()
 
 void GraphWidget::addEmployeeNode(EmployeeNode* node)
 {
+    foreach (EmployeeNode *cur, m_employeeNodes) {
+        if(cur->getTaskName()==node->getTaskName()){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Warning");
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setText("Can`t add employee.");
+            msgBox.setInformativeText("Employee already exist, try change name.");
+            msgBox.exec();
+            return;
+        }
+    }
     m_employeeNodes.push_back(node);
     m_scene->addItem(node);
     node->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
@@ -244,6 +255,17 @@ void GraphWidget::addEmployeeNode(EmployeeNode* node)
 
 void GraphWidget::addSkillNode(SkillNode* node)
 {
+    foreach (SkillNode *cur, m_skillNodes) {
+        if(cur->getTaskName()==node->getTaskName()){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Warning");
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setText("Can`t add skill.");
+            msgBox.setInformativeText("Skill already exist, try change name.");
+            msgBox.exec();
+            return;
+        }
+    }
     m_skillNodes.push_back(node);
     m_scene->addItem(node);
     node->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
@@ -346,16 +368,16 @@ void GraphWidget::load(QDataStream &str)
     }
 }
 
-void GraphWidget::addEdge()
+void GraphWidget::addNodeDialogUpdateData(AddNodeDialog *dlg)
 {
-    AddEdgeDialog* dialog = new AddEdgeDialog(this);
-    foreach (EmployeeNode *cur, m_employeeNodes) {
-        dialog->addElement(cur);
+    dlg->updateData(m_employeeNodes,m_skillNodes);
+}
+
+void GraphWidget::updateImage()
+{
+    foreach (QGraphicsItem *cur, m_scene->items()) {
+        cur->update();
     }
-    foreach (SkillNode *cur, m_skillNodes) {
-        dialog->addElement(cur);
-    }
-    dialog->show();
 }
 
 GraphWidget::~GraphWidget()
@@ -407,6 +429,18 @@ bool GraphWidget::deleteObject(TaskObject *obj)
 void GraphWidget::addEdge(GraphEdge *arg)
 {
     clear();
+    foreach (GraphEdge *cur, m_edges) {
+        if(cur->getSourceNode()==arg->getSourceNode()&&
+                cur->getDestNode()==arg->getDestNode()){
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Warning");
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setText("Can`t add edge.");
+            msgBox.setInformativeText("Edge already exist.");
+            msgBox.exec();
+            return;
+        }
+    }
     m_edges.push_back(arg);
     m_scene->addItem(arg);
 }

@@ -33,7 +33,7 @@ namespace bestalloc
 
         static QMenu* createFileMenu(QWidget *parent, QWidget *target);
         static QMenu* createEditMenu(QWidget *parent, QWidget *target);
-        static QMenu* createToolsMenu(QWidget *parent, QWidget *target);
+        static QMenu* createToolsMenu(QWidget *parent, QWidget *graph, QWidget *mainWindow);
         ~MainWindow();
 
     public slots:
