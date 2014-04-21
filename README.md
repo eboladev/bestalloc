@@ -74,7 +74,6 @@ in cmd.
 2. Install git.
 Git is required to download project source codes.
 Git can be installed from here: http://msysgit.github.io/
-
 Check installation typing:
 	`git --verion`
 in cmd. 
