@@ -22,6 +22,7 @@ using namespace bestalloc;
 #include <QDebug>
 #include <QGraphicsView>
 #include <QFileDialog>
+#include <QIntValidator>
 
 #define IMAGE_PREVIEW_SIZE 300
 
@@ -48,6 +49,9 @@ ChangeObjectDialog::ChangeObjectDialog(QWidget *parent): m_currentImage(NULL),m_
     view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 
     m_editPower = new QLineEdit(this);
+    QIntValidator *validator = new QIntValidator(this);
+    validator->setBottom(0);
+    m_editPower->setValidator(validator);
 
     QLabel* labelPower = new QLabel(GRAPH_NODE_POWER_LABEL, this);
     labelPower->setBuddy(m_editPower);
