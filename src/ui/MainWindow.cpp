@@ -147,53 +147,49 @@ void MainWindow::loadState()
 
 void MainWindow::generateReport()
 {
-    const QString filename = "report";
     const QString xml_ext = "xml";
     const QString csv_ext = "csv";
     const QString text_ext = "txt";
     const QString point = ".";
     DataConverter *dataConverter;
-    //XMLDataConverter c();
-    //XMLDataConverter *d = new XMLDataConverter;
-    //dataConverter = &c;
-    //QString f_name = QFileDialog::getSaveFileName(this, tr("Generate report"),"home",tr("Text file (*.txt);;Table csv (*.csv);;XML file (*.xml)"));
-    QFileDialog filedialog(this);
     QString selectedFilter = "";
-    //filedialog.setDefaultSuffix("txt");
+    QFileDialog filedialog;
     QString f_name = filedialog.getSaveFileName(this,
                                                 tr("Generate report"),
                                                 QDir::currentPath(),
                                                 tr(TEXT_FILE_FILTER";;"CSV_FILE_FILTER";;"XML_FILE_FILTER),
                                                 &selectedFilter);
-    QFileInfo fileInfo(f_name);
-    if(fileInfo.suffix().isEmpty() || !((fileInfo.suffix() == text_ext && selectedFilter == TEXT_FILE_FILTER)||
-                                        (fileInfo.suffix() == csv_ext && selectedFilter == CSV_FILE_FILTER)||
-                                        (fileInfo.suffix() == xml_ext && selectedFilter == XML_FILE_FILTER) ))
-    if(selectedFilter == TEXT_FILE_FILTER)
-        f_name += point + text_ext;
-    else if(selectedFilter == CSV_FILE_FILTER)
-        f_name += point + csv_ext;
-    else if(selectedFilter == XML_FILE_FILTER)
-        f_name += point + xml_ext;
-    qDebug() <<f_name;
+    if(f_name != ""){
+        QFileInfo fileInfo(f_name);
+        if(fileInfo.suffix().isEmpty() || !((fileInfo.suffix() == text_ext && selectedFilter == TEXT_FILE_FILTER)||
+                                            (fileInfo.suffix() == csv_ext && selectedFilter == CSV_FILE_FILTER)||
+                                            (fileInfo.suffix() == xml_ext && selectedFilter == XML_FILE_FILTER) ))
+        if(selectedFilter == TEXT_FILE_FILTER)
+            f_name += point + text_ext;
+        else if(selectedFilter == CSV_FILE_FILTER)
+            f_name += point + csv_ext;
+        else if(selectedFilter == XML_FILE_FILTER)
+            f_name += point + xml_ext;
+        qDebug() <<f_name;
 
-    QFileInfo fileInfoChecked(f_name);
+        QFileInfo fileInfoChecked(f_name);
 
-    if(fileInfoChecked.suffix() == text_ext)
-        dataConverter = new TextDataConverter();
-    else if(fileInfoChecked.suffix() == csv_ext)
-        dataConverter = new CSVDataConverter();
-    else if(fileInfoChecked.suffix() == xml_ext)
-        dataConverter = new XMLDataConverter();
+        if(fileInfoChecked.suffix() == text_ext)
+            dataConverter = new TextDataConverter();
+        else if(fileInfoChecked.suffix() == csv_ext)
+            dataConverter = new CSVDataConverter();
+        else if(fileInfoChecked.suffix() == xml_ext)
+            dataConverter = new XMLDataConverter();
 
-    ReportGenerator reportGenerator(f_name, dataConverter);
-    reportGenerator.setEmployeeNodes(m_graphWidget.getEmployeeNodes());
-    reportGenerator.setSkillNodes(m_graphWidget.getSkillNodes());
-    reportGenerator.setEdges(m_graphWidget.getEdges());
-    reportGenerator.setBestAllocMap(m_dataProvider.getBestAllocation());
-    reportGenerator.generateReport();
+        ReportGenerator reportGenerator(f_name, dataConverter);
+        reportGenerator.setEmployeeNodes(m_graphWidget.getEmployeeNodes());
+        reportGenerator.setSkillNodes(m_graphWidget.getSkillNodes());
+        reportGenerator.setEdges(m_graphWidget.getEdges());
+        reportGenerator.setBestAllocMap(m_dataProvider.getBestAllocation());
+        reportGenerator.generateReport();
 
-    delete dataConverter;
+        delete dataConverter;
+    }
 }
 
 MainWindow::~MainWindow()

@@ -43,6 +43,6 @@
 #define CSV_FILE_FILTER "Table csv (*.csv)"
 #define XML_FILE_FILTER "XML file (*.xml)"
 
-#define CSV_SEPARATOR ";"
+#define CSV_SEPARATOR ","
 
 #endif // CONSTANTS_H_INCLUDED
