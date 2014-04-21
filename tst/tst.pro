@@ -35,7 +35,6 @@ HEADERS += ../src/model/Skill.h \
     ../src/ui/TaskObject.h \
     ../src/ui/DeleteObjectDialog.h \
     ../src/ui/ChangeObjectDialog.h \
-    ../src/ui/AddEdgeDialog.h \
     Test_Bigraph.h
 
 
@@ -64,7 +63,6 @@ SOURCES += ../src/model/Skill.cpp \
     ../src/ui/TaskObject.cpp \
     ../src/ui/DeleteObjectDialog.cpp \
     ../src/ui/ChangeObjectDialog.cpp \
-    ../src/ui/AddEdgeDialog.cpp \
     Test_Bigraph.cpp
 
 
