@@ -111,6 +111,8 @@ void MainWindow::initMenuBar()
 
 void MainWindow::compute()
 {
+    m_dataProvider.clearContainers();
+
     foreach (EmployeeNode* node, m_graphWidget.getEmployeeNodes()) {
         m_dataProvider.addEmployee(*node);
     }

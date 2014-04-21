@@ -150,10 +150,16 @@ void GraphWidget::contextMenuEvent(QContextMenuEvent *event)
     contextMenu->addMenu(MainWindow::createFileMenu(this,parentWidget()));
     contextMenu->addMenu(MainWindow::createEditMenu(this,this));
     contextMenu->addMenu(MainWindow::createToolsMenu(this,parentWidget()));
+
     QAction* computeAction = new QAction(NULL);
     computeAction->setText(COMPUTE_LABEL);
     connect(computeAction, SIGNAL(triggered()), SIGNAL(compute()));
     contextMenu->addAction(computeAction);
+
+    QAction* clearSceneAction = new QAction(NULL);
+    clearSceneAction->setText(CLEAR_SCENE_LABEL);
+    connect(clearSceneAction, SIGNAL(triggered()), SLOT(clear()));
+    contextMenu->addAction(clearSceneAction);
 
     QPoint globalPos = this->mapToGlobal(event->pos());
     contextMenu->exec(globalPos);
