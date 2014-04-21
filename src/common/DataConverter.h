@@ -18,16 +18,12 @@ namespace bestalloc
 {
     class DataConverter
     {
-
     public:
-        //DataConverter();
         virtual QString convertEmployeeNodes(const QList<EmployeeNode*> &nodes) = 0 ;
         virtual QString convertSkillNodes(const QList<SkillNode*> &nodes) = 0 ;
         virtual QString convertEdges(const QList<GraphEdge*> &edges) = 0 ;
         virtual QString convertBestAllocMap(const vector< pair <Employee, Skill> > &bestAllocMap) = 0 ;
-        virtual ~DataConverter()
-        {
-        }
+        virtual ~DataConverter() {}
     };
 }
 

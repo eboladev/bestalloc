@@ -16,10 +16,12 @@ namespace bestalloc
     {
     public:
         TextDataConverter();
+
         QString convertEmployeeNodes(const QList<EmployeeNode*> &nodes);
         QString convertSkillNodes(const QList<SkillNode*> &nodes);
         QString convertEdges(const QList<GraphEdge*> &edges);
         QString convertBestAllocMap(const vector< pair <Employee, Skill> > &bestAllocMap);
+
         ~TextDataConverter();
     };
 }

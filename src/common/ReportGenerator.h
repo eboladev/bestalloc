@@ -33,12 +33,14 @@ namespace bestalloc
 
     public:
         ReportGenerator(const QString &filename, DataConverter *dataConverter);
+
         void setEmployeeNodes(const QList<EmployeeNode*> &nodes);
         void setSkillNodes(const QList<SkillNode*> &nodes);
         void setEdges(const QList<GraphEdge*> & edges);
         void setBestAllocMap(const vector< pair<Employee, Skill> > &bestAllocMap);
 
         void generateReport();
+
         ~ReportGenerator();
     };
 }

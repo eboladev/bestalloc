@@ -17,9 +17,10 @@
 #include "DataProvider.h"
 #include "GraphWidget.h"
 
-namespace bestalloc {
-
+namespace bestalloc
+{
     class DataProvider;
+
     class ConfigReader
     {
     public:

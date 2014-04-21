@@ -10,7 +10,8 @@
 
 #include "DataConverter.h"
 
-namespace bestalloc{
+namespace bestalloc
+{
     class XMLDataConverter : public DataConverter
     {
     public:
@@ -20,8 +21,8 @@ namespace bestalloc{
         virtual QString convertSkillNodes(const QList<SkillNode*> &nodes);
         virtual QString convertEdges(const QList<GraphEdge*> &edges);
         virtual QString convertBestAllocMap(const vector< pair <Employee, Skill> > &bestAllocMap);
-        ~XMLDataConverter();
 
+        ~XMLDataConverter();
     };
 }
 #endif // XMLDATACONVERTER_H

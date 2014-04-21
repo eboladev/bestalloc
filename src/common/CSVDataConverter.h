@@ -11,7 +11,8 @@
 #include "DataConverter.h"
 #include "Constants.h"
 
-namespace bestalloc{
+namespace bestalloc
+{
     class CSVDataConverter : public DataConverter
     {
     public:
@@ -21,6 +22,7 @@ namespace bestalloc{
         QString convertSkillNodes(const QList<SkillNode*> &nodes);
         QString convertEdges(const QList<GraphEdge*> &edges);
         QString convertBestAllocMap(const vector< pair <Employee, Skill> > &bestAllocMap);
+
         ~CSVDataConverter();
     };
 }
