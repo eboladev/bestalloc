@@ -35,7 +35,8 @@ GraphWidget::GraphWidget(QWidget* parent)
       m_skillNodes(),
       m_edges(),
       m_fakeEdges(),
-      m_lastCtxtMenuPos()
+      m_lastCtxtMenuPos(),
+      m_resized(false)
 {
     m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     m_scene->setSceneRect(QRectF());
@@ -133,8 +134,9 @@ void GraphWidget::wheelEvent(QWheelEvent *event)
 void GraphWidget::scaleView(qreal scaleFactor)
 {
     qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
-    if (factor < 0.07 || factor > 100)
+    if (factor < 0.07 || factor > 100) {
         return;
+    }
 
     scale(scaleFactor, scaleFactor);
 }
@@ -244,10 +246,12 @@ void GraphWidget::setDemoData()
 
 void GraphWidget::resizeToFit()
 {
-    if ((rect().width() < scene()->itemsBoundingRect().width() || rect().height() < scene()->itemsBoundingRect().height()) ||
-        (sceneRect().width() > rect().width() || sceneRect().height() > rect().height()))
-    {
+    if (rect().width() < scene()->itemsBoundingRect().width() || rect().height() < scene()->itemsBoundingRect().height()) {
         scene()->setSceneRect(scene()->itemsBoundingRect());
+        m_resized = true;
+    } else if (m_resized) {
+        scene()->setSceneRect(scene()->itemsBoundingRect());
+        m_resized = false;
     }
 }
 
@@ -322,7 +326,7 @@ void GraphWidget::addEmployeeNode(EmployeeNode* node)
 void GraphWidget::addSkillNode(SkillNode* node)
 {
     foreach (SkillNode *cur, m_skillNodes) {
-        if(cur->getTaskName()==node->getTaskName()){
+        if (cur->getTaskName() == node->getTaskName()){
             QMessageBox msgBox;
             msgBox.setWindowTitle("Warning");
             msgBox.setIcon(QMessageBox::Warning);
@@ -357,14 +361,17 @@ void GraphWidget::clearAll()
     foreach (GraphEdge* cur, m_edges) {
         m_scene->removeItem(cur);
     }
+
     m_edges.clear();
     foreach (EmployeeNode* cur, m_employeeNodes) {
         m_scene->removeItem(cur);
     }
+
     m_employeeNodes.clear();
     foreach (SkillNode* cur, m_skillNodes) {
         m_scene->removeItem(cur);
     }
+
     m_skillNodes.clear();
 }
 

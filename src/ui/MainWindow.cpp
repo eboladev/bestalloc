@@ -45,6 +45,11 @@ MainWindow::MainWindow(QWidget* parent)
                 windowWidth, windowHeight);
 }
 
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+    m_graphWidget.resizeToFit();
+}
+
 void MainWindow::initMenuBar()
 {
     QMenu* menuFile  = createFileMenu();

@@ -33,7 +33,7 @@ namespace bestalloc
         QList<GraphEdge*>    m_fakeEdges;
 
         QPoint m_lastCtxtMenuPos;
-
+        bool   m_resized;
 
     private:
         EmployeeNode* getEmployeeNodeById(int id);

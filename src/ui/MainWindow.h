@@ -32,6 +32,9 @@ namespace bestalloc
         DataProvider m_dataProvider;
         GraphWidget  m_graphWidget;
 
+    protected:
+        void resizeEvent(QResizeEvent* event);
+
     private:
         void initMenuBar();
         QMenu* createFileMenu();
