@@ -18,7 +18,7 @@ using namespace bestalloc;
 #include <math.h>
 
 GraphEdge::GraphEdge(EmployeeNode* sourceNode, SkillNode* destNode, int weight, bool isMarked)
-    : m_sourceNode(sourceNode), m_destNode(destNode), m_weight(weight), m_isMarked(isMarked), TaskObject()
+    : QGraphicsItem(), TaskObject(), m_sourceNode(sourceNode), m_destNode(destNode), m_weight(weight), m_isMarked(isMarked)
 {
     setAcceptedMouseButtons(0);
     m_sourceNode->addEdge(this);

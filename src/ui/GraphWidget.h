@@ -34,13 +34,21 @@ namespace bestalloc
 
         QPoint m_lastCtxtMenuPos;
 
+
     private:
         EmployeeNode* getEmployeeNodeById(int id);
         SkillNode*    getSkillNodeById(int id);
         GraphEdge*    getEdge(int sourceNodeId, int destNodeId);
 
+        void zoomIn();
+        void zoomOut();
+
+        void scaleView(qreal scaleFactor);
+
     protected:
+        void keyPressEvent(QKeyEvent *event);
         void contextMenuEvent(QContextMenuEvent* event);
+        void wheelEvent(QWheelEvent* event);
 
     public:
         GraphWidget(QWidget* parent = NULL);
@@ -56,14 +64,12 @@ namespace bestalloc
         void setBestAllocation(const vector< pair<Employee, Skill> >& bestAllocMap);
         void setDemoData();
 
-        ~GraphWidget();
-
         bool deleteObject(TaskObject *obj);
 
-    signals:
-        void compute();
+        ~GraphWidget();
 
     public slots:
+        void resizeToFit();
         void addNewNode();
         void changeObject();
         void deleteObject();

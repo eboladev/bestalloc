@@ -17,10 +17,11 @@ namespace bestalloc
 {
     class GraphWidget;
     class Employee;
+
     class EmployeeNode : public Employee, public GraphNode, public TaskObject
     {
     public:
-        EmployeeNode(const QString& name, const QPixmap& nodePicture);
+        EmployeeNode(const QString& name, const QPixmap& nodePicture, GraphWidget* widget = NULL);
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 

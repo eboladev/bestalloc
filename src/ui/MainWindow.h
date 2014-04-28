@@ -13,7 +13,6 @@
 #include <QSharedPointer>
 #include <QFileDialog>
 
-
 #include "DataProvider.h"
 #include "GraphWidget.h"
 
@@ -35,14 +34,14 @@ namespace bestalloc
 
     private:
         void initMenuBar();
+        QMenu* createFileMenu();
+        QMenu* createEditMenu();
+        QMenu* createToolsMenu();
+
+        bool checkTaskInputData();
 
     public:
         MainWindow(QWidget* parent = NULL);
-
-        static QMenu* createFileMenu(QWidget *parent, QWidget *target);
-        static QMenu* createEditMenu(QWidget *parent, QWidget *target);
-        static QMenu* createToolsMenu(QWidget *parent, QWidget *graph, QWidget *mainWindow);
-        bool checkTaskInputData();
         ~MainWindow();
 
     public slots:

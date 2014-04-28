@@ -23,15 +23,15 @@ namespace bestalloc
         QComboBox *m_objectsList;
         TaskObject *m_selectedObject;
         int m_selectedIndex;
+
     public:
         DeleteObjectDialog(GraphWidget *parent);
         ~DeleteObjectDialog();
         void addElement(TaskObject *obj);
+
     public slots:
         void selectObject(int index);
         void deleteObject();
-    signals:
-
     };
 }
 #endif // DELETEOBJECTDIALOG_H

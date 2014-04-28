@@ -26,6 +26,8 @@ using namespace bestalloc;
 #include <QDebug>
 #include <QMessageBox>
 
+#include <math.h>
+
 GraphWidget::GraphWidget(QWidget* parent)
     : QGraphicsView(parent),
       m_scene(new QGraphicsScene(this)),
@@ -36,7 +38,7 @@ GraphWidget::GraphWidget(QWidget* parent)
       m_lastCtxtMenuPos()
 {
     m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-    m_scene->setSceneRect(-this->rect().width()/2, -this->rect().height()/2, this->rect().width(), this->rect().height());
+    m_scene->setSceneRect(QRectF());
     setScene(m_scene);
     setCacheMode(CacheBackground);
     setViewportUpdateMode(BoundingRectViewportUpdate);
@@ -44,7 +46,6 @@ GraphWidget::GraphWidget(QWidget* parent)
     setTransformationAnchor(AnchorUnderMouse);
 
     setContextMenuPolicy(Qt::DefaultContextMenu);
-
     setDemoData();
 }
 
@@ -83,17 +84,59 @@ GraphEdge* GraphWidget::getEdge(int sourceNodeId, int destNodeId)
     return NULL;
 }
 
+void GraphWidget::zoomIn()
+{
+    qreal scaleFactor = 1.02;
+    scale(scaleFactor, scaleFactor);
+}
+
+void GraphWidget::zoomOut()
+{
+    qreal scaleFactor = 1.02;
+    scale(1.0/scaleFactor, 1.0/scaleFactor);
+}
+
+void GraphWidget::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+        case Qt::Key_Plus:
+            zoomIn();
+            break;
+
+        case Qt::Key_Minus:
+            zoomOut();
+            break;
+
+        default:
+            QGraphicsView::keyPressEvent(event);
+    }
+}
+
 void GraphWidget::contextMenuEvent(QContextMenuEvent *event)
 {
     m_lastCtxtMenuPos = QPoint(event->pos());
 
     QMenu *contextMenu = new QMenu();
-    contextMenu->addMenu(MainWindow::createFileMenu(this,parentWidget()));
-    contextMenu->addMenu(MainWindow::createEditMenu(this,this));
-    contextMenu->addMenu(MainWindow::createToolsMenu(this,this,parentWidget()));
+    //contextMenu->addMenu(MainWindow::createFileMenu(this,parentWidget()));
+    //contextMenu->addMenu(createEditMenu());
+    //contextMenu->addMenu(createToolsMenu(this,this,parentWidget()));
 
     QPoint globalPos = this->mapToGlobal(event->pos());
     contextMenu->exec(globalPos);
+}
+
+void GraphWidget::wheelEvent(QWheelEvent *event)
+{
+    scaleView(pow((double)2, event->delta() / 1024.0));
+}
+
+void GraphWidget::scaleView(qreal scaleFactor)
+{
+    qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
+    if (factor < 0.07 || factor > 100)
+        return;
+
+    scale(scaleFactor, scaleFactor);
 }
 
 const QList<EmployeeNode*>& GraphWidget::getEmployeeNodes() const
@@ -136,17 +179,17 @@ void GraphWidget::setBestAllocation(const vector< pair<Employee, Skill> >& bestA
 
 void GraphWidget::setDemoData()
 {
-    EmployeeNode* node1 = new EmployeeNode("Peter", QPixmap(":/images/staff_superman.png"));
-    EmployeeNode* node2 = new EmployeeNode("Mike", QPixmap(":/images/staff_businessman.png"));
-    EmployeeNode* node3 = new EmployeeNode("Robby", QPixmap(":/images/staff_professor.png"));
-    EmployeeNode* node4 = new EmployeeNode("James", QPixmap(":/images/staff_old_boss.png"));
-    EmployeeNode* node5 = new EmployeeNode("Alan", QPixmap(":/images/staff_global_manager.png"));
+    EmployeeNode* node1 = new EmployeeNode("Peter", QPixmap(":/images/staff_superman.png"), this);
+    EmployeeNode* node2 = new EmployeeNode("Mike", QPixmap(":/images/staff_businessman.png"), this);
+    EmployeeNode* node3 = new EmployeeNode("Robby", QPixmap(":/images/staff_professor.png"), this);
+    EmployeeNode* node4 = new EmployeeNode("James", QPixmap(":/images/staff_old_boss.png"), this);
+    EmployeeNode* node5 = new EmployeeNode("Alan", QPixmap(":/images/staff_global_manager.png"), this);
 
-    SkillNode*    node6 = new SkillNode("Perl", QPixmap(":/images/res_perl.png"));
-    SkillNode*    node7 = new SkillNode("PHP", QPixmap(":/images/res_php.png"));
-    SkillNode*    node8 = new SkillNode("Ruby", QPixmap(":/images/res_ruby.png"));
-    SkillNode*    node9 = new SkillNode("Python", QPixmap(":/images/res_python.png"));
-    SkillNode*    node10 = new SkillNode("VS 2010", QPixmap(":/images/res_vs.png"));
+    SkillNode*    node6 = new SkillNode("Perl", QPixmap(":/images/res_perl.png"), this);
+    SkillNode*    node7 = new SkillNode("PHP", QPixmap(":/images/res_php.png"), this);
+    SkillNode*    node8 = new SkillNode("Ruby", QPixmap(":/images/res_ruby.png"), this);
+    SkillNode*    node9 = new SkillNode("Python", QPixmap(":/images/res_python.png"), this);
+    SkillNode*    node10 = new SkillNode("VS 2010", QPixmap(":/images/res_vs.png"), this);
 
     m_edges.push_back(new GraphEdge(node1, node6, 7));
     m_edges.push_back(new GraphEdge(node1, node7, 11));
@@ -195,6 +238,17 @@ void GraphWidget::setDemoData()
     m_skillNodes.push_back(node8);
     m_skillNodes.push_back(node9);
     m_skillNodes.push_back(node10);
+
+    scene()->setSceneRect(scene()->itemsBoundingRect());
+}
+
+void GraphWidget::resizeToFit()
+{
+    if ((rect().width() < scene()->itemsBoundingRect().width() || rect().height() < scene()->itemsBoundingRect().height()) ||
+        (sceneRect().width() > rect().width() || sceneRect().height() > rect().height()))
+    {
+        scene()->setSceneRect(scene()->itemsBoundingRect());
+    }
 }
 
 void GraphWidget::addNewNode()
@@ -212,30 +266,38 @@ void GraphWidget::changeObject()
 {
     ChangeObjectDialog* dialog = new ChangeObjectDialog(this);
     connect(dialog, SIGNAL(updateImage()), SLOT(updateImage()));
+
     foreach (EmployeeNode *cur, m_employeeNodes) {
         dialog->addElement(cur);
     }
+
     foreach (SkillNode *cur, m_skillNodes) {
         dialog->addElement(cur);
     }
+
     foreach (GraphEdge *cur, m_edges) {
         dialog->addElement(cur);
     }
+
     dialog->show();
 }
 
 void GraphWidget::deleteObject()
 {
     DeleteObjectDialog* dialog = new DeleteObjectDialog(this);
+
     foreach (EmployeeNode *cur, m_employeeNodes) {
         dialog->addElement(cur);
     }
+
     foreach (SkillNode *cur, m_skillNodes) {
         dialog->addElement(cur);
     }
+
     foreach (GraphEdge *cur, m_edges) {
         dialog->addElement(cur);
     }
+
     dialog->show();
 }
 
@@ -308,15 +370,20 @@ void GraphWidget::clearAll()
 
 void GraphWidget::save(QDataStream &str)
 {
-    str<<(qint32)m_employeeNodes.size();
+    str << (qint32)m_employeeNodes.size();
+
     foreach (EmployeeNode *cur, m_employeeNodes) {
         cur->save(str);
     }
-    str<<(qint32)m_skillNodes.size();
+
+    str << (qint32)m_skillNodes.size();
+
     foreach (SkillNode *cur, m_skillNodes) {
         cur->save(str);
     }
-    str<<(qint32)m_edges.size();
+
+    str << (qint32)m_edges.size();
+
     foreach (GraphEdge *cur, m_edges) {
         str<<(qint32)cur->getSourceNode()->getId();
         str<<(qint32)cur->getDestNode()->getId();
@@ -327,31 +394,36 @@ void GraphWidget::save(QDataStream &str)
 void GraphWidget::load(QDataStream &str)
 {
     clearAll();
+
     int size;
-    str>>size;
+    str >> size;
     for (int i = 0; i < size; ++i) {
         EmployeeNode* node = new EmployeeNode("", QPixmap(":/images/staff_superman.png"));
         node->load(str);
         m_employeeNodes.push_back(node);
     }
-    str>>size;
+
+    str >> size;
     for (int i = 0; i < size; ++i) {
         SkillNode* node = new SkillNode("", QPixmap(":/images/staff_superman.png"));
         node->load(str);
         m_skillNodes.push_back(node);
     }
-    str>>size;
+
+    str >> size;
     for (int i = 0; i < size; ++i) {
         int eId;
-        str>>eId;
+        str >> eId;
         int sId;
-        str>>sId;
+        str >> sId;
+
         EmployeeNode* eNode = getEmployeeNodeById(eId);
         SkillNode* sNode = getSkillNodeById(sId);
-        if(!eNode||!sNode){
+        if (!eNode||!sNode) {
             qDebug()<<"GraphWidget::load :: !eNode||!sNode\n";
             throw;
         }
+
         GraphEdge* node = new GraphEdge(eNode,sNode,42);
         node->load(str);
         m_edges.push_back(node);
@@ -382,10 +454,6 @@ void GraphWidget::updateImage()
     foreach (QGraphicsItem *cur, m_scene->items()) {
         cur->update();
     }
-}
-
-GraphWidget::~GraphWidget()
-{
 }
 
 bool GraphWidget::deleteObject(TaskObject *obj)
@@ -426,6 +494,7 @@ bool GraphWidget::deleteObject(TaskObject *obj)
             return true;
         }
     }
+
     return false;
 }
 
@@ -446,4 +515,8 @@ void GraphWidget::addEdge(GraphEdge *arg)
     }
     m_edges.push_back(arg);
     m_scene->addItem(arg);
+}
+
+GraphWidget::~GraphWidget()
+{
 }

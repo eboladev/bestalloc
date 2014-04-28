@@ -21,11 +21,15 @@ using namespace bestalloc;
 using namespace std;
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), m_dataProvider(BestAllocAlgorithm()), m_graphWidget()
+    : QMainWindow(parent), m_dataProvider(BestAllocAlgorithm()), m_graphWidget(this)
 {
     initMenuBar();
 
-    setCentralWidget(&m_graphWidget);
+    QScrollArea* scrollArea = new QScrollArea(this);
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(&m_graphWidget);
+
+    setCentralWidget(scrollArea);
     setWindowTitle(BESTALLOC_TITLE);
 
     QDesktopWidget desktopWidget;
@@ -41,35 +45,47 @@ MainWindow::MainWindow(QWidget* parent)
                 windowWidth, windowHeight);
 }
 
-QMenu *MainWindow::createFileMenu(QWidget *parent, QWidget *target)
+void MainWindow::initMenuBar()
+{
+    QMenu* menuFile  = createFileMenu();
+    QMenu* menuEdit  = createEditMenu();
+    QMenu* menuTools = createToolsMenu();
+
+    menuBar()->addMenu(menuFile);
+    menuBar()->addMenu(menuEdit);
+    menuBar()->addMenu(menuTools);
+}
+
+QMenu* MainWindow::createFileMenu()
 {
     QAction* saveAction = new QAction(NULL);
     saveAction->setText(SAVE_ACTION_MENU_LABEL);
-    parent->connect(saveAction, SIGNAL(triggered()),target, SLOT(saveState()));
+    connect(saveAction, SIGNAL(triggered()), SLOT(saveState()));
 
     QAction* loadAction = new QAction(NULL);
     loadAction->setText(LOAD_ACTION_MENU_LABEL);
-    parent->connect(loadAction, SIGNAL(triggered()),target, SLOT(loadState()));
+    connect(loadAction, SIGNAL(triggered()), SLOT(loadState()));
 
     QMenu* menuFile = new QMenu(FILE_MENU_LABEL);
     menuFile->addAction(saveAction);
     menuFile->addAction(loadAction);
+
     return menuFile;
 }
 
-QMenu *MainWindow::createEditMenu(QWidget *parent, QWidget *target)
+QMenu* MainWindow::createEditMenu()
 {
     QAction* addDataAction = new QAction(NULL);
     addDataAction->setText(ADD_DATA_MENU_LABEL);
-    parent->connect(addDataAction, SIGNAL(triggered()), target, SLOT(addNewNode()));
+    connect(addDataAction, SIGNAL(triggered()), &m_graphWidget, SLOT(addNewNode()));
 
     QAction* changeObjectAction = new QAction(NULL);
     changeObjectAction->setText(CHANGE_OBJECT_MENU_LABEL);
-    parent->connect(changeObjectAction, SIGNAL(triggered()), target, SLOT(changeObject()));
+    connect(changeObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(changeObject()));
 
     QAction* deleteObjectAction = new QAction(NULL);
     deleteObjectAction->setText(DELETE_OBJECT_MENU_LABEL);
-    parent->connect(deleteObjectAction, SIGNAL(triggered()), target, SLOT(deleteObject()));
+    connect(deleteObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(deleteObject()));
 
     QMenu* menuEdit = new QMenu(EDIT_MENU_LABEL);
     menuEdit->addAction(addDataAction);
@@ -78,19 +94,19 @@ QMenu *MainWindow::createEditMenu(QWidget *parent, QWidget *target)
     return menuEdit;
 }
 
-QMenu *MainWindow::createToolsMenu(QWidget *parent, QWidget *graph, QWidget *mainWindow)
+QMenu* MainWindow::createToolsMenu()
 {
     QAction* generateReportAction = new QAction(NULL);
     generateReportAction->setText(GENERATE_REPORT_ACTION_MENU_LABEL);
-    parent->connect(generateReportAction, SIGNAL(triggered()), mainWindow, SLOT(generateReport()));
+    connect(generateReportAction, SIGNAL(triggered()), SLOT(generateReport()));
 
     QAction* computeAction = new QAction(NULL);
     computeAction->setText(COMPUTE_LABEL);
-    parent->connect(computeAction, SIGNAL(triggered()), mainWindow, SLOT(compute()));
+    connect(computeAction, SIGNAL(triggered()), SLOT(compute()));
 
     QAction* clearSceneAction = new QAction(NULL);
     clearSceneAction->setText(CLEAR_SCENE_LABEL);
-    parent->connect(clearSceneAction, SIGNAL(triggered()), graph, SLOT(clear()));
+    connect(clearSceneAction, SIGNAL(triggered()), &m_graphWidget, SLOT(clear()));
 
     QMenu* menuTools = new QMenu(TOOLS_MENU_LABEL);
     menuTools->addAction(computeAction);
@@ -109,24 +125,13 @@ bool MainWindow::checkTaskInputData()
     }
 
     foreach (SkillNode* node, m_graphWidget.getSkillNodes()) {
-        if(node->getEdges().size()<=0){
+        if (node->getEdges().size()<=0){
             return false;
         }
     }
-    return m_graphWidget.getEmployeeNodes().size()==m_graphWidget.getSkillNodes().size();
-}
 
-void MainWindow::initMenuBar()
-{
-    QMenu* menuFile = createFileMenu(this,this);
-
-    QMenu* menuEdit = createEditMenu(this,&m_graphWidget);
-
-    QMenu* menuTools = createToolsMenu(this,&m_graphWidget,this);
-
-    menuBar()->addMenu(menuFile);
-    menuBar()->addMenu(menuEdit);
-    menuBar()->addMenu(menuTools);
+    bool result = m_graphWidget.getEmployeeNodes().size() == m_graphWidget.getSkillNodes().size();
+    return result;
 }
 
 void MainWindow::compute()
@@ -194,11 +199,11 @@ void MainWindow::generateReport()
                                                 QDir::currentPath(),
                                                 tr(TEXT_FILE_FILTER";;"CSV_FILE_FILTER";;"XML_FILE_FILTER),
                                                 &selectedFilter);
-    if(f_name != ""){
+    if (f_name != ""){
         QFileInfo fileInfo(f_name);
-        if(fileInfo.suffix().isEmpty() || !((fileInfo.suffix() == text_ext && selectedFilter == TEXT_FILE_FILTER)||
-                                            (fileInfo.suffix() == csv_ext && selectedFilter == CSV_FILE_FILTER)||
-                                            (fileInfo.suffix() == xml_ext && selectedFilter == XML_FILE_FILTER) ))
+        if (fileInfo.suffix().isEmpty() || !((fileInfo.suffix() == text_ext && selectedFilter == TEXT_FILE_FILTER)||
+                                             (fileInfo.suffix() == csv_ext && selectedFilter == CSV_FILE_FILTER)  ||
+                                             (fileInfo.suffix() == xml_ext && selectedFilter == XML_FILE_FILTER)))
         if(selectedFilter == TEXT_FILE_FILTER)
             f_name += point + text_ext;
         else if(selectedFilter == CSV_FILE_FILTER)

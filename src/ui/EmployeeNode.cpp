@@ -13,8 +13,8 @@ using namespace bestalloc;
 
 static int s_globalEmployeeCounter = 0;
 
-EmployeeNode::EmployeeNode(const QString &name, const QPixmap &nodePicture)
-    : Employee(s_globalEmployeeCounter++, name.toStdString()), GraphNode(nodePicture), TaskObject()
+EmployeeNode::EmployeeNode(const QString &name, const QPixmap &nodePicture, GraphWidget* widget)
+    : Employee(s_globalEmployeeCounter++, name.toStdString()), GraphNode(nodePicture, widget), TaskObject()
 {
 }
 

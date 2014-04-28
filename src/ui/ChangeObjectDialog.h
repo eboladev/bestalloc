@@ -31,11 +31,11 @@ namespace bestalloc
         ~ChangeObjectDialog();
         void addElement(TaskObject *obj);
 
-
     public slots:
         void selectObject(int index);
         void confirmChanges();
         void openPicture();
+
     signals:
         void updateImage();
     };

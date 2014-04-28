@@ -17,8 +17,8 @@ using namespace bestalloc;
 #include <QStyleOption>
 #include "ConfigReader.h"
 
-GraphNode::GraphNode(const QPixmap& nodePicture)
-    : QGraphicsPixmapItem(), m_nodePicture(QPixmap(nodePicture)),m_position(QPointF(0,0))
+GraphNode::GraphNode(const QPixmap& nodePicture, GraphWidget* widget)
+    : QGraphicsPixmapItem(), m_widget(widget), m_nodePicture(QPixmap(nodePicture)), m_position(QPointF(0,0))
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
@@ -36,6 +36,10 @@ void GraphNode::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     update();
     QGraphicsItem::mouseReleaseEvent(event);
+
+    if (m_widget != NULL) {
+        m_widget->resizeToFit();
+    }
 }
 
 QVariant GraphNode::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -47,8 +51,8 @@ QVariant GraphNode::itemChange(GraphicsItemChange change, const QVariant &value)
             }
 
             break;
-        default:
 
+        default:
             break;
     };
 
@@ -91,10 +95,6 @@ QPainterPath GraphNode::shape() const
 void GraphNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
     painter->drawPixmap(-100, -100, 100, 100, m_nodePicture);
-}
-
-GraphNode::~GraphNode()
-{
 }
 
 void GraphNode::save(QDataStream &str)
@@ -146,4 +146,8 @@ bool GraphNode::hasEdges()
 void GraphNode::removeEdge(GraphEdge *edge)
 {
     m_edgeList.removeAll(edge);
+}
+
+GraphNode::~GraphNode()
+{
 }

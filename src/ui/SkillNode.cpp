@@ -13,8 +13,8 @@ using namespace bestalloc;
 
 static int s_globalSkillCounter = 0;
 
-SkillNode::SkillNode(const QString &name, const QPixmap &nodePicture)
-    : Skill(s_globalSkillCounter++, name.toStdString()), GraphNode(nodePicture), TaskObject()
+SkillNode::SkillNode(const QString &name, const QPixmap &nodePicture, GraphWidget* widget)
+    : Skill(s_globalSkillCounter++, name.toStdString()), GraphNode(nodePicture, widget), TaskObject()
 {
 }
 
