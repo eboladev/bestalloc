@@ -20,14 +20,15 @@ namespace bestalloc
     {
         Q_OBJECT
 
-        QComboBox *m_objectsList;
-        TaskObject *m_selectedObject;
-        int m_selectedIndex;
+    private:
+        QComboBox*  m_objectsList;
+        TaskObject* m_selectedObject;
+        int         m_selectedIndex;
 
     public:
         DeleteObjectDialog(GraphWidget *parent);
-        ~DeleteObjectDialog();
         void addElement(TaskObject *obj);
+        ~DeleteObjectDialog();
 
     public slots:
         void selectObject(int index);

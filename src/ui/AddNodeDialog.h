@@ -28,23 +28,23 @@ namespace bestalloc
     private:
         QString m_itemName;
 
-        QRadioButton* m_employeeRadioBtn;
-        QRadioButton* m_skillRadioBtn;
+        QRadioButton*  m_employeeRadioBtn;
+        QRadioButton*  m_skillRadioBtn;
 
-        QRadioButton* m_patternRadioBtn;
-        QComboBox* m_patternsList;
+        QRadioButton*  m_patternRadioBtn;
+        QComboBox*     m_patternsList;
         QList<QString> m_patternsNames;
         QList<QString> m_patternsImages;
-        int m_patternIndex;
+        int            m_patternIndex;
 
-        QRadioButton *m_edgeRadioBtn;
-        QComboBox *m_skillsList;
-        QComboBox *m_employeeList;
-        QLineEdit* m_weightEdit;
+        QRadioButton*  m_edgeRadioBtn;
+        QComboBox*     m_skillsList;
+        QComboBox*     m_employeeList;
+        QLineEdit*     m_weightEdit;
 
-        int m_weight;
-        EmployeeNode *m_selectedEmployeeNode;
-        SkillNode *m_selectedSkillNode;
+        int            m_weight;
+        EmployeeNode*  m_selectedEmployeeNode;
+        SkillNode*     m_selectedSkillNode;
 
     public:
         AddNodeDialog(QWidget* parent = NULL);

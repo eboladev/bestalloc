@@ -23,7 +23,7 @@ void SkillNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     GraphNode::paint(painter, option, widget);
 
     painter->setBrush(Qt::black);
-    painter->setFont(QFont("Verdana", 15));
+    painter->setFont(QFont("Monospace", 11));
 
     painter->drawText(QRect(-100, -140, 100, 50), Qt::AlignCenter | Qt::AlignTop, QString(getName().c_str()));
 }

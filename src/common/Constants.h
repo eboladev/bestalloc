@@ -10,11 +10,13 @@
 #define LOAD_ACTION_MENU_LABEL   "&Load"
 
 #define EDIT_MENU_LABEL          "&Edit"
-#define ADD_DATA_MENU_LABEL      "Add &employee/resource"
+#define ADD_DATA_MENU_LABEL      "Add &object"
 #define ADD_EDGE_MENU_LABEL      "Add ed&ge"
 #define ADD_TEMPLATE_MENU_LABEL  "Add &template"
-#define CHANGE_OBJECT_MENU_LABEL "&Change object"
+#define EDIT_OBJECT_MENU_LABEL   "&Edit object"
 #define DELETE_OBJECT_MENU_LABEL "&Delete object"
+#define EDIT_MENU_LABEL          "&Edit"
+#define DELETE_MENU_LABEL        "&Delete"
 
 #define TOOLS_MENU_LABEL                  "&Tools"
 #define GENERATE_REPORT_ACTION_MENU_LABEL "&Generate report"
@@ -32,7 +34,7 @@
 #define GRAPH_SKILL_TYPE_LABEL    "Skill"
 #define GRAPH_PATTERN_TYPE_LABEL  "Pattern"
 #define GRAPH_EDGE_TYPE_LABEL     "Edge"
-#define CLEAR_SCENE_LABEL         "Clear scene"
+#define RESET_GRAPH_LABEL         "Reset"
 
 #define CONFIRM_LABEL        "OK"
 #define CANCEL_LABEL         "Cancel"
@@ -45,5 +47,8 @@
 #define XML_FILE_FILTER  "XML file (*.xml)"
 
 #define CSV_SEPARATOR ","
+
+#define CONFIRM_DELETION_TITLE "Confirm deletion"
+#define CONFIRM_DELETION_TEXT  "Are you really want to delete this node?"
 
 #endif // CONSTANTS_H_INCLUDED

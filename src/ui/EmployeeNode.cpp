@@ -11,6 +11,10 @@
 #include "ConfigReader.h"
 using namespace bestalloc;
 
+#include <QMenu>
+#include <QMessageBox>
+#include <QGraphicsSceneContextMenuEvent>
+
 static int s_globalEmployeeCounter = 0;
 
 EmployeeNode::EmployeeNode(const QString &name, const QPixmap &nodePicture, GraphWidget* widget)
@@ -18,20 +22,49 @@ EmployeeNode::EmployeeNode(const QString &name, const QPixmap &nodePicture, Grap
 {
 }
 
+void EmployeeNode::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+{
+    QMenu contextMenu;
+    QAction* editAction = contextMenu.addAction(EDIT_MENU_LABEL);
+    contextMenu.addAction(DELETE_MENU_LABEL);
+
+    QAction* selectedAction = contextMenu.exec(event->screenPos());
+    if (selectedAction != NULL) {
+        if (selectedAction == editAction) {
+
+        } else { // Delete
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(CONFIRM_DELETION_TITLE);
+            msgBox.setText(CONFIRM_DELETION_TEXT);
+            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            int ret = msgBox.exec();
+            switch (ret) {
+                case QMessageBox::Ok:
+                    m_widget->deleteEmployeeNode(this);
+                    break;
+
+                case QMessageBox::Cancel:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+}
+
 void EmployeeNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     GraphNode::paint(painter, option, widget);
 
     painter->setBrush(Qt::black);
-    painter->setFont(QFont("Verdana", 15));
+    painter->setFont(QFont("Monospace", 11));
 
     painter->drawText(QRect(-100, -140, 100, 50), Qt::AlignCenter | Qt::AlignTop, QString(getName().c_str()));
 }
 
-EmployeeNode::~EmployeeNode()
-{
-}
-
+/*
 void EmployeeNode::save(QDataStream &str)
 {
     this->Employee::save(str);
@@ -43,6 +76,7 @@ void EmployeeNode::load(QDataStream &str)
     this->Employee::load(str);
     this->GraphNode::load(str);
 }
+*/
 
 QString EmployeeNode::getTaskName()
 {
@@ -71,4 +105,8 @@ void EmployeeNode::setFrom(QLineEdit *editName, QLineEdit *editPower)
 void EmployeeNode::setImage(QGraphicsItem *item)
 {
     GraphNode::setImage(item);
+}
+
+EmployeeNode::~EmployeeNode()
+{
 }

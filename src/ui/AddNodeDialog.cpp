@@ -107,7 +107,6 @@ AddNodeDialog::AddNodeDialog(QWidget *parent)
     botLeftLayout->addWidget(weightLabel);
     botLeftLayout->addWidget(m_weightEdit);
 
-
     QVBoxLayout *leftLayout = new QVBoxLayout;
     leftLayout->addWidget(m_employeeRadioBtn);
     leftLayout->addWidget(m_skillRadioBtn);
@@ -202,11 +201,6 @@ void AddNodeDialog::confirmNewItem()
     emit(updateData(this));
 }
 
-AddNodeDialog::~AddNodeDialog()
-{
-}
-
-
 void AddNodeDialog::selectSkill(int index)
 {
     QVariant v = m_skillsList->itemData(index);
@@ -234,4 +228,8 @@ void AddNodeDialog::updateData(QList<EmployeeNode *> &employees, QList<SkillNode
         QVariant v = QVariant::fromValue(cur);
         m_skillsList->addItem(cur->getTaskName(),v);
     }
+}
+
+AddNodeDialog::~AddNodeDialog()
+{
 }

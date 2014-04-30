@@ -16,14 +16,16 @@ namespace bestalloc
     class GraphWidget;
     class GraphEdge;
 
-    class GraphNode : public QGraphicsPixmapItem
+    class GraphNode : public QGraphicsItem
     {
     private:
-        GraphWidget*      m_widget;
         QPixmap           m_nodePicture;
         QPointF           m_newPos;
         QList<GraphEdge*> m_edgeList;
         QPointF           m_position;
+
+    protected:
+        GraphWidget*      m_widget;
 
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);

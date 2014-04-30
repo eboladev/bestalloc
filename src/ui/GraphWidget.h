@@ -47,7 +47,6 @@ namespace bestalloc
 
     protected:
         void keyPressEvent(QKeyEvent *event);
-        void contextMenuEvent(QContextMenuEvent* event);
         void wheelEvent(QWheelEvent* event);
 
     public:
@@ -73,11 +72,19 @@ namespace bestalloc
         void addNewNode();
         void changeObject();
         void deleteObject();
+
         void addEmployeeNode(EmployeeNode* node);
         void addSkillNode(SkillNode* node);
         void addEdge(GraphEdge* edge);
+
+        void editEmployeeNode(EmployeeNode* node);
+
+        void deleteEmployeeNode(EmployeeNode* node);
+        void deleteSkillNode(SkillNode* node);
+        void deleteEdge(GraphEdge* edge);
+
+        void reset();
         void clear();
-        void clearAll();
         void save(QDataStream &str);
         void load(QDataStream &str);
         void addNodeDialogUpdateData(AddNodeDialog*dlg);

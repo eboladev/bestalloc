@@ -15,10 +15,12 @@ using namespace bestalloc;
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
+#include <QMenu>
+#include <QAction>
 #include "ConfigReader.h"
 
 GraphNode::GraphNode(const QPixmap& nodePicture, GraphWidget* widget)
-    : QGraphicsPixmapItem(), m_widget(widget), m_nodePicture(QPixmap(nodePicture)), m_position(QPointF(0,0))
+    : QGraphicsItem(), m_widget(widget), m_nodePicture(QPixmap(nodePicture)), m_position(QPointF(0,0))
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
@@ -88,7 +90,7 @@ QRectF GraphNode::boundingRect() const
 QPainterPath GraphNode::shape() const
 {
     QPainterPath path;
-    path.addEllipse(-100, -100, 100, 100);
+    path.addEllipse(-150, -150, 150, 150);
     return path;
 }
 

@@ -20,21 +20,22 @@ namespace bestalloc
 
     class EmployeeNode : public Employee, public GraphNode, public TaskObject
     {
+    protected:
+        void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
     public:
         EmployeeNode(const QString& name, const QPixmap& nodePicture, GraphWidget* widget = NULL);
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-        ~EmployeeNode();
-
-        void save(QDataStream &str);
-        void load(QDataStream &str);
-
+//        void save(QDataStream &str);
+//        void load(QDataStream &str);
         virtual QString getTaskName();
         virtual void printTo(QLineEdit *editName, QLineEdit *editPower);
         virtual QGraphicsItem *getGraphItem();
         virtual void setFrom(QLineEdit*editName, QLineEdit*editPower);
         virtual void setImage(QGraphicsItem *item);
+
+        ~EmployeeNode();
     };
 }
 Q_DECLARE_METATYPE(bestalloc::EmployeeNode*)

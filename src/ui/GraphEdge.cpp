@@ -65,7 +65,7 @@ void GraphEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 
     QPoint weightPosPoint = QPoint((m_destPoint.x() + m_sourcePoint.x()) / 2, (m_destPoint.y() + m_sourcePoint.y()) / 2);
 
-    painter->drawText(QRect(weightPosPoint.x() - 20, weightPosPoint.y(), 20, 20), Qt::AlignCenter | Qt::AlignTop, QString::number(m_weight));
+    painter->drawText(QRect(weightPosPoint.x() - 50, weightPosPoint.y(), 100, 20), Qt::AlignCenter | Qt::AlignTop, QString::number(m_weight));
 }
 
 EmployeeNode* GraphEdge::getSourceNode() const
@@ -157,9 +157,9 @@ void GraphEdge::load(QDataStream &str)
 QString GraphEdge::getTaskName()
 {
     QString result = "";
-    result+=m_sourceNode->getName().data();
-    result+="<->";
-    result+=m_destNode->getName().data();
+    result += m_sourceNode->getName().data();
+    result += "<->";
+    result += m_destNode->getName().data();
     return result;
 }
 

@@ -25,7 +25,8 @@ using namespace bestalloc;
 #include <QFileDialog>
 #include <QMessageBox>
 
-DeleteObjectDialog::DeleteObjectDialog(GraphWidget *parent):m_selectedIndex(0),m_selectedObject(NULL),QDialog(parent)
+DeleteObjectDialog::DeleteObjectDialog(GraphWidget *parent)
+    : QDialog(parent), m_selectedIndex(0), m_selectedObject(NULL)
 {
     m_objectsList = new QComboBox(this);
     connect(m_objectsList, SIGNAL(currentIndexChanged(int)), SLOT(selectObject(int)));
@@ -48,10 +49,6 @@ DeleteObjectDialog::DeleteObjectDialog(GraphWidget *parent):m_selectedIndex(0),m
     setWindowTitle(DELETE_OBJECT_LABEL);
 }
 
-DeleteObjectDialog::~DeleteObjectDialog()
-{
-}
-
 void DeleteObjectDialog::addElement(TaskObject *obj)
 {
     QVariant v = QVariant::fromValue(obj);
@@ -68,10 +65,10 @@ void DeleteObjectDialog::selectObject(int index)
 
 void DeleteObjectDialog::deleteObject()
 {
-    if(m_selectedObject){
-        if(((GraphWidget *)parentWidget())->deleteObject(m_selectedObject)){
+    if (m_selectedObject) {
+        if (((GraphWidget *)parentWidget())->deleteObject(m_selectedObject)) {
             m_objectsList->removeItem(m_selectedIndex);
-        }else{
+        } else {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Warning");
             msgBox.setIcon(QMessageBox::Warning);
@@ -80,4 +77,8 @@ void DeleteObjectDialog::deleteObject()
             msgBox.exec();
         }
     }
+}
+
+DeleteObjectDialog::~DeleteObjectDialog()
+{
 }

@@ -85,7 +85,7 @@ QMenu* MainWindow::createEditMenu()
     connect(addDataAction, SIGNAL(triggered()), &m_graphWidget, SLOT(addNewNode()));
 
     QAction* changeObjectAction = new QAction(NULL);
-    changeObjectAction->setText(CHANGE_OBJECT_MENU_LABEL);
+    changeObjectAction->setText(EDIT_OBJECT_MENU_LABEL);
     connect(changeObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(changeObject()));
 
     QAction* deleteObjectAction = new QAction(NULL);
@@ -109,13 +109,13 @@ QMenu* MainWindow::createToolsMenu()
     computeAction->setText(COMPUTE_LABEL);
     connect(computeAction, SIGNAL(triggered()), SLOT(compute()));
 
-    QAction* clearSceneAction = new QAction(NULL);
-    clearSceneAction->setText(CLEAR_SCENE_LABEL);
-    connect(clearSceneAction, SIGNAL(triggered()), &m_graphWidget, SLOT(clear()));
+    QAction* resetGraphAction = new QAction(NULL);
+    resetGraphAction->setText(RESET_GRAPH_LABEL);
+    connect(resetGraphAction, SIGNAL(triggered()), &m_graphWidget, SLOT(reset()));
 
     QMenu* menuTools = new QMenu(TOOLS_MENU_LABEL);
     menuTools->addAction(computeAction);
-    menuTools->addAction(clearSceneAction);
+    menuTools->addAction(resetGraphAction);
     menuTools->addAction(generateReportAction);
 
     return menuTools;

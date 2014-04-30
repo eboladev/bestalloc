@@ -46,12 +46,12 @@ Employee::~Employee()
 
 void Employee::save(QDataStream &str)
 {
-    str<<(qint32)m_id;
-    str<<m_name.data();
+    str << (qint32)m_id;
+    str << m_name.data();
 }
 
 void Employee::load(QDataStream &str)
 {
-    str>>m_id;
+    str >> m_id;
     m_name = ConfigReader::readString(str);
 }
