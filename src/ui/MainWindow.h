@@ -41,7 +41,7 @@ namespace bestalloc
         QMenu* createEditMenu();
         QMenu* createToolsMenu();
 
-        bool checkTaskInputData();
+        bool validateInputData();
 
     public:
         MainWindow(QWidget* parent = NULL);

@@ -121,16 +121,16 @@ QMenu* MainWindow::createToolsMenu()
     return menuTools;
 }
 
-bool MainWindow::checkTaskInputData()
+bool MainWindow::validateInputData()
 {
     foreach (EmployeeNode* node, m_graphWidget.getEmployeeNodes()) {
-        if(node->getEdges().size()<=0){
+        if (node->getEdges().size() <= 0){
             return false;
         }
     }
 
     foreach (SkillNode* node, m_graphWidget.getSkillNodes()) {
-        if (node->getEdges().size()<=0){
+        if (node->getEdges().size() <= 0){
             return false;
         }
     }
@@ -143,15 +143,12 @@ void MainWindow::compute()
 {
     m_dataProvider.clearContainers();
 
-    if(!checkTaskInputData()){
+    if (!validateInputData()) {
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Warning");
+        msgBox.setWindowTitle(WARNING_TITLE);
         msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setText("Can`t compute");
-        msgBox.setInformativeText(
-                    "1) The number of peaks in different parts should be the same; \n"
-                    "2) There must not be connected vertices, each vertex must be connected with anything;"
-                    );
+        msgBox.setText(CALC_WARNING_TEXT);
+        msgBox.setInformativeText(CALC_WARNING_INFO);
         msgBox.exec();
         return;
     }

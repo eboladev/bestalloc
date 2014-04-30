@@ -297,7 +297,7 @@ void GraphWidget::addEmployeeNode(EmployeeNode* node)
     foreach (EmployeeNode *cur, m_employeeNodes) {
         if(cur->getTaskName()==node->getTaskName()){
             QMessageBox msgBox;
-            msgBox.setWindowTitle("Warning");
+            msgBox.setWindowTitle(WARNING_TITLE);
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setText("Can`t add employee.");
             msgBox.setInformativeText("Employee already exist, try change name.");
@@ -316,7 +316,7 @@ void GraphWidget::addSkillNode(SkillNode* node)
     foreach (SkillNode *cur, m_skillNodes) {
         if (cur->getTaskName() == node->getTaskName()){
             QMessageBox msgBox;
-            msgBox.setWindowTitle("Warning");
+            msgBox.setWindowTitle(WARNING_TITLE);
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setText("Can`t add skill.");
             msgBox.setInformativeText("Skill already exist, try change name.");
@@ -324,6 +324,7 @@ void GraphWidget::addSkillNode(SkillNode* node)
             return;
         }
     }
+
     m_skillNodes.push_back(node);
     m_scene->addItem(node);
     node->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
@@ -335,7 +336,7 @@ void GraphWidget::addEdge(GraphEdge *edge)
     foreach (GraphEdge *cur, m_edges) {
         if (cur->getSourceNode() == edge->getSourceNode() && cur->getDestNode() == edge->getDestNode()) {
             QMessageBox msgBox;
-            msgBox.setWindowTitle("Warning");
+            msgBox.setWindowTitle(WARNING_TITLE);
             msgBox.setIcon(QMessageBox::Warning);
             msgBox.setText("Can`t add edge.");
             msgBox.setInformativeText("Edge already exist.");

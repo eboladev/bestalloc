@@ -48,6 +48,12 @@
 
 #define CSV_SEPARATOR ","
 
+#define WARNING_TITLE "Warning"
+
+#define CALC_WARNING_TEXT "Cannot calculate best allocation for given graph"
+#define CALC_WARNING_INFO "1) The number of peaks in different parts should be the same;\n2) There must not be connected vertices, each vertex must be connected with anything;"
+
+
 #define CONFIRM_DELETION_TITLE "Confirm deletion"
 #define CONFIRM_DELETION_TEXT  "Are you really want to delete this node?"
 
