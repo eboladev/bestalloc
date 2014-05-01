@@ -332,7 +332,7 @@ void GraphWidget::addSkillNode(SkillNode* node)
 
 void GraphWidget::addEdge(GraphEdge *edge)
 {
-    clear();
+    reset();
     foreach (GraphEdge *cur, m_edges) {
         if (cur->getSourceNode() == edge->getSourceNode() && cur->getDestNode() == edge->getDestNode()) {
             QMessageBox msgBox;
@@ -360,6 +360,8 @@ void GraphWidget::editEmployeeNode(EmployeeNode *node)
 void GraphWidget::deleteEmployeeNode(EmployeeNode* node)
 {
     if (node != NULL) {
+        reset();
+
         for (int i = 0; i < m_employeeNodes.size(); i++) {
             EmployeeNode* target = m_employeeNodes.at(i);
             if (m_employeeNodes.at(i)->getId() == node->getId()) {
@@ -378,6 +380,8 @@ void GraphWidget::deleteEmployeeNode(EmployeeNode* node)
 void GraphWidget::deleteSkillNode(SkillNode *node)
 {
     if (node != NULL) {
+        reset();
+
         for (int i = 0; i < m_skillNodes.size(); i++) {
             SkillNode* target = m_skillNodes.at(i);
             if (m_skillNodes.at(i)->getId() == node->getId()) {
@@ -396,6 +400,8 @@ void GraphWidget::deleteSkillNode(SkillNode *node)
 void GraphWidget::deleteEdge(GraphEdge *edge)
 {
     if (edge != NULL) {
+        reset();
+
         for (int i = 0; i < m_edges.size(); ++i) {
             GraphEdge* target = m_edges.at(i);
             if (target == edge) {
@@ -412,6 +418,7 @@ void GraphWidget::reset()
 {
     foreach (GraphEdge* fakeEdge, m_fakeEdges) {
         m_scene->removeItem(fakeEdge);
+        delete fakeEdge;
     }
 
     m_fakeEdges.clear();
@@ -425,20 +432,20 @@ void GraphWidget::reset()
 void GraphWidget::clear()
 {
     reset();
-    foreach (GraphEdge* cur, m_edges) {
-        m_scene->removeItem(cur);
-    }
 
+    foreach (GraphEdge* edge, m_edges) {
+        m_scene->removeItem(edge);
+    }
     m_edges.clear();
-    foreach (EmployeeNode* cur, m_employeeNodes) {
-        m_scene->removeItem(cur);
-    }
 
+    foreach (EmployeeNode* node, m_employeeNodes) {
+        m_scene->removeItem(node);
+    }
     m_employeeNodes.clear();
-    foreach (SkillNode* cur, m_skillNodes) {
-        m_scene->removeItem(cur);
-    }
 
+    foreach (SkillNode* node, m_skillNodes) {
+        m_scene->removeItem(node);
+    }
     m_skillNodes.clear();
 }
 
@@ -532,7 +539,7 @@ void GraphWidget::updateImage()
 
 bool GraphWidget::deleteObject(TaskObject *obj)
 {
-    clear();
+    reset();
 
     for (int i = 0; i < m_edges.size(); ++i) {
         GraphEdge *cur = m_edges.at(i);
