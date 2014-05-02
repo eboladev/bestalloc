@@ -11,11 +11,48 @@
 #include "ConfigReader.h"
 using namespace bestalloc;
 
+#include <QGraphicsSceneContextMenuEvent>
+#include <QMenu>
+#include <QMessageBox>
+#include <QAction>
+
 static int s_globalSkillCounter = 0;
 
 SkillNode::SkillNode(const QString &name, const QPixmap &nodePicture, GraphWidget* widget)
     : Skill(s_globalSkillCounter++, name.toStdString()), GraphNode(nodePicture, widget)
 {
+}
+
+void SkillNode::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+{
+    QMenu contextMenu;
+    QAction* editAction = contextMenu.addAction(EDIT_MENU_LABEL);
+    contextMenu.addAction(DELETE_MENU_LABEL);
+
+    QAction* selectedAction = contextMenu.exec(event->screenPos());
+    if (selectedAction != NULL) {
+        if (selectedAction == editAction) {
+
+        } else {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(CONFIRM_DELETION_TITLE);
+            msgBox.setText(CONFIRM_SKILL_DELETION_TEXT + QString("'") + QString::fromStdString(getName()) + QString("'?"));
+            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            int ret = msgBox.exec();
+            switch (ret) {
+                case QMessageBox::Ok:
+                    m_widget->deleteNode(this);
+                    break;
+
+                case QMessageBox::Cancel:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
 }
 
 void SkillNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

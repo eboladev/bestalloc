@@ -43,6 +43,9 @@ MainWindow::MainWindow(QWidget* parent)
     setGeometry(screenWidth / 2 - windowWidth / 2,
                 screenHeight / 2 - windowHeight / 2,
                 windowWidth, windowHeight);
+
+    connect(&m_graphWidget, SIGNAL(compute()), SLOT(compute()));
+    connect(&m_graphWidget, SIGNAL(report()), SLOT(generateReport()));
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -80,12 +83,12 @@ QMenu* MainWindow::createFileMenu()
 
 QMenu* MainWindow::createEditMenu()
 {
-    QAction* addDataAction = new QAction(NULL);
-    addDataAction->setText(ADD_DATA_MENU_LABEL);
-    connect(addDataAction, SIGNAL(triggered()), &m_graphWidget, SLOT(addNewNode()));
+    QAction* addObjectAction = new QAction(NULL);
+    addObjectAction->setText(ADD_OBJECT_MENU_LABEL);
+    connect(addObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(addObject()));
 
     QAction* changeObjectAction = new QAction(NULL);
-    changeObjectAction->setText(EDIT_OBJECT_MENU_LABEL);
+    changeObjectAction->setText(CHANGE_OBJECT_MENU_LABEL);
     connect(changeObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(changeObject()));
 
     QAction* deleteObjectAction = new QAction(NULL);
@@ -93,18 +96,15 @@ QMenu* MainWindow::createEditMenu()
     connect(deleteObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(deleteObject()));
 
     QMenu* menuEdit = new QMenu(EDIT_MENU_LABEL);
-    menuEdit->addAction(addDataAction);
+    menuEdit->addAction(addObjectAction);
     menuEdit->addAction(changeObjectAction);
     menuEdit->addAction(deleteObjectAction);
+
     return menuEdit;
 }
 
 QMenu* MainWindow::createToolsMenu()
 {
-    QAction* generateReportAction = new QAction(NULL);
-    generateReportAction->setText(GENERATE_REPORT_ACTION_MENU_LABEL);
-    connect(generateReportAction, SIGNAL(triggered()), SLOT(generateReport()));
-
     QAction* computeAction = new QAction(NULL);
     computeAction->setText(COMPUTE_LABEL);
     connect(computeAction, SIGNAL(triggered()), SLOT(compute()));
@@ -112,6 +112,10 @@ QMenu* MainWindow::createToolsMenu()
     QAction* resetGraphAction = new QAction(NULL);
     resetGraphAction->setText(RESET_GRAPH_LABEL);
     connect(resetGraphAction, SIGNAL(triggered()), &m_graphWidget, SLOT(reset()));
+
+    QAction* generateReportAction = new QAction(NULL);
+    generateReportAction->setText(GENERATE_REPORT_ACTION_MENU_LABEL);
+    connect(generateReportAction, SIGNAL(triggered()), SLOT(generateReport()));
 
     QMenu* menuTools = new QMenu(TOOLS_MENU_LABEL);
     menuTools->addAction(computeAction);

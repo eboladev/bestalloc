@@ -18,6 +18,9 @@ namespace bestalloc
 
     class SkillNode : public Skill, public GraphNode
     {
+    protected:
+        void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
     public:
         SkillNode(const QString& name, const QPixmap& nodePicture, GraphWidget* widget = NULL);
 

@@ -27,11 +27,11 @@ using namespace bestalloc;
     m_patternsImages.append(":images/"#image".png");
 
 AddNodeDialog::AddNodeDialog(QWidget *parent)
-    : m_selectedEmployeeNode(0),
-      m_selectedSkillNode(0),
-      QDialog(parent),
+    : QDialog(parent),
+      m_itemName(""),
       m_weight(0),
-      m_itemName("")
+      m_selectedEmployeeNode(0),
+      m_selectedSkillNode(0)
 {
     ADD_PATTERN(PHP,res_php);
     ADD_PATTERN(Perl,res_perl);

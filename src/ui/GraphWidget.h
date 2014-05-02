@@ -66,10 +66,14 @@ namespace bestalloc
 
         ~GraphWidget();
 
+    signals:
+        void compute();
+        void report();
+
     public slots:
         void resizeToFit();
 
-        void addNewNode();
+        void addObject();
         void changeObject();
         void deleteObject();
 

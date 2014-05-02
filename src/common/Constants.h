@@ -10,10 +10,10 @@
 #define LOAD_ACTION_MENU_LABEL   "&Load"
 
 #define EDIT_MENU_LABEL          "&Edit"
-#define ADD_DATA_MENU_LABEL      "Add &object"
+#define ADD_OBJECT_MENU_LABEL    "Add &object"
 #define ADD_EDGE_MENU_LABEL      "Add ed&ge"
 #define ADD_TEMPLATE_MENU_LABEL  "Add &template"
-#define EDIT_OBJECT_MENU_LABEL   "&Edit object"
+#define CHANGE_OBJECT_MENU_LABEL "&Change object"
 #define DELETE_OBJECT_MENU_LABEL "&Delete object"
 #define EDIT_MENU_LABEL          "&Edit"
 #define DELETE_MENU_LABEL        "&Delete"
@@ -54,7 +54,9 @@
 #define CALC_WARNING_INFO "1) The number of vertices in different parts should be the same;\n2) Each vertex must be connected with another one;"
 
 #define CONFIRM_DELETION_TITLE "Confirm deletion"
-#define CONFIRM_DELETION_TEXT  "Are you really want to delete this node?"
+#define CONFIRM_DELETION_TEXT  "Are you really want to this node?"
+#define CONFIRM_SKILL_DELETION_TEXT  "Are you really want to delete skill "
+#define CONFIRM_EMPLOYEE_DELETION_TEXT  "Are you really want to delete employee "
 
 #define ADD_EMPLOYEE_ERROR_TEXT "Can`t add employee"
 #define ADD_EMPLOYEE_ERROR_INFO "Employee already exists, try to change name"

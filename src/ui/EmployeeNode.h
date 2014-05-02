@@ -18,6 +18,9 @@ namespace bestalloc
 
     class EmployeeNode : public Employee, public GraphNode
     {
+    protected:
+        void contextMenuEvent(QGraphicsSceneContextMenuEvent* event);
+
     public:
         EmployeeNode(const QString& name, const QPixmap& nodePicture, GraphWidget* widget = NULL);
 

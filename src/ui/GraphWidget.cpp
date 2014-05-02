@@ -121,13 +121,35 @@ void GraphWidget::wheelEvent(QWheelEvent *event)
 void GraphWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::RightButton) {
-        qDebug() << scene()->itemAt(QPointF(event->pos()));
+        QGraphicsItem* selectedObject = scene()->itemAt(mapToScene(event->pos()), QTransform());
+        GraphNode* selectedNode = dynamic_cast<GraphNode*>(selectedObject);
+        if (selectedNode == NULL) {
+            QMenu contextMenu;
 
-//        QMenu contextMenu;
-//        QAction* editAction = contextMenu.addAction("1");
-//        contextMenu.addAction("2");
+            QAction* addObjectAction = contextMenu.addAction(ADD_OBJECT_MENU_LABEL);
+            connect(addObjectAction, SIGNAL(triggered()), SLOT(addObject()));
 
-//        QAction* selectedAction = contextMenu.exec(event->globalPos());
+            QAction* changeObject = contextMenu.addAction(CHANGE_OBJECT_MENU_LABEL);
+            connect(changeObject, SIGNAL(triggered()), SLOT(changeObject()));
+
+            QAction* deleteObjectAction = contextMenu.addAction(DELETE_OBJECT_MENU_LABEL);
+            connect(deleteObjectAction, SIGNAL(triggered()), SLOT(deleteObject()));
+
+            contextMenu.addSeparator();
+
+            QAction* computeAction = contextMenu.addAction(COMPUTE_LABEL);
+            connect(computeAction, SIGNAL(triggered()), SIGNAL(compute()));
+
+            QAction* resetSceneAction = contextMenu.addAction(RESET_GRAPH_LABEL);
+            connect(resetSceneAction, SIGNAL(triggered()), SLOT(reset()));
+
+            QAction* generateReportAction = contextMenu.addAction(GENERATE_REPORT_ACTION_MENU_LABEL);
+            connect(generateReportAction, SIGNAL(triggered()), SIGNAL(report()));
+
+            contextMenu.exec(event->globalPos());
+        }
+    } else {
+        QGraphicsView::mousePressEvent(event);
     }
 }
 
@@ -255,13 +277,14 @@ void GraphWidget::resizeToFit()
     }
 }
 
-void GraphWidget::addNewNode()
+void GraphWidget::addObject()
 {
     AddNodeDialog* dialog = new AddNodeDialog(this);
     connect(dialog, SIGNAL(addEmployeeNode(EmployeeNode*)), SLOT(addEmployeeNode(EmployeeNode*)));
     connect(dialog, SIGNAL(addSkillNode(SkillNode*)), SLOT(addSkillNode(SkillNode*)));
     connect(dialog, SIGNAL(addEdge(GraphEdge*)), SLOT(addEdge(GraphEdge*)));
     connect(dialog, SIGNAL(updateData(AddNodeDialog*)), SLOT(addNodeDialogUpdateData(AddNodeDialog*)));
+
     dialog->updateData(m_employeeNodes,m_skillNodes);
     dialog->show();
 }

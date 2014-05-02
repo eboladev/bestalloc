@@ -13,13 +13,8 @@
 using namespace bestalloc;
 
 #include <QGraphicsScene>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsSceneContextMenuEvent>
 #include <QPainter>
 #include <QStyleOption>
-#include <QMessageBox>
-#include <QMenu>
-#include <QAction>
 
 GraphNode::GraphNode(const QPixmap& nodePicture, GraphWidget* widget)
     : QGraphicsItem(), m_nodePicture(QPixmap(nodePicture)), m_position(QPointF(0,0)), m_widget(widget)
@@ -43,38 +38,6 @@ void GraphNode::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     if (m_widget != NULL) {
         m_widget->resizeToFit();
-    }
-}
-
-void GraphNode::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
-{
-    QMenu contextMenu;
-    QAction* editAction = contextMenu.addAction(EDIT_MENU_LABEL);
-    contextMenu.addAction(DELETE_MENU_LABEL);
-
-    QAction* selectedAction = contextMenu.exec(event->screenPos());
-    if (selectedAction != NULL) {
-        if (selectedAction == editAction) {
-
-        } else {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle(CONFIRM_DELETION_TITLE);
-            msgBox.setText(CONFIRM_DELETION_TEXT);
-            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-            msgBox.setDefaultButton(QMessageBox::Cancel);
-            int ret = msgBox.exec();
-            switch (ret) {
-                case QMessageBox::Ok:
-                    m_widget->deleteNode(this);
-                    break;
-
-                case QMessageBox::Cancel:
-                    break;
-
-                default:
-                    break;
-            }
-        }
     }
 }
 
