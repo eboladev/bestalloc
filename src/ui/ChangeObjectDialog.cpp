@@ -26,7 +26,8 @@ using namespace bestalloc;
 
 #define IMAGE_PREVIEW_SIZE 300
 
-ChangeObjectDialog::ChangeObjectDialog(QWidget *parent): m_currentImage(NULL),m_selectedObject(NULL),QDialog(parent)
+ChangeObjectDialog::ChangeObjectDialog(QWidget *parent)
+    : QDialog(parent), m_currentImage(NULL)//, m_selectedObject(NULL),
 {
     m_objectsList = new QComboBox(this);
     connect(m_objectsList, SIGNAL(currentIndexChanged(int)), SLOT(selectObject(int)));
@@ -97,15 +98,15 @@ ChangeObjectDialog::~ChangeObjectDialog()
 {
 }
 
-void ChangeObjectDialog::addElement(TaskObject *obj)
+/*void ChangeObjectDialog::addElement(TaskObject *obj)
 {
     QVariant v = QVariant::fromValue(obj);
     m_objectsList->addItem(obj->getTaskName(),v);
-}
+}*/
 
 void ChangeObjectDialog::selectObject(int index)
 {
-    m_scene->clear();
+/*    m_scene->clear();
     QVariant v = m_objectsList->itemData(index);
     TaskObject *obj = v.value<TaskObject*>();
     m_selectedObject = obj;
@@ -116,12 +117,12 @@ void ChangeObjectDialog::selectObject(int index)
         m_currentImage->setPixmap(pixmap.scaledToHeight(IMAGE_PREVIEW_SIZE).scaledToWidth(IMAGE_PREVIEW_SIZE));
         m_scene->addItem(m_currentImage);
     }
-    m_openPictureBtn->setEnabled(m_currentImage);
+    m_openPictureBtn->setEnabled(m_currentImage);*/
 }
 
 void ChangeObjectDialog::confirmChanges()
 {
-    if(!m_selectedObject){
+/*    if(!m_selectedObject){
         return;
     }
     m_selectedObject->setFrom(m_editName,m_editPower);
@@ -129,7 +130,7 @@ void ChangeObjectDialog::confirmChanges()
         m_selectedObject->setImage(m_currentImage);
     }
     m_objectsList->setEnabled(false);
-    emit(updateImage());
+    emit(updateImage());*/
 }
 
 void ChangeObjectDialog::openPicture()

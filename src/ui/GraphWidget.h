@@ -48,6 +48,7 @@ namespace bestalloc
     protected:
         void keyPressEvent(QKeyEvent *event);
         void wheelEvent(QWheelEvent* event);
+        void mousePressEvent(QMouseEvent* event);
 
     public:
         GraphWidget(QWidget* parent = NULL);
@@ -63,30 +64,30 @@ namespace bestalloc
         void setBestAllocation(const vector< pair<Employee, Skill> >& bestAllocMap);
         void setDemoData();
 
-        bool deleteObject(TaskObject *obj);
-
         ~GraphWidget();
 
     public slots:
         void resizeToFit();
+
         void addNewNode();
         void changeObject();
         void deleteObject();
 
-        void addEmployeeNode(EmployeeNode* node);
-        void addSkillNode(SkillNode* node);
+        void addNode(QGraphicsItem* node);
         void addEdge(GraphEdge* edge);
 
-        void editEmployeeNode(EmployeeNode* node);
+        void changeNode(QGraphicsItem* node);
+        void changeEdge(GraphEdge* edge);
 
-        void deleteEmployeeNode(EmployeeNode* node);
-        void deleteSkillNode(SkillNode* node);
+        void deleteNode(QGraphicsItem* node);
         void deleteEdge(GraphEdge* edge);
 
         void reset();
         void clear();
+
         void save(QDataStream &str);
         void load(QDataStream &str);
+
         void addNodeDialogUpdateData(AddNodeDialog*dlg);
         void updateImage();
     };

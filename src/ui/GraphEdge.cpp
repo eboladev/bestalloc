@@ -9,16 +9,18 @@
 #include "GraphEdge.h"
 #include "EmployeeNode.h"
 #include "SkillNode.h"
+#include "Constants.h"
 using namespace bestalloc;
 
+#include <QMenu>
+#include <QMessageBox>
 #include <QPainter>
 #include <QDebug>
-#include "ConfigReader.h"
 
 #include <math.h>
 
 GraphEdge::GraphEdge(EmployeeNode* sourceNode, SkillNode* destNode, int weight, bool isMarked)
-    : QGraphicsItem(), TaskObject(), m_sourceNode(sourceNode), m_destNode(destNode), m_weight(weight), m_isMarked(isMarked)
+    : QGraphicsItem(), m_sourceNode(sourceNode), m_destNode(destNode), m_weight(weight), m_isMarked(isMarked)
 {
     setAcceptedMouseButtons(0);
     m_sourceNode->addEdge(this);
@@ -136,42 +138,6 @@ void GraphEdge::adjust()
     }
 }
 
-void GraphEdge::save(QDataStream &str)
+GraphEdge::~GraphEdge()
 {
-    str<<(qint32)m_weight;
-    str<<m_isMarked;
-
-    ConfigReader::saveQPointF(str, m_sourcePoint);
-    ConfigReader::saveQPointF(str, m_destPoint);
-}
-
-void GraphEdge::load(QDataStream &str)
-{
-    str>>m_weight;
-    str>>m_isMarked;
-
-    ConfigReader::loadQPointF(str, m_sourcePoint);
-    ConfigReader::loadQPointF(str, m_destPoint);
-}
-
-QString GraphEdge::getTaskName()
-{
-    QString result = "";
-    result += m_sourceNode->getName().data();
-    result += "<->";
-    result += m_destNode->getName().data();
-    return result;
-}
-
-void GraphEdge::printTo(QLineEdit *editName, QLineEdit *editPower)
-{
-    editName->setEnabled(false);
-    editPower->setEnabled(true);
-    editName->clear();
-    editPower->setText(QString::number(m_weight));
-}
-
-void GraphEdge::setFrom(QLineEdit *editName, QLineEdit *editPower)
-{
-    m_weight = editPower->text().toInt();
 }

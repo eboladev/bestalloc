@@ -118,6 +118,19 @@ void GraphWidget::wheelEvent(QWheelEvent *event)
     scaleView(pow((double)2, event->delta() / 1024.0));
 }
 
+void GraphWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::RightButton) {
+        qDebug() << scene()->itemAt(QPointF(event->pos()));
+
+//        QMenu contextMenu;
+//        QAction* editAction = contextMenu.addAction("1");
+//        contextMenu.addAction("2");
+
+//        QAction* selectedAction = contextMenu.exec(event->globalPos());
+    }
+}
+
 void GraphWidget::scaleView(qreal scaleFactor)
 {
     qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
@@ -259,15 +272,15 @@ void GraphWidget::changeObject()
     connect(dialog, SIGNAL(updateImage()), SLOT(updateImage()));
 
     foreach (EmployeeNode *cur, m_employeeNodes) {
-        dialog->addElement(cur);
+        //dialog->addElement(cur);
     }
 
     foreach (SkillNode *cur, m_skillNodes) {
-        dialog->addElement(cur);
+        //dialog->addElement(cur);
     }
 
     foreach (GraphEdge *cur, m_edges) {
-        dialog->addElement(cur);
+        //dialog->addElement(cur);
     }
 
     dialog->show();
@@ -278,56 +291,69 @@ void GraphWidget::deleteObject()
     DeleteObjectDialog* dialog = new DeleteObjectDialog(this);
 
     foreach (EmployeeNode *cur, m_employeeNodes) {
-        dialog->addElement(cur);
+        //dialog->addElement(cur);
     }
 
     foreach (SkillNode *cur, m_skillNodes) {
-        dialog->addElement(cur);
+        //dialog->addElement(cur);
     }
 
     foreach (GraphEdge *cur, m_edges) {
-        dialog->addElement(cur);
+        //dialog->addElement(cur);
     }
 
     dialog->show();
 }
 
-void GraphWidget::addEmployeeNode(EmployeeNode* node)
+void GraphWidget::addNode(QGraphicsItem *node)
 {
-    foreach (EmployeeNode *cur, m_employeeNodes) {
-        if(cur->getTaskName()==node->getTaskName()){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle(WARNING_TITLE);
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setText("Can`t add employee.");
-            msgBox.setInformativeText("Employee already exist, try change name.");
-            msgBox.exec();
+    if (node != NULL) {
+        EmployeeNode* emplNode;
+        emplNode = dynamic_cast<EmployeeNode*>(node);
+        if (emplNode != NULL) {
+            foreach (EmployeeNode *curNode, m_employeeNodes) {
+                if (curNode->getName() == emplNode->getName()) {
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle(WARNING_TITLE);
+                    msgBox.setIcon(QMessageBox::Warning);
+                    msgBox.setText(ADD_EMPLOYEE_ERROR_TEXT);
+                    msgBox.setInformativeText(ADD_EMPLOYEE_ERROR_INFO);
+                    msgBox.exec();
+
+                    return;
+                }
+            }
+
+            m_employeeNodes.push_back(emplNode);
+            m_scene->addItem(emplNode);
+            emplNode->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
+
+            return;
+        }
+
+        SkillNode* skillNode;
+        skillNode = dynamic_cast<SkillNode*>(node);
+        if (skillNode != NULL) {
+            foreach (SkillNode* curNode, m_skillNodes) {
+                if (curNode->getName() == skillNode->getName()) {
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle(WARNING_TITLE);
+                    msgBox.setIcon(QMessageBox::Warning);
+                    msgBox.setText(ADD_SKILL_ERROR_TEXT);
+                    msgBox.setInformativeText(ADD_SKILL_ERROR_INFO);
+                    msgBox.exec();
+
+                    return;
+                }
+            }
+
+            m_skillNodes.push_back(skillNode);
+            m_scene->addItem(skillNode);
+            skillNode->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
+
             return;
         }
     }
-
-    m_employeeNodes.push_back(node);
-    m_scene->addItem(node);
-    node->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
-}
-
-void GraphWidget::addSkillNode(SkillNode* node)
-{
-    foreach (SkillNode *cur, m_skillNodes) {
-        if (cur->getTaskName() == node->getTaskName()){
-            QMessageBox msgBox;
-            msgBox.setWindowTitle(WARNING_TITLE);
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setText("Can`t add skill.");
-            msgBox.setInformativeText("Skill already exist, try change name.");
-            msgBox.exec();
-            return;
-        }
-    }
-
-    m_skillNodes.push_back(node);
-    m_scene->addItem(node);
-    node->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
 }
 
 void GraphWidget::addEdge(GraphEdge *edge)
@@ -338,18 +364,19 @@ void GraphWidget::addEdge(GraphEdge *edge)
             QMessageBox msgBox;
             msgBox.setWindowTitle(WARNING_TITLE);
             msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setText("Can`t add edge.");
-            msgBox.setInformativeText("Edge already exist.");
+            msgBox.setText(ADD_EDGE_ERROR_TEXT);
+            msgBox.setInformativeText(ADD_EDGE_ERROR_INFO);
             msgBox.exec();
 
             return;
         }
     }
+
     m_edges.push_back(edge);
     m_scene->addItem(edge);
 }
 
-void GraphWidget::editEmployeeNode(EmployeeNode *node)
+void GraphWidget::changeNode(QGraphicsItem* node)
 {
     if (node != NULL) {
 
@@ -357,42 +384,54 @@ void GraphWidget::editEmployeeNode(EmployeeNode *node)
     }
 }
 
-void GraphWidget::deleteEmployeeNode(EmployeeNode* node)
+void GraphWidget::changeEdge(GraphEdge* edge)
+{
+    if (edge != NULL) {
+
+    }
+}
+
+void GraphWidget::deleteNode(QGraphicsItem* node)
 {
     if (node != NULL) {
         reset();
 
-        for (int i = 0; i < m_employeeNodes.size(); i++) {
-            EmployeeNode* target = m_employeeNodes.at(i);
-            if (m_employeeNodes.at(i)->getId() == node->getId()) {
-                foreach (GraphEdge* edge, target->getEdges()) {
-                    deleteEdge(edge);
-                }
+        EmployeeNode* emplNode;
+        emplNode = dynamic_cast<EmployeeNode*>(node);
+        if (emplNode != NULL) {
+            for (int i = 0; i < m_employeeNodes.size(); i++) {
+                EmployeeNode* curNode = m_employeeNodes.at(i);
+                if (curNode->getId() == emplNode->getId()) {
+                    foreach (GraphEdge* edge, curNode->getEdges()) {
+                        deleteEdge(edge);
+                    }
 
-                m_employeeNodes.removeAt(i);
-                delete target;
-                break;
+                    m_employeeNodes.removeAt(i);
+                    delete curNode;
+                    break;
+                }
             }
+
+            return;
         }
-    }
-}
 
-void GraphWidget::deleteSkillNode(SkillNode *node)
-{
-    if (node != NULL) {
-        reset();
+        SkillNode* skillNode;
+        skillNode = dynamic_cast<SkillNode*>(node);
+        if (skillNode != NULL) {
+            for (int i = 0; i < m_skillNodes.size(); i++) {
+                SkillNode* curNode = m_skillNodes.at(i);
+                if (curNode->getId() == skillNode->getId()) {
+                    foreach (GraphEdge* edge, curNode->getEdges()) {
+                        deleteEdge(edge);
+                    }
 
-        for (int i = 0; i < m_skillNodes.size(); i++) {
-            SkillNode* target = m_skillNodes.at(i);
-            if (m_skillNodes.at(i)->getId() == node->getId()) {
-                foreach (GraphEdge* edge, target->getEdges()) {
-                    deleteEdge(edge);
+                    m_skillNodes.removeAt(i);
+                    delete curNode;
+                    break;
                 }
-
-                m_skillNodes.removeAt(i);
-                delete target;
-                break;
             }
+
+            return;
         }
     }
 }
@@ -408,7 +447,8 @@ void GraphWidget::deleteEdge(GraphEdge *edge)
                 target->getSourceNode()->removeEdge(target);
                 target->getDestNode()->removeEdge(target);
                 m_edges.removeAt(i);
-                delete(target);
+
+                delete target;
             }
         }
     }
@@ -418,6 +458,10 @@ void GraphWidget::reset()
 {
     foreach (GraphEdge* fakeEdge, m_fakeEdges) {
         m_scene->removeItem(fakeEdge);
+
+        fakeEdge->getSourceNode()->removeEdge(fakeEdge);
+        fakeEdge->getDestNode()->removeEdge(fakeEdge);
+
         delete fakeEdge;
     }
 
@@ -537,7 +581,7 @@ void GraphWidget::updateImage()
     }
 }
 
-bool GraphWidget::deleteObject(TaskObject *obj)
+/*bool GraphWidget::deleteObject(TaskObject *obj)
 {
     reset();
 
@@ -578,7 +622,7 @@ bool GraphWidget::deleteObject(TaskObject *obj)
     }
 
     return false;
-}
+}*/
 
 GraphWidget::~GraphWidget()
 {

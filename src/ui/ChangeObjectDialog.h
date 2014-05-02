@@ -10,8 +10,8 @@
 #define CHANGEOBJECTDIALOG_H
 
 #include <QDialog>
-#include "TaskObject.h"
 #include <QComboBox>
+#include <QGraphicsWidget>
 
 namespace bestalloc
 {
@@ -19,17 +19,18 @@ namespace bestalloc
     {
         Q_OBJECT
 
+    private:
         QComboBox *m_objectsList;
         QGraphicsScene* m_scene;
         QLineEdit* m_editName;
         QLineEdit* m_editPower;
         QGraphicsPixmapItem *m_currentImage;
-        TaskObject *m_selectedObject;
+        //TaskObject *m_selectedObject;
         QPushButton *m_openPictureBtn;
     public:
         ChangeObjectDialog(QWidget* parent = NULL);
         ~ChangeObjectDialog();
-        void addElement(TaskObject *obj);
+        //void addElement(TaskObject *obj);
 
     public slots:
         void selectObject(int index);

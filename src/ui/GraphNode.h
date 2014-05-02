@@ -9,7 +9,7 @@
 #ifndef GRAPHNODE_H_INCLUDED
 #define GRAPHNODE_H_INCLUDED
 
-#include <QGraphicsWidget>
+#include <QGraphicsItem>
 
 namespace bestalloc
 {
@@ -30,6 +30,7 @@ namespace bestalloc
     protected:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+        void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
         QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
     public:
@@ -44,17 +45,9 @@ namespace bestalloc
         QPainterPath shape() const;
         virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-        virtual ~GraphNode();
-
-        void save(QDataStream &str);
-        void load(QDataStream &str);
-        void setPos(qreal x, qreal y);
-        void setPos(const QPointF &arg);
-        QPointF getPosition();
-        QPixmap getPixmap();
-        void setImage(QGraphicsItem *image);
-        bool hasEdges();
         void removeEdge(GraphEdge *edge);
+
+        virtual ~GraphNode();
     };
 }
 

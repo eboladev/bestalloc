@@ -10,7 +10,6 @@
 #define DELETEOBJECTDIALOG_H
 
 #include <QDialog>
-#include "TaskObject.h"
 #include <QComboBox>
 
 namespace bestalloc
@@ -22,12 +21,12 @@ namespace bestalloc
 
     private:
         QComboBox*  m_objectsList;
-        TaskObject* m_selectedObject;
+        //TaskObject* m_selectedObject;
         int         m_selectedIndex;
 
     public:
         DeleteObjectDialog(GraphWidget *parent);
-        void addElement(TaskObject *obj);
+        //void addElement(TaskObject *obj);
         ~DeleteObjectDialog();
 
     public slots:

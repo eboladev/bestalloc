@@ -26,7 +26,7 @@ using namespace bestalloc;
 #include <QMessageBox>
 
 DeleteObjectDialog::DeleteObjectDialog(GraphWidget *parent)
-    : QDialog(parent), m_selectedIndex(0), m_selectedObject(NULL)
+    : QDialog(parent), m_selectedIndex(0)//, m_selectedObject(NULL)
 {
     m_objectsList = new QComboBox(this);
     connect(m_objectsList, SIGNAL(currentIndexChanged(int)), SLOT(selectObject(int)));
@@ -49,23 +49,23 @@ DeleteObjectDialog::DeleteObjectDialog(GraphWidget *parent)
     setWindowTitle(DELETE_OBJECT_LABEL);
 }
 
-void DeleteObjectDialog::addElement(TaskObject *obj)
+/*void DeleteObjectDialog::addElement(TaskObject *obj)
 {
     QVariant v = QVariant::fromValue(obj);
     m_objectsList->addItem(obj->getTaskName(),v);
-}
+}*/
 
 void DeleteObjectDialog::selectObject(int index)
 {
     QVariant v = m_objectsList->itemData(index);
-    TaskObject *obj = v.value<TaskObject*>();
+/*    TaskObject *obj = v.value<TaskObject*>();
     m_selectedObject = obj;
-    m_selectedIndex = index;
+    m_selectedIndex = index;*/
 }
 
 void DeleteObjectDialog::deleteObject()
 {
-    if (m_selectedObject) {
+/*    if (m_selectedObject) {
         if (((GraphWidget *)parentWidget())->deleteObject(m_selectedObject)) {
             m_objectsList->removeItem(m_selectedIndex);
         } else {
@@ -77,6 +77,7 @@ void DeleteObjectDialog::deleteObject()
             msgBox.exec();
         }
     }
+    */
 }
 
 DeleteObjectDialog::~DeleteObjectDialog()

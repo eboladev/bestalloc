@@ -51,10 +51,18 @@
 #define WARNING_TITLE "Warning"
 
 #define CALC_WARNING_TEXT "Cannot calculate best allocation for given graph"
-#define CALC_WARNING_INFO "1) The number of peaks in different parts should be the same;\n2) There must not be connected vertices, each vertex must be connected with anything;"
-
+#define CALC_WARNING_INFO "1) The number of vertices in different parts should be the same;\n2) Each vertex must be connected with another one;"
 
 #define CONFIRM_DELETION_TITLE "Confirm deletion"
 #define CONFIRM_DELETION_TEXT  "Are you really want to delete this node?"
+
+#define ADD_EMPLOYEE_ERROR_TEXT "Can`t add employee"
+#define ADD_EMPLOYEE_ERROR_INFO "Employee already exists, try to change name"
+
+#define ADD_SKILL_ERROR_TEXT "Can`t add skill"
+#define ADD_SKILL_ERROR_INFO "Skill already exists, try to change name"
+
+#define ADD_EDGE_ERROR_TEXT "Can`t add edge"
+#define ADD_EDGE_ERROR_INFO "Edge already exists"
 
 #endif // CONSTANTS_H_INCLUDED

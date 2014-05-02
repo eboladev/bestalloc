@@ -12,30 +12,34 @@ HEADERS += model/Bigraph.h \
     model/BestAllocAlgo.h \
     model/BigraphIterator.h \
     model/BigraphAllocator.h \
+    common/Constants.h \
     common/DataProvider.h \
+    common/XMLDataConverter.h \
+    common/TextDataConverter.h \
+    common/ReportGenerator.h \
+    common/DataConverter.h \
+    common/CSVDataConverter.h \
+    common/ConfigReader.h \
     ui/MainWindow.h \
     ui/GraphWidget.h \
-    common/Constants.h \
     ui/GraphEdge.h \
     ui/GraphNode.h \
     ui/AddNodeDialog.h \
     ui/SkillNode.h \
     ui/EmployeeNode.h \
-    common/ConfigReader.h \
     ui/ChangeObjectDialog.h \
-    ui/TaskObject.h \
-    ui/DeleteObjectDialog.h \
-    common/XMLDataConverter.h \
-    common/TextDataConverter.h \
-    common/ReportGenerator.h \
-    common/DataConverter.h \
-    common/CSVDataConverter.h
+    ui/DeleteObjectDialog.h
 
 SOURCES += main.cpp \
     model/Employee.cpp \
     model/Skill.cpp \
     model/BestAllocAlgo.cpp \
     common/DataProvider.cpp \
+    common/XMLDataConverter.cpp \
+    common/TextDataConverter.cpp \
+    common/ReportGenerator.cpp \
+    common/CSVDataConverter.cpp \
+    common/ConfigReader.cpp \
     ui/MainWindow.cpp \
     ui/GraphWidget.cpp \
     ui/GraphEdge.cpp \
@@ -43,14 +47,8 @@ SOURCES += main.cpp \
     ui/AddNodeDialog.cpp \
     ui/SkillNode.cpp \
     ui/EmployeeNode.cpp \
-    common/ConfigReader.cpp \
     ui/ChangeObjectDialog.cpp \
-    ui/TaskObject.cpp \
-    ui/DeleteObjectDialog.cpp \
-    common/XMLDataConverter.cpp \
-    common/TextDataConverter.cpp \
-    common/ReportGenerator.cpp \
-    common/CSVDataConverter.cpp
+    ui/DeleteObjectDialog.cpp
 
 RESOURCES += \
     bestalloc.qrc

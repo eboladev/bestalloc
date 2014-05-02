@@ -203,21 +203,21 @@ void AddNodeDialog::confirmNewItem()
 
 void AddNodeDialog::selectSkill(int index)
 {
-    QVariant v = m_skillsList->itemData(index);
+    /*QVariant v = m_skillsList->itemData(index);
     SkillNode *obj = v.value<SkillNode*>();
-    m_selectedSkillNode = obj;
+    m_selectedSkillNode = obj;*/
 }
 
 void AddNodeDialog::selectEmployee(int index)
 {
-    QVariant v = m_employeeList->itemData(index);
+/*    QVariant v = m_employeeList->itemData(index);
     EmployeeNode *obj = v.value<EmployeeNode*>();
-    m_selectedEmployeeNode = obj;
+    m_selectedEmployeeNode = obj;*/
 }
 
 void AddNodeDialog::updateData(QList<EmployeeNode *> &employees, QList<SkillNode *> &skills)
 {
-    m_employeeList->clear();
+/*    m_employeeList->clear();
     foreach (EmployeeNode *cur, employees) {
         QVariant v = QVariant::fromValue(cur);
         m_employeeList->addItem(cur->getTaskName(),v);
@@ -227,7 +227,7 @@ void AddNodeDialog::updateData(QList<EmployeeNode *> &employees, QList<SkillNode
     foreach (SkillNode *cur, skills) {
         QVariant v = QVariant::fromValue(cur);
         m_skillsList->addItem(cur->getTaskName(),v);
-    }
+    }*/
 }
 
 AddNodeDialog::~AddNodeDialog()

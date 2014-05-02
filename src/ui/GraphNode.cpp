@@ -9,18 +9,20 @@
 #include "GraphNode.h"
 #include "GraphWidget.h"
 #include "GraphEdge.h"
+#include "Constants.h"
 using namespace bestalloc;
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneContextMenuEvent>
 #include <QPainter>
 #include <QStyleOption>
+#include <QMessageBox>
 #include <QMenu>
 #include <QAction>
-#include "ConfigReader.h"
 
 GraphNode::GraphNode(const QPixmap& nodePicture, GraphWidget* widget)
-    : QGraphicsItem(), m_widget(widget), m_nodePicture(QPixmap(nodePicture)), m_position(QPointF(0,0))
+    : QGraphicsItem(), m_nodePicture(QPixmap(nodePicture)), m_position(QPointF(0,0)), m_widget(widget)
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
@@ -41,6 +43,38 @@ void GraphNode::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     if (m_widget != NULL) {
         m_widget->resizeToFit();
+    }
+}
+
+void GraphNode::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
+{
+    QMenu contextMenu;
+    QAction* editAction = contextMenu.addAction(EDIT_MENU_LABEL);
+    contextMenu.addAction(DELETE_MENU_LABEL);
+
+    QAction* selectedAction = contextMenu.exec(event->screenPos());
+    if (selectedAction != NULL) {
+        if (selectedAction == editAction) {
+
+        } else {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(CONFIRM_DELETION_TITLE);
+            msgBox.setText(CONFIRM_DELETION_TEXT);
+            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            int ret = msgBox.exec();
+            switch (ret) {
+                case QMessageBox::Ok:
+                    m_widget->deleteNode(this);
+                    break;
+
+                case QMessageBox::Cancel:
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }
 
@@ -97,52 +131,6 @@ QPainterPath GraphNode::shape() const
 void GraphNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
     painter->drawPixmap(-100, -100, 100, 100, m_nodePicture);
-}
-
-void GraphNode::save(QDataStream &str)
-{
-    m_position.setX(QGraphicsItem::x());
-    m_position.setY(QGraphicsItem::y());
-    ConfigReader::saveQPixmap(str,m_nodePicture);
-    ConfigReader::saveQPointF(str,m_newPos);
-    ConfigReader::saveQPointF(str,m_position);
-}
-
-void GraphNode::load(QDataStream &str)
-{
-    ConfigReader::loadQPixmap(str,m_nodePicture);
-    ConfigReader::loadQPointF(str,m_newPos);
-    ConfigReader::loadQPointF(str,m_position);
-}
-
-void GraphNode::setPos(qreal x, qreal y)
-{
-    QGraphicsItem::setPos(x,y);
-}
-
-void GraphNode::setPos(const QPointF &arg)
-{
-    QGraphicsItem::setPos(arg);
-}
-
-QPointF GraphNode::getPosition()
-{
-    return m_position;
-}
-
-QPixmap GraphNode::getPixmap()
-{
-    return m_nodePicture;
-}
-
-void GraphNode::setImage(QGraphicsItem *image)
-{
-    m_nodePicture = ((QGraphicsPixmapItem*)image)->pixmap();
-}
-
-bool GraphNode::hasEdges()
-{
-    return m_edgeList.size();
 }
 
 void GraphNode::removeEdge(GraphEdge *edge)
