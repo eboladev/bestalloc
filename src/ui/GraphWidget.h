@@ -17,7 +17,7 @@
 #include "GraphNode.h"
 #include "EmployeeNode.h"
 #include "SkillNode.h"
-#include "AddNodeDialog.h"
+#include "AddObjectDialog.h"
 
 namespace bestalloc
 {
@@ -32,8 +32,8 @@ namespace bestalloc
         QList<GraphEdge*>    m_edges;
         QList<GraphEdge*>    m_fakeEdges;
 
-        QPoint m_lastCtxtMenuPos;
-        bool   m_resized;
+        QPointF m_lastCtxtMenuPos;
+        bool    m_resized;
 
     private:
         EmployeeNode* getEmployeeNodeById(int id);
@@ -69,9 +69,11 @@ namespace bestalloc
     signals:
         void compute();
         void report();
+        void nodeAdded();
 
     public slots:
         void resizeToFit();
+        void resetLastCtxtMenuPosition();
 
         void addObject();
         void changeObject();
@@ -92,7 +94,6 @@ namespace bestalloc
         void save(QDataStream &str);
         void load(QDataStream &str);
 
-        void addNodeDialogUpdateData(AddNodeDialog*dlg);
         void updateImage();
     };
 }

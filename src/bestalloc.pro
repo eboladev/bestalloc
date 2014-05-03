@@ -24,11 +24,11 @@ HEADERS += model/Bigraph.h \
     ui/GraphWidget.h \
     ui/GraphEdge.h \
     ui/GraphNode.h \
-    ui/AddNodeDialog.h \
     ui/SkillNode.h \
     ui/EmployeeNode.h \
     ui/ChangeObjectDialog.h \
-    ui/DeleteObjectDialog.h
+    ui/DeleteObjectDialog.h \
+    ui/AddObjectDialog.h
 
 SOURCES += main.cpp \
     model/Employee.cpp \
@@ -44,11 +44,11 @@ SOURCES += main.cpp \
     ui/GraphWidget.cpp \
     ui/GraphEdge.cpp \
     ui/GraphNode.cpp \
-    ui/AddNodeDialog.cpp \
     ui/SkillNode.cpp \
     ui/EmployeeNode.cpp \
     ui/ChangeObjectDialog.cpp \
-    ui/DeleteObjectDialog.cpp
+    ui/DeleteObjectDialog.cpp \
+    ui/AddObjectDialog.cpp
 
 RESOURCES += \
     bestalloc.qrc

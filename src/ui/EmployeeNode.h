@@ -30,4 +30,6 @@ namespace bestalloc
     };
 }
 
+Q_DECLARE_METATYPE(bestalloc::EmployeeNode*)
+
 #endif // EMPLOYEENODE_H_INCLUDED

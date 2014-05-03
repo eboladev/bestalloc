@@ -9,7 +9,7 @@
 #include "GraphWidget.h"
 #include "GraphNode.h"
 #include "GraphEdge.h"
-#include "AddNodeDialog.h"
+#include "AddObjectDialog.h"
 #include "DataProvider.h"
 #include "BestAllocAlgo.h"
 #include "ChangeObjectDialog.h"
@@ -146,6 +146,8 @@ void GraphWidget::mousePressEvent(QMouseEvent *event)
             QAction* generateReportAction = contextMenu.addAction(GENERATE_REPORT_ACTION_MENU_LABEL);
             connect(generateReportAction, SIGNAL(triggered()), SIGNAL(report()));
 
+            m_lastCtxtMenuPos = mapToScene(event->pos());
+
             contextMenu.exec(event->globalPos());
         }
     } else {
@@ -277,15 +279,18 @@ void GraphWidget::resizeToFit()
     }
 }
 
+void GraphWidget::resetLastCtxtMenuPosition()
+{
+    m_lastCtxtMenuPos = QPointF();
+}
+
 void GraphWidget::addObject()
 {
-    AddNodeDialog* dialog = new AddNodeDialog(this);
-    connect(dialog, SIGNAL(addEmployeeNode(EmployeeNode*)), SLOT(addEmployeeNode(EmployeeNode*)));
-    connect(dialog, SIGNAL(addSkillNode(SkillNode*)), SLOT(addSkillNode(SkillNode*)));
+    AddObjectDialog* dialog = new AddObjectDialog(this);
+    connect(dialog, SIGNAL(addNode(QGraphicsItem*)), SLOT(addNode(QGraphicsItem*)));
     connect(dialog, SIGNAL(addEdge(GraphEdge*)), SLOT(addEdge(GraphEdge*)));
-    connect(dialog, SIGNAL(updateData(AddNodeDialog*)), SLOT(addNodeDialogUpdateData(AddNodeDialog*)));
+    connect(this, SIGNAL(nodeAdded()), dialog, SLOT(updateData()));
 
-    dialog->updateData(m_employeeNodes,m_skillNodes);
     dialog->show();
 }
 
@@ -328,7 +333,7 @@ void GraphWidget::deleteObject()
     dialog->show();
 }
 
-void GraphWidget::addNode(QGraphicsItem *node)
+void GraphWidget::addNode(QGraphicsItem* node)
 {
     if (node != NULL) {
         EmployeeNode* emplNode;
@@ -349,8 +354,9 @@ void GraphWidget::addNode(QGraphicsItem *node)
 
             m_employeeNodes.push_back(emplNode);
             m_scene->addItem(emplNode);
-            emplNode->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
+            emplNode->setPos(m_lastCtxtMenuPos + QPoint(emplNode->boundingRect().width()/2, emplNode->boundingRect().height()/2));
 
+            emit(nodeAdded());
             return;
         }
 
@@ -372,8 +378,9 @@ void GraphWidget::addNode(QGraphicsItem *node)
 
             m_skillNodes.push_back(skillNode);
             m_scene->addItem(skillNode);
-            skillNode->setPos(m_lastCtxtMenuPos - QPoint(rect().width()/2, rect().height()/2));
+            skillNode->setPos(m_lastCtxtMenuPos + QPoint(skillNode->boundingRect().width()/2, skillNode->boundingRect().height()/2));
 
+            emit(nodeAdded());
             return;
         }
     }
@@ -592,11 +599,6 @@ void GraphWidget::load(QDataStream &str)
     }*/
 }
 
-void GraphWidget::addNodeDialogUpdateData(AddNodeDialog *dlg)
-{
-    dlg->updateData(m_employeeNodes,m_skillNodes);
-}
-
 void GraphWidget::updateImage()
 {
     foreach (QGraphicsItem *cur, m_scene->items()) {
@@ -649,4 +651,5 @@ void GraphWidget::updateImage()
 
 GraphWidget::~GraphWidget()
 {
+    clear();
 }

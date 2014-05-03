@@ -25,13 +25,15 @@ EmployeeNode::EmployeeNode(const QString &name, const QPixmap &nodePicture, Grap
 
 void EmployeeNode::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
 {
+    if (m_widget == NULL) return;
+
     QMenu contextMenu;
-    QAction* editAction = contextMenu.addAction(EDIT_MENU_LABEL);
+    QAction* changeAction = contextMenu.addAction(CHANGE_MENU_LABEL);
     contextMenu.addAction(DELETE_MENU_LABEL);
 
     QAction* selectedAction = contextMenu.exec(event->screenPos());
     if (selectedAction != NULL) {
-        if (selectedAction == editAction) {
+        if (selectedAction == changeAction) {
 
         } else {
             QMessageBox msgBox;

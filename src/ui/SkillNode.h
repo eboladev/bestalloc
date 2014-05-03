@@ -30,4 +30,6 @@ namespace bestalloc
     };
 }
 
+Q_DECLARE_METATYPE(bestalloc::SkillNode*)
+
 #endif // SKILLNODE_H_INCLUDED

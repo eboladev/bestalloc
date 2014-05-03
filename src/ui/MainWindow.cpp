@@ -86,6 +86,7 @@ QMenu* MainWindow::createEditMenu()
     QAction* addObjectAction = new QAction(NULL);
     addObjectAction->setText(ADD_OBJECT_MENU_LABEL);
     connect(addObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(addObject()));
+    connect(addObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(resetLastCtxtMenuPosition()));
 
     QAction* changeObjectAction = new QAction(NULL);
     changeObjectAction->setText(CHANGE_OBJECT_MENU_LABEL);

@@ -54,7 +54,7 @@ ChangeObjectDialog::ChangeObjectDialog(QWidget *parent)
     validator->setBottom(0);
     m_editPower->setValidator(validator);
 
-    QLabel* labelPower = new QLabel(GRAPH_NODE_POWER_LABEL, this);
+    QLabel* labelPower = new QLabel(GRAPH_NODE_WEIGHT_LABEL, this);
     labelPower->setBuddy(m_editPower);
 
     QHBoxLayout *layoutName = new QHBoxLayout;

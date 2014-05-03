@@ -15,20 +15,20 @@
 #define ADD_TEMPLATE_MENU_LABEL  "Add &template"
 #define CHANGE_OBJECT_MENU_LABEL "&Change object"
 #define DELETE_OBJECT_MENU_LABEL "&Delete object"
-#define EDIT_MENU_LABEL          "&Edit"
+#define CHANGE_MENU_LABEL          "&Edit"
 #define DELETE_MENU_LABEL        "&Delete"
 
 #define TOOLS_MENU_LABEL                  "&Tools"
 #define GENERATE_REPORT_ACTION_MENU_LABEL "&Generate report"
 
 #define COMPUTE_LABEL           "Compute"
-#define ADD_NODE_LABEL          "Add node"
+#define ADD_OBJECT_LABEL        "Add object"
 #define ADD_EDGE_LABEL          "Add edge"
 #define CHANGE_OBJECT_LABEL     "Change object"
 #define GRAPH_NODE_NAME_LABEL   "Name: "
 #define GRAPH_NODE_TYPE_LABEL   "Type: "
 #define GRAPH_NODE_IMAGE_LABEL  "Image: "
-#define GRAPH_NODE_POWER_LABEL  "Power: "
+#define GRAPH_NODE_WEIGHT_LABEL  "Weight: "
 
 #define GRAPH_EMPLOYEE_TYPE_LABEL "Employee"
 #define GRAPH_SKILL_TYPE_LABEL    "Skill"
@@ -64,7 +64,9 @@
 #define ADD_SKILL_ERROR_TEXT "Can`t add skill"
 #define ADD_SKILL_ERROR_INFO "Skill already exists, try to change name"
 
-#define ADD_EDGE_ERROR_TEXT "Can`t add edge"
+#define ADD_EDGE_ERROR_TEXT "Cannot add edge"
 #define ADD_EDGE_ERROR_INFO "Edge already exists"
+
+#define MAX_NODE_NAME_LENGTH 11
 
 #endif // CONSTANTS_H_INCLUDED
