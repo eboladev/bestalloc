@@ -33,10 +33,8 @@ ChangeObjectDialog::ChangeObjectDialog(GraphWidget* parent)
       m_nodeImage(NULL)
 {
     m_objectsList = new QComboBox(this);
+    m_objectsList->setStyle(QStyleFactory::create("Windows"));
     connect(m_objectsList, SIGNAL(currentIndexChanged(int)), SLOT(selectObject(int)));
-    if (!m_objectsList->style()->styleHint(QStyle::SH_ComboBox_Popup)) {
-        m_objectsList->setStyle(QStyleFactory::create("Windows"));
-    }
 
     m_nameEdit = new QLineEdit(this);
     m_nameEdit->setMaxLength(MAX_NODE_NAME_LENGTH);

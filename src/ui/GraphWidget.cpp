@@ -306,6 +306,9 @@ void GraphWidget::changeObject()
 void GraphWidget::deleteObject()
 {
     DeleteObjectDialog* dialog = new DeleteObjectDialog(this);
+    connect(dialog, SIGNAL(deleteNode(QGraphicsItem*)), SLOT(deleteNode(QGraphicsItem*)));
+    connect(dialog, SIGNAL(deleteEdge(GraphEdge*)), SLOT(deleteEdge(GraphEdge*)));
+    connect(this, SIGNAL(contentChanged()), dialog, SLOT(updateContent()));
 
     dialog->show();
 }

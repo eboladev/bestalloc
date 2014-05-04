@@ -9,16 +9,16 @@
 #ifndef ADDOBJECTDIALOG_H_INCLUDED
 #define ADDOBJECTDIALOG_H_INCLUDED
 
+#include "EmployeeNode.h"
+#include "SkillNode.h"
+#include "GraphEdge.h"
+
 #include <QDialog>
 #include <QString>
 #include <QComboBox>
 #include <QList>
 #include <QMap>
 #include <QRadioButton>
-
-#include "EmployeeNode.h"
-#include "SkillNode.h"
-#include "GraphEdge.h"
 
 namespace bestalloc
 {
