@@ -6,8 +6,8 @@
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
 
-#ifndef MAIN_WINDOW_H_INCLUDED
-#define MAIN_WINDOW_H_INCLUDED
+#ifndef MAINWINDOW_H_INCLUDED
+#define MAINWINDOW_H_INCLUDED
 
 #include <QMainWindow>
 #include <QSharedPointer>
@@ -57,4 +57,4 @@ namespace bestalloc
     };
 }
 
-#endif // MAIN_WINDOW_H_INCLUDED
+#endif // MAINWINDOW_H_INCLUDED

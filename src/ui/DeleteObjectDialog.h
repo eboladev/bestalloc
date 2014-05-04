@@ -6,8 +6,8 @@
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
 
-#ifndef DELETEOBJECTDIALOG_H
-#define DELETEOBJECTDIALOG_H
+#ifndef DELETEOBJECTDIALOG_H_INCLUDED
+#define DELETEOBJECTDIALOG_H_INCLUDED
 
 #include <QDialog>
 #include <QComboBox>
@@ -34,4 +34,4 @@ namespace bestalloc
         void deleteObject();
     };
 }
-#endif // DELETEOBJECTDIALOG_H
+#endif // DELETEOBJECTDIALOG_H_INCLUDED

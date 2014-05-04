@@ -5,8 +5,9 @@
  *
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
-#ifndef DATACONVERTER_H
-#define DATACONVERTER_H
+
+#ifndef DATACONVERTER_H_INCLUDED
+#define DATACONVERTER_H_INCLUDED
 
 #include <QList>
 #include <QString>
@@ -27,4 +28,4 @@ namespace bestalloc
     };
 }
 
-#endif // DATACONVERTER_H
+#endif // DATACONVERTER_H_INCLUDED

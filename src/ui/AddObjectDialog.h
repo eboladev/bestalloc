@@ -6,8 +6,8 @@
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
 
-#ifndef AddObjectDialog_H_INCLUDED
-#define AddObjectDialog_H_INCLUDED
+#ifndef ADDOBJECTDIALOG_H_INCLUDED
+#define ADDOBJECTDIALOG_H_INCLUDED
 
 #include <QDialog>
 #include <QString>
@@ -84,10 +84,10 @@ namespace bestalloc
         void selectSkill(int index);
         void selectEmployee(int index);
 
-        void updateData();
+        void updateContent();
 
         void confirmNewObject();
     };
 }
 
-#endif // AddObjectDialog_H_INCLUDED
+#endif // ADDOBJECTDIALOG_H_INCLUDED

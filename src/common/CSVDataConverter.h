@@ -5,8 +5,9 @@
  *
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
-#ifndef CSVDATACONVERTER_H
-#define CSVDATACONVERTER_H
+
+#ifndef CSVDATACONVERTER_H_INCLUDED
+#define CSVDATACONVERTER_H_INCLUDED
 
 #include "DataConverter.h"
 #include "Constants.h"
@@ -27,4 +28,4 @@ namespace bestalloc
     };
 }
 
-#endif // CSVDATACONVERTER_H
+#endif // CSVDATACONVERTER_H_INCLUDED

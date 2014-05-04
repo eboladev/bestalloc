@@ -69,7 +69,7 @@ namespace bestalloc
     signals:
         void compute();
         void report();
-        void nodeAdded();
+        void contentChanged();
 
     public slots:
         void resizeToFit();
@@ -82,19 +82,15 @@ namespace bestalloc
         void addNode(QGraphicsItem* node);
         void addEdge(GraphEdge* edge);
 
-        void changeNode(QGraphicsItem* node);
-        void changeEdge(GraphEdge* edge);
-
         void deleteNode(QGraphicsItem* node);
         void deleteEdge(GraphEdge* edge);
 
         void reset();
         void clear();
+        void update();
 
         void save(QDataStream &str);
         void load(QDataStream &str);
-
-        void updateImage();
     };
 }
 

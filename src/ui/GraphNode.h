@@ -38,11 +38,14 @@ namespace bestalloc
         void addEdge(GraphEdge *edge);
         QList<GraphEdge*> getEdges() const;
 
+        QPixmap getNodePicture() const;
+        void setNodePicture(const QPixmap& value);
+
         bool advance();
 
         QRectF boundingRect() const;
         QPainterPath shape() const;
-        virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+        virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
 
         void removeEdge(GraphEdge *edge);
 

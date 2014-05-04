@@ -5,8 +5,9 @@
  *
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
-#ifndef REPORTGENERATOR_H
-#define REPORTGENERATOR_H
+
+#ifndef REPORTGENERATOR_H_INCLUDED
+#define REPORTGENERATOR_H_INCLUDED
 
 #include <QList>
 #include <QFile>
@@ -45,4 +46,4 @@ namespace bestalloc
     };
 }
 
-#endif // REPORTGENERATOR_H
+#endif // REPORTGENERATOR_H_INCLUDED

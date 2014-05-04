@@ -5,8 +5,9 @@
  *
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
-#ifndef TEXTDATACONVERTER_H
-#define TEXTDATACONVERTER_H
+
+#ifndef TEXTDATACONVERTER_H_INCLUDED
+#define TEXTDATACONVERTER_H_INCLUDED
 
 #include "DataConverter.h"
 
@@ -26,4 +27,4 @@ namespace bestalloc
     };
 }
 
-#endif // TEXTDATACONVERTER_H
+#endif // TEXTDATACONVERTER_H_INCLUDED

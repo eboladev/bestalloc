@@ -49,4 +49,6 @@ namespace bestalloc
     };
 }
 
+Q_DECLARE_METATYPE(bestalloc::GraphEdge*)
+
 #endif // GRAPHEDGE_H_INCLUDED

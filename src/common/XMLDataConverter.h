@@ -5,8 +5,9 @@
  *
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
-#ifndef XMLDATACONVERTER_H
-#define XMLDATACONVERTER_H
+
+#ifndef XMLDATACONVERTER_H_INCLUDED
+#define XMLDATACONVERTER_H_INCLUDED
 
 #include "DataConverter.h"
 
@@ -25,4 +26,4 @@ namespace bestalloc
         ~XMLDataConverter();
     };
 }
-#endif // XMLDATACONVERTER_H
+#endif // XMLDATACONVERTER_H_INCLUDED

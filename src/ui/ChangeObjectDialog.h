@@ -6,39 +6,61 @@
  * PROJ: bestalloc
  * ---------------------------------------------------------------- */
 
-#ifndef CHANGEOBJECTDIALOG_H
-#define CHANGEOBJECTDIALOG_H
+#ifndef CHANGEOBJECTDIALOG_H_INCLUDED
+#define CHANGEOBJECTDIALOG_H_INCLUDED
 
 #include <QDialog>
 #include <QComboBox>
-#include <QGraphicsWidget>
+#include <QVariant>
+#include <QGraphicsView>
 
 namespace bestalloc
 {
+    class EmployeeNode;
+    class SkillNode;
+    class GraphEdge;
+    class GraphWidget;
+
     class ChangeObjectDialog : public QDialog
     {
         Q_OBJECT
 
     private:
-        QComboBox *m_objectsList;
-        QGraphicsScene* m_scene;
-        QLineEdit* m_editName;
-        QLineEdit* m_editPower;
-        QGraphicsPixmapItem *m_currentImage;
-        //TaskObject *m_selectedObject;
-        QPushButton *m_openPictureBtn;
-    public:
-        ChangeObjectDialog(QWidget* parent = NULL);
-        ~ChangeObjectDialog();
-        //void addElement(TaskObject *obj);
+        GraphWidget* m_widget;
 
-    public slots:
-        void selectObject(int index);
-        void confirmChanges();
-        void openPicture();
+        QVariant     m_selectedObject;
+        QVariant     m_lastChangedObject;
+        QComboBox*   m_objectsList;
+
+        QGraphicsPixmapItem* m_nodeImage;
+
+        QLineEdit*           m_nameEdit;
+        QLineEdit*           m_weightEdit;
+        QGraphicsView*       m_graphicsView;
+
+    public:
+        ChangeObjectDialog(GraphWidget* parent = NULL);
+        ~ChangeObjectDialog();
 
     signals:
-        void updateImage();
+        void enableNodeEdit(bool);
+        void enableEdgeEdit(bool);
+        void enableConfirmButton(bool);
+        void objectChanged();
+
+    public slots:
+        void updateContent();
+        void changeNodeName(const QString& value);
+        void changeWeight(const QString& value);
+        void selectObject(int index);
+        void openPicture();
+        void confirmChanges();
+
+        void restoreSelection();
+        void restoreEmployeeNode(EmployeeNode*);
+        void restoreSkillNode(SkillNode*);
+        void restoreEdge(GraphEdge* edge);
     };
 }
-#endif // CHANGEOBJECTDIALOG_H
+
+#endif // CHANGEOBJECTDIALOG_H_INCLUDED

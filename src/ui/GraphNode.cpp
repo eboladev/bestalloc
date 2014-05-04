@@ -69,6 +69,16 @@ QList<GraphEdge*> GraphNode::getEdges() const
     return m_edgeList;
 }
 
+QPixmap GraphNode::getNodePicture() const
+{
+    return m_nodePicture;
+}
+
+void GraphNode::setNodePicture(const QPixmap& value)
+{
+    m_nodePicture = value;
+}
+
 bool GraphNode::advance()
 {
     if (m_newPos == pos())
@@ -91,7 +101,7 @@ QPainterPath GraphNode::shape() const
     return path;
 }
 
-void GraphNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
+void GraphNode::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     painter->drawPixmap(-100, -100, 100, 100, m_nodePicture);
 }

@@ -22,6 +22,7 @@ using namespace bestalloc;
 #include <QComboBox>
 #include <QDebug>
 #include <QIntValidator>
+#include <QStyleFactory>
 
 AddObjectDialog::AddObjectDialog(GraphWidget *parent)
     : QDialog(parent),
@@ -81,6 +82,9 @@ AddObjectDialog::AddObjectDialog(GraphWidget *parent)
     m_nodeImageList = new QComboBox(this);
     connect(m_nodeImageList, SIGNAL(currentIndexChanged(QString)), SLOT(selectNodeImage(QString)));
     connect(this, SIGNAL(enableImageList(bool)), m_nodeImageList, SLOT(setEnabled(bool)));
+    if (!m_nodeImageList->style()->styleHint(QStyle::SH_ComboBox_Popup)) {
+        m_nodeImageList->setStyle(QStyleFactory::create("Windows"));
+    }
 
     QLabel* nodeImageLabel = new QLabel(GRAPH_NODE_IMAGE_LABEL, this);
     nodeImageLabel->setBuddy(m_nodeImageList);
@@ -91,7 +95,9 @@ AddObjectDialog::AddObjectDialog(GraphWidget *parent)
     QComboBox* patternsList = new QComboBox(this);
     connect(patternsList, SIGNAL(currentIndexChanged(QString)), SLOT(selectPattern(QString)));
     connect(this, SIGNAL(enablePatternsList(bool)), patternsList, SLOT(setEnabled(bool)));
-    patternsList->setEnabled(false);
+    if (!patternsList->style()->styleHint(QStyle::SH_ComboBox_Popup)) {
+        patternsList->setStyle(QStyleFactory::create("Windows"));
+    }
 
     QMap<QString, QString>::iterator i;
     for (i = m_skillsMap.begin(); i != m_skillsMap.end(); i++) {
@@ -111,10 +117,16 @@ AddObjectDialog::AddObjectDialog(GraphWidget *parent)
     m_skillsList = new QComboBox(this);
     connect(m_skillsList, SIGNAL(currentIndexChanged(int)), SLOT(selectSkill(int)));
     connect(this, SIGNAL(enableSkillsList(bool)), m_skillsList, SLOT(setEnabled(bool)));
+    if (!m_skillsList->style()->styleHint(QStyle::SH_ComboBox_Popup)) {
+        m_skillsList->setStyle(QStyleFactory::create("Windows"));
+    }
 
     m_employeeList = new QComboBox(this);
     connect(m_employeeList, SIGNAL(currentIndexChanged(int)), SLOT(selectEmployee(int)));
     connect(this, SIGNAL(enableEmployeeList(bool)), m_employeeList, SLOT(setEnabled(bool)));
+    if (!m_employeeList->style()->styleHint(QStyle::SH_ComboBox_Popup)) {
+        m_employeeList->setStyle(QStyleFactory::create("Windows"));
+    }
 
     m_weightEdit = new QLineEdit(this);
     connect(m_weightEdit, SIGNAL(textChanged(QString)), this, SLOT(changeWeight(QString)));
@@ -172,7 +184,7 @@ AddObjectDialog::AddObjectDialog(GraphWidget *parent)
     enableEmployeeList(false);
     enableWeightEdit(false);
 
-    updateData();
+    updateContent();
 }
 
 void AddObjectDialog::changeNodeName(const QString& value)
@@ -268,7 +280,7 @@ void AddObjectDialog::selectEmployee(int index)
     m_selectedEmployeeNode = obj;
 }
 
-void AddObjectDialog::updateData()
+void AddObjectDialog::updateContent()
 {
     if (m_widget == NULL) return;
 
@@ -312,7 +324,7 @@ void AddObjectDialog::confirmNewObject()
             break;
 
         case PATTERN:
-            newSkillNode = new SkillNode(m_selectedPatternName, m_skillsMap.value(m_selectedPatternName));
+            newSkillNode = new SkillNode(m_selectedPatternName, m_skillsMap.value(m_selectedPatternName), m_widget);
             emit(addNode(newSkillNode));
             break;
 

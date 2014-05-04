@@ -289,7 +289,7 @@ void GraphWidget::addObject()
     AddObjectDialog* dialog = new AddObjectDialog(this);
     connect(dialog, SIGNAL(addNode(QGraphicsItem*)), SLOT(addNode(QGraphicsItem*)));
     connect(dialog, SIGNAL(addEdge(GraphEdge*)), SLOT(addEdge(GraphEdge*)));
-    connect(this, SIGNAL(nodeAdded()), dialog, SLOT(updateData()));
+    connect(this, SIGNAL(contentChanged()), dialog, SLOT(updateContent()));
 
     dialog->show();
 }
@@ -297,19 +297,8 @@ void GraphWidget::addObject()
 void GraphWidget::changeObject()
 {
     ChangeObjectDialog* dialog = new ChangeObjectDialog(this);
-    connect(dialog, SIGNAL(updateImage()), SLOT(updateImage()));
-
-    foreach (EmployeeNode *cur, m_employeeNodes) {
-        //dialog->addElement(cur);
-    }
-
-    foreach (SkillNode *cur, m_skillNodes) {
-        //dialog->addElement(cur);
-    }
-
-    foreach (GraphEdge *cur, m_edges) {
-        //dialog->addElement(cur);
-    }
+    connect(dialog, SIGNAL(objectChanged()), SLOT(update()));
+    connect(this, SIGNAL(contentChanged()), dialog, SLOT(updateContent()));
 
     dialog->show();
 }
@@ -317,18 +306,6 @@ void GraphWidget::changeObject()
 void GraphWidget::deleteObject()
 {
     DeleteObjectDialog* dialog = new DeleteObjectDialog(this);
-
-    foreach (EmployeeNode *cur, m_employeeNodes) {
-        //dialog->addElement(cur);
-    }
-
-    foreach (SkillNode *cur, m_skillNodes) {
-        //dialog->addElement(cur);
-    }
-
-    foreach (GraphEdge *cur, m_edges) {
-        //dialog->addElement(cur);
-    }
 
     dialog->show();
 }
@@ -356,7 +333,7 @@ void GraphWidget::addNode(QGraphicsItem* node)
             m_scene->addItem(emplNode);
             emplNode->setPos(m_lastCtxtMenuPos + QPoint(emplNode->boundingRect().width()/2, emplNode->boundingRect().height()/2));
 
-            emit(nodeAdded());
+            emit contentChanged();
             return;
         }
 
@@ -380,7 +357,7 @@ void GraphWidget::addNode(QGraphicsItem* node)
             m_scene->addItem(skillNode);
             skillNode->setPos(m_lastCtxtMenuPos + QPoint(skillNode->boundingRect().width()/2, skillNode->boundingRect().height()/2));
 
-            emit(nodeAdded());
+            emit contentChanged();
             return;
         }
     }
@@ -404,21 +381,8 @@ void GraphWidget::addEdge(GraphEdge *edge)
 
     m_edges.push_back(edge);
     m_scene->addItem(edge);
-}
 
-void GraphWidget::changeNode(QGraphicsItem* node)
-{
-    if (node != NULL) {
-
-
-    }
-}
-
-void GraphWidget::changeEdge(GraphEdge* edge)
-{
-    if (edge != NULL) {
-
-    }
+    emit contentChanged();
 }
 
 void GraphWidget::deleteNode(QGraphicsItem* node)
@@ -438,6 +402,7 @@ void GraphWidget::deleteNode(QGraphicsItem* node)
 
                     m_employeeNodes.removeAt(i);
                     delete curNode;
+                    emit contentChanged();
                     break;
                 }
             }
@@ -457,6 +422,7 @@ void GraphWidget::deleteNode(QGraphicsItem* node)
 
                     m_skillNodes.removeAt(i);
                     delete curNode;
+                    emit contentChanged();
                     break;
                 }
             }
@@ -479,6 +445,7 @@ void GraphWidget::deleteEdge(GraphEdge *edge)
                 m_edges.removeAt(i);
 
                 delete target;
+                emit contentChanged();
             }
         }
     }
@@ -521,6 +488,17 @@ void GraphWidget::clear()
         m_scene->removeItem(node);
     }
     m_skillNodes.clear();
+}
+
+void GraphWidget::update()
+{
+    reset();
+
+    foreach (QGraphicsItem* item, m_scene->items()) {
+        item->update();
+    }
+
+    emit contentChanged();
 }
 
 void GraphWidget::save(QDataStream &str)
@@ -598,56 +576,6 @@ void GraphWidget::load(QDataStream &str)
         cur->setPos(cur->getPosition());
     }*/
 }
-
-void GraphWidget::updateImage()
-{
-    foreach (QGraphicsItem *cur, m_scene->items()) {
-        cur->update();
-    }
-}
-
-/*bool GraphWidget::deleteObject(TaskObject *obj)
-{
-    reset();
-
-    for (int i = 0; i < m_edges.size(); ++i) {
-        GraphEdge *cur = m_edges.at(i);
-        if (cur == obj) {
-            cur->getSourceNode()->removeEdge(cur);
-            cur->getDestNode()->removeEdge(cur);
-            m_edges.removeAt(i);
-            delete(cur);
-            return true;
-        }
-    }
-
-    for (int i = 0; i < m_employeeNodes.size(); ++i) {
-        EmployeeNode *cur = m_employeeNodes.at(i);
-        if (cur == obj) {
-            foreach (GraphEdge* edge, cur->getEdges()) {
-                deleteObject(edge);
-            }
-            m_employeeNodes.removeAt(i);
-            delete(cur);
-            return true;
-        }
-    }
-
-    for (int i = 0; i < m_skillNodes.size(); ++i) {
-        SkillNode *cur = m_skillNodes.at(i);
-        if (cur == obj) {
-            foreach (GraphEdge* edge, cur->getEdges()) {
-                deleteObject(edge);
-            }
-
-            m_skillNodes.removeAt(i);
-            delete(cur);
-            return true;
-        }
-    }
-
-    return false;
-}*/
 
 GraphWidget::~GraphWidget()
 {

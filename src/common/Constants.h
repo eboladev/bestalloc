@@ -49,6 +49,7 @@
 #define CSV_SEPARATOR ","
 
 #define WARNING_TITLE "Warning"
+#define ERROR_TITLE "Error"
 
 #define CALC_WARNING_TEXT "Cannot calculate best allocation for given graph"
 #define CALC_WARNING_INFO "1) The number of vertices in different parts should be the same;\n2) Each vertex must be connected with another one;"
@@ -58,15 +59,30 @@
 #define CONFIRM_SKILL_DELETION_TEXT  "Are you really want to delete skill "
 #define CONFIRM_EMPLOYEE_DELETION_TEXT  "Are you really want to delete employee "
 
-#define ADD_EMPLOYEE_ERROR_TEXT "Can`t add employee"
+#define ADD_EMPLOYEE_ERROR_TEXT "Cannot add employee"
 #define ADD_EMPLOYEE_ERROR_INFO "Employee already exists, try to change name"
 
-#define ADD_SKILL_ERROR_TEXT "Can`t add skill"
+#define ADD_SKILL_ERROR_TEXT "Cannot add skill"
 #define ADD_SKILL_ERROR_INFO "Skill already exists, try to change name"
 
 #define ADD_EDGE_ERROR_TEXT "Cannot add edge"
 #define ADD_EDGE_ERROR_INFO "Edge already exists"
 
+#define EDIT_EMPLOYEE_ERROR_TEXT "Cannot edit employee"
+#define EDIT_EMPLOYEE_ERROR_INFO "Employee already exists, try to change name"
+
+#define EDIT_SKILL_ERROR_TEXT "Cannot edit skill"
+#define EDIT_SKILL_ERROR_INFO "Skill already exists, try to change name"
+
+#define OPEN_FILE_ERROR_TEXT "Cannot open selected file"
+#define OPEN_FILE_ERROR_INFO "Selected file is corrupted or has undefined format"
+
+#define EMPLOYEE_ID    "Employee: "
+#define SKILL_ID       "Skill: "
+#define EDGE_ID        "Edge: "
+#define EDGE_SEPARATOR " <---> "
+
 #define MAX_NODE_NAME_LENGTH 11
+#define IMAGE_PREVIEW_SIZE 300
 
 #endif // CONSTANTS_H_INCLUDED
