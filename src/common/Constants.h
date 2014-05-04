@@ -25,6 +25,7 @@
 #define ADD_OBJECT_LABEL        "Add object"
 #define ADD_EDGE_LABEL          "Add edge"
 #define CHANGE_OBJECT_LABEL     "Change object"
+#define EDIT_NODE_LABEL         "Edit node"
 #define GRAPH_NODE_NAME_LABEL   "Name: "
 #define GRAPH_NODE_TYPE_LABEL   "Type: "
 #define GRAPH_NODE_IMAGE_LABEL  "Image: "

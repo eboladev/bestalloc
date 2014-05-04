@@ -36,10 +36,6 @@ namespace bestalloc
         bool    m_resized;
 
     private:
-        EmployeeNode* getEmployeeNodeById(int id);
-        SkillNode*    getSkillNodeById(int id);
-        GraphEdge*    getEdge(int sourceNodeId, int destNodeId);
-
         void zoomIn();
         void zoomOut();
 
@@ -60,6 +56,10 @@ namespace bestalloc
         const QList<EmployeeNode*>& getEmployeeNodes() const;
         const QList<SkillNode*>&    getSkillNodes() const;
         const QList<GraphEdge*>&    getEdges() const;
+
+        EmployeeNode* getEmployeeNodeById(int id);
+        SkillNode*    getSkillNodeById(int id);
+        GraphEdge*    getEdge(int sourceNodeId, int destNodeId);
 
         void setBestAllocation(const vector< pair<Employee, Skill> >& bestAllocMap);
         void setDemoData();

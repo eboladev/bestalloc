@@ -89,11 +89,11 @@ ChangeObjectDialog::ChangeObjectDialog(GraphWidget* parent)
     layoutPower->addWidget(m_weightEdit);
 
     QPushButton* confirmButton = new QPushButton(CONFIRM_LABEL, this);
-    confirmButton->setDefault(true);
     connect(confirmButton, SIGNAL(clicked()), SLOT(confirmChanges()));
     connect(this, SIGNAL(enableConfirmButton(bool)), confirmButton, SLOT(setEnabled(bool)));
 
     QPushButton* closeButton = new QPushButton(CANCEL_LABEL, this);
+    closeButton->setDefault(true);
     connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
     QHBoxLayout *layoutBtns = new QHBoxLayout;
@@ -206,7 +206,7 @@ void ChangeObjectDialog::selectObject(int index)
 void ChangeObjectDialog::openPicture()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select picture file"), ":/images", tr("png (*.png);;jpeg (*.jpg)"));
-    if (fileName!="") {
+    if (fileName != "") {
         QPixmap picture(fileName);
         if (!picture.isNull()) {
             m_graphicsView->scene()->clear();
@@ -228,6 +228,8 @@ void ChangeObjectDialog::openPicture()
 
 void ChangeObjectDialog::confirmChanges()
 {
+    if (m_widget == NULL) return;
+
     if (m_selectedObject.canConvert<EmployeeNode*>()) {
         EmployeeNode* emplNode = m_selectedObject.value<EmployeeNode*>();
         string nodeName = m_nameEdit->text().toStdString();

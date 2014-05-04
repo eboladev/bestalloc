@@ -9,6 +9,7 @@
 #include "SkillNode.h"
 #include "GraphWidget.h"
 #include "ConfigReader.h"
+#include "EditNodeDialog.h"
 using namespace bestalloc;
 
 #include <QGraphicsSceneContextMenuEvent>
@@ -34,7 +35,10 @@ void SkillNode::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
     QAction* selectedAction = contextMenu.exec(event->screenPos());
     if (selectedAction != NULL) {
         if (selectedAction == changeAction) {
-
+            EditNodeDialog* dialog = new EditNodeDialog(SKILL_TYPE, getId(), m_widget);
+            QObject::connect(dialog, SIGNAL(objectChanged()), m_widget, SLOT(update()));
+            QObject::connect(m_widget, SIGNAL(contentChanged()), dialog, SLOT(updateContent()));
+            dialog->show();
         } else {
             QMessageBox msgBox;
             msgBox.setWindowTitle(CONFIRM_DELETION_TITLE);

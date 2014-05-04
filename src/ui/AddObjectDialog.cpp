@@ -105,6 +105,7 @@ AddObjectDialog::AddObjectDialog(GraphWidget *parent)
     connect(this, SIGNAL(enableConfirmButton(bool)), confirmButton, SLOT(setEnabled(bool)));
 
     QPushButton* closeButton = new QPushButton(CANCEL_LABEL, this);
+    closeButton->setDefault(true);
     connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
     QRadioButton* edgeRadioBtn = new QRadioButton(GRAPH_EDGE_TYPE_LABEL, this);
