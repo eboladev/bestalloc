@@ -29,6 +29,7 @@ HEADERS += ../src/model/Skill.h \
     ../src/ui/AddObjectDialog.h \
     ../src/ui/DeleteObjectDialog.h \
     ../src/ui/ChangeObjectDialog.h \
+    ../src/ui/EditNodeDialog.h \
     Test_Skill.h \
     Test_Skill.h \
     Test_Employee.h \
@@ -50,6 +51,7 @@ SOURCES += ../src/model/Skill.cpp \
     ../src/ui/AddObjectDialog.cpp \
     ../src/ui/DeleteObjectDialog.cpp \
     ../src/ui/ChangeObjectDialog.cpp \
+    ../src/ui/EditNodeDialog.cpp \
     ../src/common/XMLDataConverter.cpp \
     ../src/common/TextDataConverter.cpp \
     ../src/common/ReportGenerator.cpp \
