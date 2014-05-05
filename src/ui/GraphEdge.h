@@ -45,6 +45,8 @@ namespace bestalloc
 
         void adjust();
 
+        static bool compare(GraphEdge* first, GraphEdge* second);
+
         virtual ~GraphEdge();
     };
 }

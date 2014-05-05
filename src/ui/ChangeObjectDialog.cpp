@@ -26,6 +26,7 @@ using namespace bestalloc;
 #include <QFileDialog>
 #include <QIntValidator>
 #include <QStyleFactory>
+#include <QtAlgorithms>
 
 ChangeObjectDialog::ChangeObjectDialog(GraphWidget* parent)
     : QDialog(parent),
@@ -118,18 +119,21 @@ void ChangeObjectDialog::updateContent()
     m_objectsList->clear();
 
     QList<EmployeeNode*> employees = m_widget->getEmployeeNodes();
+    qSort(employees.begin(), employees.end(), EmployeeNode::compare);
     foreach (EmployeeNode* emplNode, employees) {
         QVariant var = QVariant::fromValue(emplNode);
         m_objectsList->addItem(EMPLOYEE_ID + QString::fromStdString(emplNode->getName()), var);
     }
 
     QList<SkillNode*> skills = m_widget->getSkillNodes();
+    qSort(skills.begin(), skills.end(), SkillNode::compare);
     foreach (SkillNode* skillNode, skills) {
         QVariant var = QVariant::fromValue(skillNode);
         m_objectsList->addItem(SKILL_ID + QString::fromStdString(skillNode->getName()), var);
     }
 
     QList<GraphEdge*> edges = m_widget->getEdges();
+    qSort(edges.begin(), edges.end(), GraphEdge::compare);
     foreach (GraphEdge* edge, edges) {
         QString edgeId = EDGE_ID +
                          QString::fromStdString(edge->getSourceNode()->getName()) +

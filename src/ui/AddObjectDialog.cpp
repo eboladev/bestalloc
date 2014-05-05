@@ -23,6 +23,7 @@ using namespace bestalloc;
 #include <QDebug>
 #include <QIntValidator>
 #include <QStyleFactory>
+#include <QtAlgorithms>
 
 AddObjectDialog::AddObjectDialog(GraphWidget *parent)
     : QDialog(parent),
@@ -280,6 +281,7 @@ void AddObjectDialog::updateContent()
     m_employeeList->clear();
 
     QList<EmployeeNode*> employees = m_widget->getEmployeeNodes();
+    qSort(employees.begin(), employees.end(), EmployeeNode::compare);
     foreach (EmployeeNode *emplNode, employees) {
         QVariant var = QVariant::fromValue(emplNode);
         m_employeeList->addItem(QString::fromStdString(emplNode->getName()), var);
@@ -288,6 +290,7 @@ void AddObjectDialog::updateContent()
     m_skillsList->clear();
 
     QList<SkillNode*> skills = m_widget->getSkillNodes();
+    qSort(skills.begin(), skills.end(), SkillNode::compare);
     foreach (SkillNode* skillNode, skills) {
         QVariant var = QVariant::fromValue(skillNode);
         m_skillsList->addItem(QString::fromStdString(skillNode->getName()), var);

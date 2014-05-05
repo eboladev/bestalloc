@@ -26,6 +26,8 @@ namespace bestalloc
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+        static bool compare(SkillNode* first, SkillNode* second);
+
         ~SkillNode();
     };
 }

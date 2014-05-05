@@ -12,6 +12,8 @@
 #include "Employee.h"
 #include "GraphNode.h"
 
+#include <QtAlgorithms>
+
 namespace bestalloc
 {
     class GraphWidget;
@@ -25,6 +27,8 @@ namespace bestalloc
         EmployeeNode(const QString& name, const QPixmap& nodePicture, GraphWidget* widget = NULL);
 
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+        static bool compare(EmployeeNode* first, EmployeeNode* second);
 
         ~EmployeeNode();
     };

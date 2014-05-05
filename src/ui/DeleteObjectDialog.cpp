@@ -15,6 +15,7 @@ using namespace bestalloc;
 #include <QLayout>
 #include <QStyleFactory>
 #include <QMessageBox>
+#include <QtAlgorithms>
 
 DeleteObjectDialog::DeleteObjectDialog(GraphWidget* parent)
     : QDialog(parent),
@@ -25,10 +26,10 @@ DeleteObjectDialog::DeleteObjectDialog(GraphWidget* parent)
     connect(m_objectsList, SIGNAL(currentIndexChanged(int)), SLOT(selectObject(int)));
 
     QPushButton* confirmButton = new QPushButton(DELETE_LABEL, this);
-    confirmButton->setDefault(true);
     connect(confirmButton, SIGNAL(clicked()), SLOT(deleteObject()));
 
     QPushButton* closeButton = new QPushButton(CANCEL_LABEL, this);
+    closeButton->setDefault(true);
     connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
     QHBoxLayout* layoutBtns = new QHBoxLayout;
@@ -49,18 +50,21 @@ void DeleteObjectDialog::updateContent()
     m_objectsList->clear();
 
     QList<EmployeeNode*> employees = m_widget->getEmployeeNodes();
+    qSort(employees.begin(), employees.end(), EmployeeNode::compare);
     foreach (EmployeeNode* emplNode, employees) {
         QVariant var = QVariant::fromValue(emplNode);
         m_objectsList->addItem(EMPLOYEE_ID + QString::fromStdString(emplNode->getName()), var);
     }
 
     QList<SkillNode*> skills = m_widget->getSkillNodes();
+    qSort(skills.begin(), skills.end(), SkillNode::compare);
     foreach (SkillNode* skillNode, skills) {
         QVariant var = QVariant::fromValue(skillNode);
         m_objectsList->addItem(SKILL_ID + QString::fromStdString(skillNode->getName()), var);
     }
 
     QList<GraphEdge*> edges = m_widget->getEdges();
+    qSort(edges.begin(), edges.end(), GraphEdge::compare);
     foreach (GraphEdge* edge, edges) {
         QString edgeId = EDGE_ID +
                          QString::fromStdString(edge->getSourceNode()->getName()) +

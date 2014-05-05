@@ -138,6 +138,25 @@ void GraphEdge::adjust()
     }
 }
 
+bool GraphEdge::compare(GraphEdge* first, GraphEdge* second)
+{
+    if (first == NULL || second == NULL) return false;
+
+    EmployeeNode* firstSrcNode = first->getSourceNode();
+    EmployeeNode* secondSrcNode = second->getSourceNode();
+
+    if (firstSrcNode == NULL || secondSrcNode == NULL) return false;
+
+    QString firstName = QString::fromStdString(firstSrcNode->getName());
+    QString secondName = QString::fromStdString(secondSrcNode->getName());
+
+    if (firstName.compare(secondName, Qt::CaseSensitive) >= 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 GraphEdge::~GraphEdge()
 {
 }

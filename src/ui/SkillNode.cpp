@@ -71,6 +71,20 @@ void SkillNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawText(QRect(-100, -140, 100, 50), Qt::AlignCenter | Qt::AlignTop, QString(getName().c_str()));
 }
 
+bool SkillNode::compare(SkillNode* first, SkillNode* second)
+{
+    if (first == NULL || second == NULL) return false;
+
+    QString firstName = QString::fromStdString(first->getName());
+    QString secondName = QString::fromStdString(second->getName());
+
+    if (firstName.compare(secondName, Qt::CaseSensitive) >= 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 SkillNode::~SkillNode()
 {
 }

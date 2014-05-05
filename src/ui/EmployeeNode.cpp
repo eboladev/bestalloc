@@ -71,6 +71,20 @@ void EmployeeNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->drawText(QRect(-100, -140, 100, 50), Qt::AlignCenter | Qt::AlignTop, QString(getName().c_str()));
 }
 
+bool EmployeeNode::compare(EmployeeNode *first, EmployeeNode *second)
+{
+    if (first == NULL || second == NULL) return false;
+
+    QString firstName = QString::fromStdString(first->getName());
+    QString secondName = QString::fromStdString(second->getName());
+
+    if (firstName.compare(secondName, Qt::CaseSensitive) >= 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 EmployeeNode::~EmployeeNode()
 {
 }
