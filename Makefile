@@ -22,7 +22,7 @@ test:
 run_tests:
 	echo "Running unit tests:" && $(BINDIR)/$(BIN_TST)/test
 
-build:
+build: clean
 	dpkg-buildpackage -rfakeroot -uc -us
 
 clean:
