@@ -165,6 +165,21 @@ void GraphWidget::scaleView(qreal scaleFactor)
     scale(scaleFactor, scaleFactor);
 }
 
+void GraphWidget::setEmployeeNodes(const QList<EmployeeNode*>& nodes)
+{
+    m_employeeNodes = nodes;
+}
+
+void GraphWidget::setSkillNodes(const QList<SkillNode*>& nodes)
+{
+    m_skillNodes = nodes;
+}
+
+void GraphWidget::setEdges(const QList<GraphEdge*>& edges)
+{
+    m_edges = edges;
+}
+
 const QList<EmployeeNode*>& GraphWidget::getEmployeeNodes() const
 {
     return m_employeeNodes;
@@ -178,6 +193,32 @@ const QList<SkillNode*>& GraphWidget::getSkillNodes() const
 const QList<GraphEdge*>& GraphWidget::getEdges() const
 {
     return m_edges;
+}
+
+void GraphWidget::setContainers(const QList<EmployeeNode*>& employees,
+                                const QList<SkillNode*>& skills,
+                                const QList<GraphEdge*>& edges)
+{
+    clear();
+
+    foreach (EmployeeNode* node, employees) {
+        m_employeeNodes.push_back(node);
+        m_scene->addItem(node);
+    }
+
+    foreach (SkillNode* node, skills) {
+        m_skillNodes.push_back(node);
+        m_scene->addItem(node);
+    }
+
+    foreach (GraphEdge* edge, edges) {
+        m_edges.push_back(edge);
+        m_scene->addItem(edge);
+    }
+
+    scene()->setSceneRect(scene()->itemsBoundingRect());
+
+    emit contentChanged();
 }
 
 void GraphWidget::setBestAllocation(const vector< pair<Employee, Skill> >& bestAllocMap)
@@ -266,6 +307,8 @@ void GraphWidget::setDemoData()
     m_skillNodes.push_back(node10);
 
     scene()->setSceneRect(scene()->itemsBoundingRect());
+
+    emit contentChanged();
 }
 
 void GraphWidget::resizeToFit()
@@ -502,82 +545,6 @@ void GraphWidget::update()
     }
 
     emit contentChanged();
-}
-
-void GraphWidget::save(QDataStream &str)
-{
-    /*str << (qint32)m_employeeNodes.size();
-
-    foreach (EmployeeNode *cur, m_employeeNodes) {
-        cur->save(str);
-    }
-
-    str << (qint32)m_skillNodes.size();
-
-    foreach (SkillNode *cur, m_skillNodes) {
-        cur->save(str);
-    }
-
-    str << (qint32)m_edges.size();
-
-    foreach (GraphEdge *cur, m_edges) {
-        str<<(qint32)cur->getSourceNode()->getId();
-        str<<(qint32)cur->getDestNode()->getId();
-        cur->save(str);
-    }*/
-}
-
-void GraphWidget::load(QDataStream &str)
-{
-    /*clear();
-
-    int size;
-    str >> size;
-    for (int i = 0; i < size; ++i) {
-        EmployeeNode* node = new EmployeeNode("", QPixmap(":/images/staff_superman.png"));
-        node->load(str);
-        m_employeeNodes.push_back(node);
-    }
-
-    str >> size;
-    for (int i = 0; i < size; ++i) {
-        SkillNode* node = new SkillNode("", QPixmap(":/images/staff_superman.png"));
-        node->load(str);
-        m_skillNodes.push_back(node);
-    }
-
-    str >> size;
-    for (int i = 0; i < size; ++i) {
-        int eId;
-        str >> eId;
-        int sId;
-        str >> sId;
-
-        EmployeeNode* eNode = getEmployeeNodeById(eId);
-        SkillNode* sNode = getSkillNodeById(sId);
-        if (!eNode||!sNode) {
-            qDebug() << "GraphWidget::load :: !eNode||!sNode\n";
-            throw;
-        }
-
-        GraphEdge* node = new GraphEdge(eNode,sNode,42);
-        node->load(str);
-        m_edges.push_back(node);
-    }
-
-    foreach (GraphEdge *cur, m_edges) {
-        m_scene->addItem(cur);
-    }
-
-    foreach (EmployeeNode *cur, m_employeeNodes) {
-        m_scene->addItem(cur);
-        cur->setPos(cur->getPosition());
-    }
-
-    foreach (SkillNode *cur, m_skillNodes) {
-        m_scene->addItem(cur);
-        cur->setPos(cur->getPosition());
-    }*/
 }
 
 GraphWidget::~GraphWidget()

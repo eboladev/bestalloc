@@ -47,12 +47,16 @@ namespace bestalloc
         MainWindow(QWidget* parent = NULL);
         ~MainWindow();
 
+    signals:
+        void setStatus(QString);
+
     public slots:
         void compute();
 
         void saveState();
         void loadState();
 
+        void updateStatus();
         void generateReport();
     };
 }

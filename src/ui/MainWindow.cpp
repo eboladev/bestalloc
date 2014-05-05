@@ -8,14 +8,15 @@
 
 #include "MainWindow.h"
 #include "Constants.h"
+#include "ConfigReader.h"
 using namespace bestalloc;
 
 #include <QMenuBar>
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QMessageBox>
-
-#include "ConfigReader.h"
+#include <QLabel>
+#include <QStatusBar>
 
 #include <iostream>
 using namespace std;
@@ -32,6 +33,12 @@ MainWindow::MainWindow(QWidget* parent)
     setCentralWidget(scrollArea);
     setWindowTitle(BESTALLOC_TITLE);
 
+    statusBar()->addWidget(new QLabel(STATUS_LABEL, this));
+
+    QLabel* statusLabel = new QLabel("", this);
+    statusBar()->addWidget(statusLabel);
+    connect(this, SIGNAL(setStatus(QString)), statusLabel, SLOT(setText(QString)));
+
     QDesktopWidget desktopWidget;
 
     int windowWidth = 850;
@@ -46,6 +53,9 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(&m_graphWidget, SIGNAL(compute()), SLOT(compute()));
     connect(&m_graphWidget, SIGNAL(report()), SLOT(generateReport()));
+    connect(&m_graphWidget, SIGNAL(contentChanged()), SLOT(updateStatus()));
+
+    updateStatus();
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -177,19 +187,29 @@ void MainWindow::compute()
 void MainWindow::saveState()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-        tr("Save task to file"), "/home", tr("Best files (*.bst)"));
-    if(fileName!=""){
-        ConfigReader::save(fileName+".bst",m_dataProvider,m_graphWidget);
+        tr(SAVE_CONFIGURATION_LABEL), QDir::currentPath(), tr(CONFIGURATION_FILE_FILTER));
+    if (fileName != "") {
+        ConfigReader::save(fileName, &m_graphWidget);
     }
 }
 
 void MainWindow::loadState()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Load task from file"), "/home", tr("Best files (*.bst)"));
-    if(fileName!=""){
-        ConfigReader::load(fileName,m_dataProvider,m_graphWidget);
+        tr(LOAD_CONFIGURATION_LABEL), QDir::currentPath(), tr(CONFIGURATION_FILE_FILTER));
+    if (fileName != "") {
+        ConfigReader::load(fileName, &m_graphWidget);
     }
+}
+
+void MainWindow::updateStatus()
+{
+    QList<EmployeeNode*> employees = m_graphWidget.getEmployeeNodes();
+    QList<SkillNode*> skills = m_graphWidget.getSkillNodes();
+
+    QString status = QString(EMPLOYEES_LABEL) + ": " + QString::number(employees.count()) + ";  " +
+                     QString(SKILLS_LABEL) + ": " + QString::number(skills.count());
+    setStatus(status);
 }
 
 void MainWindow::generateReport()
@@ -201,9 +221,7 @@ void MainWindow::generateReport()
     DataConverter *dataConverter;
     QString selectedFilter = "";
     QFileDialog filedialog;
-    QString f_name = filedialog.getSaveFileName(this,
-                                                tr("Generate report"),
-                                                QDir::currentPath(),
+    QString f_name = filedialog.getSaveFileName(this, tr(GENERATE_REPORT_LABEL), QDir::currentPath(),
                                                 tr(TEXT_FILE_FILTER";;"CSV_FILE_FILTER";;"XML_FILE_FILTER),
                                                 &selectedFilter);
     if (f_name != ""){

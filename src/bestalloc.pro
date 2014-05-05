@@ -29,7 +29,8 @@ HEADERS += model/Bigraph.h \
     ui/ChangeObjectDialog.h \
     ui/DeleteObjectDialog.h \
     ui/AddObjectDialog.h \
-    ui/EditNodeDialog.h
+    ui/EditNodeDialog.h \
+    common/BestAllocException.h
 
 SOURCES += main.cpp \
     model/Employee.cpp \
@@ -50,7 +51,8 @@ SOURCES += main.cpp \
     ui/ChangeObjectDialog.cpp \
     ui/DeleteObjectDialog.cpp \
     ui/AddObjectDialog.cpp \
-    ui/EditNodeDialog.cpp
+    ui/EditNodeDialog.cpp \
+    common/BestAllocException.cpp
 
 RESOURCES += \
     bestalloc.qrc

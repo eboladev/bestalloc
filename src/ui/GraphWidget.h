@@ -61,6 +61,9 @@ namespace bestalloc
         SkillNode*    getSkillNodeById(int id);
         GraphEdge*    getEdge(int sourceNodeId, int destNodeId);
 
+        void setContainers(const QList<EmployeeNode*>& employees,
+                           const QList<SkillNode*>& skills,
+                           const QList<GraphEdge*>& edges);
         void setBestAllocation(const vector< pair<Employee, Skill> >& bestAllocMap);
         void setDemoData();
 
@@ -88,9 +91,6 @@ namespace bestalloc
         void reset();
         void clear();
         void update();
-
-        void save(QDataStream &str);
-        void load(QDataStream &str);
     };
 }
 

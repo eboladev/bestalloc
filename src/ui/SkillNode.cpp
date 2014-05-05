@@ -8,8 +8,8 @@
 
 #include "SkillNode.h"
 #include "GraphWidget.h"
-#include "ConfigReader.h"
 #include "EditNodeDialog.h"
+#include "Constants.h"
 using namespace bestalloc;
 
 #include <QGraphicsSceneContextMenuEvent>

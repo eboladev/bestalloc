@@ -1,9 +1,21 @@
+/*! ---------------------------------------------------------------
+ * \file   Constants.h
+ * \brief  Useful constants
+ * \author Edward Ryabikov
+ *
+ * PROJ: bestalloc
+ * ---------------------------------------------------------------- */
+
 #ifndef CONSTANTS_H_INCLUDED
 #define CONSTANTS_H_INCLUDED
 
 #define MAX_STRING_SIZE          255
 
 #define BESTALLOC_TITLE          "Best Allocation Analyzer"
+#define STATUS_LABEL             "Status:"
+
+#define EMPLOYEES_LABEL          "Employees"
+#define SKILLS_LABEL             "Skills"
 
 #define FILE_MENU_LABEL          "&File"
 #define SAVE_ACTION_MENU_LABEL   "&Save"
@@ -15,7 +27,7 @@
 #define ADD_TEMPLATE_MENU_LABEL  "Add &template"
 #define CHANGE_OBJECT_MENU_LABEL "&Change object"
 #define DELETE_OBJECT_MENU_LABEL "&Delete object"
-#define CHANGE_MENU_LABEL          "&Edit"
+#define CHANGE_MENU_LABEL        "&Edit"
 #define DELETE_MENU_LABEL        "&Delete"
 
 #define TOOLS_MENU_LABEL                  "&Tools"
@@ -85,5 +97,18 @@
 
 #define MAX_NODE_NAME_LENGTH 11
 #define IMAGE_PREVIEW_SIZE 300
+
+#define GENERATE_REPORT_LABEL    "Generate report"
+#define SAVE_CONFIGURATION_LABEL "Save configuration to file"
+#define LOAD_CONFIGURATION_LABEL "Load configuration from file"
+
+#define CONFIGURATION_FILE_FILTER "bestalloc files (*.bst)"
+
+#define SAVE_CONFIG_FILE_ERROR_TEXT "Save configuration error"
+#define WRITE_CONFIG_FILE_ERROR_INFO "Cannot write configuration to selected file"
+
+#define LOAD_CONFIG_FILE_ERROR_TEXT "Load configuration error"
+#define READ_CONFIG_FILE_ERROR_INFO "Cannot read configuration from selected file"
+#define LOAD_CONFIG_FILE_ERROR_INFO "Selected file is corrupted or has undefined format"
 
 #endif // CONSTANTS_H_INCLUDED

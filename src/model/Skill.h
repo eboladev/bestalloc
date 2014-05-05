@@ -31,9 +31,6 @@ namespace bestalloc
         void   setName(string& value);
 
         ~Skill();
-
-        void save(QDataStream &str);
-        void load(QDataStream &str);
     };
 }
 

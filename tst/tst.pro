@@ -26,6 +26,7 @@ HEADERS += ../src/model/Skill.h \
     ../src/common/ReportGenerator.h \
     ../src/common/DataConverter.h \
     ../src/common/CSVDataConverter.h \
+    ../src/common/BestAllocException.h \
     ../src/ui/AddObjectDialog.h \
     ../src/ui/DeleteObjectDialog.h \
     ../src/ui/ChangeObjectDialog.h \
@@ -56,6 +57,7 @@ SOURCES += ../src/model/Skill.cpp \
     ../src/common/TextDataConverter.cpp \
     ../src/common/ReportGenerator.cpp \
     ../src/common/CSVDataConverter.cpp \
+    ../src/common/BestAllocException.cpp \
     main.cpp \
     Test_Skill.cpp \
     Test_Employee.cpp \

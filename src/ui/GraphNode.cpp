@@ -17,7 +17,7 @@ using namespace bestalloc;
 #include <QStyleOption>
 
 GraphNode::GraphNode(const QPixmap& nodePicture, GraphWidget* widget)
-    : QGraphicsItem(), m_nodePicture(QPixmap(nodePicture)), m_position(QPointF(0,0)), m_widget(widget)
+    : QGraphicsItem(), m_nodePicture(QPixmap(nodePicture)), m_widget(widget)
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
@@ -79,12 +79,23 @@ void GraphNode::setNodePicture(const QPixmap& value)
     m_nodePicture = value;
 }
 
+
+QPointF GraphNode::getPosition() const
+{
+    return m_position;
+}
+
+void GraphNode::setPosition(const QPointF& value)
+{
+    m_position = value;
+}
+
 bool GraphNode::advance()
 {
-    if (m_newPos == pos())
+    if (m_position == pos())
         return false;
 
-    setPos(m_newPos);
+    setPos(m_position);
     return true;
 }
 

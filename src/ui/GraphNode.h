@@ -20,7 +20,6 @@ namespace bestalloc
     {
     private:
         QPixmap           m_nodePicture;
-        QPointF           m_newPos;
         QList<GraphEdge*> m_edgeList;
         QPointF           m_position;
 
@@ -40,6 +39,9 @@ namespace bestalloc
 
         QPixmap getNodePicture() const;
         void setNodePicture(const QPixmap& value);
+
+        QPointF getPosition() const;
+        void setPosition(const QPointF& value);
 
         bool advance();
 
