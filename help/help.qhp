@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>com.kdeorg.bestalloc.1.0</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <customFilter name="Best Allocation Analyzer 1.0">
+        <filterAttribute>bestalloc</filterAttribute>
+        <filterAttribute>1.0</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>bestalloc</filterAttribute>
+        <filterAttribute>1.0</filterAttribute>
+        <toc>
+            <section title="Best Allocation Analyzer Manual">
+               <section title="Introduction" ref="docs/intro.html"/>
+                <section title="Copyright" ref="docs/copyright.html"/>
+                <section title="Using BestAlloc">
+                    <section title="Menus" ref="docs/menus.html"/>
+                    <section title="Adding objects" ref="docs/add_obj.html"/>
+                    <section title="Deleting objects" ref="docs/del_obj.html"/>
+                    <section title="Editing objects" ref="docs/edit_obj.html"/>
+                    <section title="Calculating" ref="docs/calc.html"/>
+                    <section title="Saving/Loading configurations" ref="docs/configs.html"/>
+                    <section title="Reports" ref="docs/reports.html"/>
+                    <section title="Constraints" ref="docs/constraints.html"/>
+                    <section title="Additional features" ref="docs/misc.html"/>
+                </section>
+            </section>
+       </toc>
+        <keywords>
+        </keywords>
+        <files>
+            <file>docs/*.html</file>
+            <file>docs/images/*.png</file>
+        </files>
+    </filterSection>
+</QtHelpProject>
