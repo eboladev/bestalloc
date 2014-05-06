@@ -520,20 +520,25 @@ void GraphWidget::clear()
 {
     reset();
 
-    foreach (GraphEdge* edge, m_edges) {
-        m_scene->removeItem(edge);
-    }
-    m_edges.clear();
-
     foreach (EmployeeNode* node, m_employeeNodes) {
         m_scene->removeItem(node);
+        delete node;
+
     }
     m_employeeNodes.clear();
 
     foreach (SkillNode* node, m_skillNodes) {
         m_scene->removeItem(node);
+        delete node;
     }
+
     m_skillNodes.clear();
+
+    foreach (GraphEdge* edge, m_edges) {
+        m_scene->removeItem(edge);
+        delete edge;
+    }
+    m_edges.clear();
 }
 
 void GraphWidget::update()
