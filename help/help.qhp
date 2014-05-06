@@ -10,10 +10,10 @@
         <filterAttribute>bestalloc</filterAttribute>
         <filterAttribute>1.0</filterAttribute>
         <toc>
-            <section title="Best Allocation Analyzer Manual">
+            <section title="Best Allocation Analyzer Manual" ref="docs/index.html">
                <section title="Introduction" ref="docs/intro.html"/>
                 <section title="Copyright" ref="docs/copyright.html"/>
-                <section title="Using BestAlloc">
+                <section title="Using BestAlloc" ref="docs/usage.html">
                     <section title="Menus" ref="docs/menus.html"/>
                     <section title="Adding objects" ref="docs/add_obj.html"/>
                     <section title="Deleting objects" ref="docs/del_obj.html"/>

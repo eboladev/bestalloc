@@ -10,6 +10,8 @@ For adding objects (nodes and edges) to graph you can use two methods:
 
 In both cases the following dialog box appears:
 
+
 .. image:: images/add_obj.png
+
 
 You can select type of the object for adding or add object from template.
