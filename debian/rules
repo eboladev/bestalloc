@@ -3,4 +3,4 @@
 	dh $@
 
 override_dh_auto_install:
-	$(MAKE) DESTDIR=$$(pwd)/debian/bestalloc INSTALLDIR=/usr/bin install
+	$(MAKE) DESTDIR=$$(pwd)/debian/bestalloc INSTALLDIR=/usr/bin OPTDIR=/opt/bestalloc install

@@ -17,12 +17,10 @@ using namespace bestalloc;
 #include <QMessageBox>
 #include <QLabel>
 #include <QStatusBar>
-
-#include <iostream>
-using namespace std;
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), m_dataProvider(BestAllocAlgorithm()), m_graphWidget(this)
+    : QMainWindow(parent), m_dataProvider(BestAllocAlgorithm()), m_graphWidget(this), m_helpProcess(new QProcess())
 {
     initMenuBar();
 
@@ -68,23 +66,25 @@ void MainWindow::initMenuBar()
     QMenu* menuFile  = createFileMenu();
     QMenu* menuEdit  = createEditMenu();
     QMenu* menuTools = createToolsMenu();
+    QMenu* menuHelp  = createHelpMenu();
 
     menuBar()->addMenu(menuFile);
     menuBar()->addMenu(menuEdit);
     menuBar()->addMenu(menuTools);
+    menuBar()->addMenu(menuHelp);
 }
 
 QMenu* MainWindow::createFileMenu()
 {
-    QAction* saveAction = new QAction(NULL);
+    QAction* saveAction = new QAction(this);
     saveAction->setText(SAVE_ACTION_MENU_LABEL);
     connect(saveAction, SIGNAL(triggered()), SLOT(saveState()));
 
-    QAction* loadAction = new QAction(NULL);
+    QAction* loadAction = new QAction(this);
     loadAction->setText(LOAD_ACTION_MENU_LABEL);
     connect(loadAction, SIGNAL(triggered()), SLOT(loadState()));
 
-    QMenu* menuFile = new QMenu(FILE_MENU_LABEL);
+    QMenu* menuFile = new QMenu(FILE_MENU_LABEL, this);
     menuFile->addAction(saveAction);
     menuFile->addAction(loadAction);
 
@@ -93,20 +93,20 @@ QMenu* MainWindow::createFileMenu()
 
 QMenu* MainWindow::createEditMenu()
 {
-    QAction* addObjectAction = new QAction(NULL);
+    QAction* addObjectAction = new QAction(this);
     addObjectAction->setText(ADD_OBJECT_MENU_LABEL);
     connect(addObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(addObject()));
     connect(addObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(resetLastCtxtMenuPosition()));
 
-    QAction* changeObjectAction = new QAction(NULL);
+    QAction* changeObjectAction = new QAction(this);
     changeObjectAction->setText(CHANGE_OBJECT_MENU_LABEL);
     connect(changeObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(changeObject()));
 
-    QAction* deleteObjectAction = new QAction(NULL);
+    QAction* deleteObjectAction = new QAction(this);
     deleteObjectAction->setText(DELETE_OBJECT_MENU_LABEL);
     connect(deleteObjectAction, SIGNAL(triggered()), &m_graphWidget, SLOT(deleteObject()));
 
-    QMenu* menuEdit = new QMenu(EDIT_MENU_LABEL);
+    QMenu* menuEdit = new QMenu(EDIT_MENU_LABEL, this);
     menuEdit->addAction(addObjectAction);
     menuEdit->addAction(changeObjectAction);
     menuEdit->addAction(deleteObjectAction);
@@ -116,24 +116,36 @@ QMenu* MainWindow::createEditMenu()
 
 QMenu* MainWindow::createToolsMenu()
 {
-    QAction* computeAction = new QAction(NULL);
+    QAction* computeAction = new QAction(this);
     computeAction->setText(COMPUTE_LABEL);
     connect(computeAction, SIGNAL(triggered()), SLOT(compute()));
 
-    QAction* resetGraphAction = new QAction(NULL);
+    QAction* resetGraphAction = new QAction(this);
     resetGraphAction->setText(RESET_GRAPH_LABEL);
     connect(resetGraphAction, SIGNAL(triggered()), &m_graphWidget, SLOT(reset()));
 
-    QAction* generateReportAction = new QAction(NULL);
+    QAction* generateReportAction = new QAction(this);
     generateReportAction->setText(GENERATE_REPORT_ACTION_MENU_LABEL);
     connect(generateReportAction, SIGNAL(triggered()), SLOT(generateReport()));
 
-    QMenu* menuTools = new QMenu(TOOLS_MENU_LABEL);
+    QMenu* menuTools = new QMenu(TOOLS_MENU_LABEL, this);
     menuTools->addAction(computeAction);
     menuTools->addAction(resetGraphAction);
     menuTools->addAction(generateReportAction);
 
     return menuTools;
+}
+
+QMenu* MainWindow::createHelpMenu()
+{
+    QAction* helpAction = new QAction(this);
+    helpAction->setText(HELP_MENU_LABEL);
+    connect(helpAction, SIGNAL(triggered()), SLOT(showHelp()));
+
+    QMenu* menuHelp = new QMenu(HELP_MENU_LABEL, this);
+    menuHelp->addAction(helpAction);
+
+    return menuHelp;
 }
 
 bool MainWindow::validateInputData()
@@ -257,6 +269,49 @@ void MainWindow::generateReport()
     }
 }
 
+void MainWindow::showHelp()
+{
+    QProcess::ProcessState state = m_helpProcess->state();
+    if (state == QProcess::NotRunning) {
+        QLatin1String filename1(DEFAULT_HELP_FILE_PATH);
+        QLatin1String filename2(INSTALLED_HELP_FILE_PATH);
+
+        QFile helpFile1(filename1);
+        QFile helpFile2(filename2);
+
+        if (!helpFile1.exists() && !helpFile2.exists()) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(WARNING_TITLE);
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.setText(HELP_RUNNING_WARNING_TEXT);
+            msgBox.setInformativeText(HELP_NOT_FOUND_ERROR_INFO);
+            msgBox.exec();
+
+            return;
+        }
+
+        QStringList args("-collectionFile");
+
+        if (helpFile1.exists()) {
+            args << filename1;
+        } else if (helpFile2.exists()) {
+            args << filename2;
+        }
+
+        m_helpProcess->start(QLatin1String("assistant"), args);
+
+    } else {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle(WARNING_TITLE);
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setText(HELP_RUNNING_WARNING_TEXT);
+        msgBox.setInformativeText(HELP_RUNNING_WARNING_INFO);
+        msgBox.exec();
+    }
+}
+
 MainWindow::~MainWindow()
 {
+    m_helpProcess->kill();
+    delete(m_helpProcess);
 }

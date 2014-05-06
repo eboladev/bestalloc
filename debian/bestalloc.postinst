@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo chmod a+r /opt/bestalloc/help.qch
+sudo chmod a+r /opt/bestalloc/helpcollection.qhc

@@ -33,6 +33,8 @@
 #define TOOLS_MENU_LABEL                  "&Tools"
 #define GENERATE_REPORT_ACTION_MENU_LABEL "&Generate report"
 
+#define HELP_MENU_LABEL         "&Help"
+
 #define COMPUTE_LABEL           "Compute"
 #define ADD_OBJECT_LABEL        "Add object"
 #define ADD_EDGE_LABEL          "Add edge"
@@ -110,5 +112,12 @@
 #define LOAD_CONFIG_FILE_ERROR_TEXT "Load configuration error"
 #define READ_CONFIG_FILE_ERROR_INFO "Cannot read configuration from selected file"
 #define LOAD_CONFIG_FILE_ERROR_INFO "Selected file is corrupted or has undefined format"
+
+#define HELP_RUNNING_WARNING_TEXT "Open help error"
+#define HELP_RUNNING_WARNING_INFO "Another instance of help service has been already launched"
+#define HELP_NOT_FOUND_ERROR_INFO "Help file not found"
+
+#define DEFAULT_HELP_FILE_PATH   "helpcollection.qhc"
+#define INSTALLED_HELP_FILE_PATH "/opt/bestalloc/helpcollection.qhc"
 
 #endif // CONSTANTS_H_INCLUDED

@@ -12,6 +12,7 @@
 #include <QMainWindow>
 #include <QSharedPointer>
 #include <QFileDialog>
+#include <QProcess>
 
 #include "DataProvider.h"
 #include "GraphWidget.h"
@@ -32,6 +33,8 @@ namespace bestalloc
         DataProvider m_dataProvider;
         GraphWidget  m_graphWidget;
 
+        QProcess*    m_helpProcess;
+
     protected:
         void resizeEvent(QResizeEvent* event);
 
@@ -40,6 +43,7 @@ namespace bestalloc
         QMenu* createFileMenu();
         QMenu* createEditMenu();
         QMenu* createToolsMenu();
+        QMenu* createHelpMenu();
 
         bool validateInputData();
 
@@ -58,6 +62,8 @@ namespace bestalloc
 
         void updateStatus();
         void generateReport();
+
+        void showHelp();
     };
 }
 
