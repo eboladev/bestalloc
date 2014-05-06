@@ -57,8 +57,8 @@ namespace bestalloc
         void confirmChanges();
 
         void restoreSelection();
-        void restoreEmployeeNode(EmployeeNode*);
-        void restoreSkillNode(SkillNode*);
+        void restoreEmployeeNode(EmployeeNode* node);
+        void restoreSkillNode(SkillNode* node);
         void restoreEdge(GraphEdge* edge);
     };
 }
